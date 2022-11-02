@@ -40,9 +40,10 @@ public class playerController : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        PlayerSprint();
     }
 
-    // move the player
+    // moves the player
     void PlayerMovement()
     {
         if(controller.isGrounded && playerVelocity.y < 0)
@@ -62,5 +63,20 @@ public class playerController : MonoBehaviour
 
         playerVelocity.y -= gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    // makes the player sprint
+    void PlayerSprint()
+    {
+        if (Input.GetButtonDown("Sprint"))
+        {
+            playerSpeed *= sprintMod;
+            isSprinting = true;
+        }
+        else if (Input.GetButtonUp("Sprint"))
+        {
+            playerSpeed /= sprintMod;
+            isSprinting = false;
+        }
     }
 }
