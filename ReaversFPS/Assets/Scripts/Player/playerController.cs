@@ -79,4 +79,17 @@ public class playerController : MonoBehaviour
             isSprinting = false;
         }
     }
+
+    public void TakeDamage(int dmg)
+    {
+        HP -= dmg;
+
+        StartCoroutine(gameManager.instance.playerDamageFlash());
+
+        if (HP <= 0)
+        {
+            gameManager.instance.playerDeadMenu.SetActive(true);
+            gameManager.instance.Pause();
+        }
+    }
 }
