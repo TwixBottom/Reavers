@@ -133,9 +133,10 @@ public class playerController : MonoBehaviour
             isShooting = true;
 
             RaycastHit hit;
+
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
             {
-                if (hit.collider.GetComponent<PlayerDamage>() != null)
+                if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
                 {
                     hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
                 }

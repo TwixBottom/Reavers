@@ -21,13 +21,24 @@ public class gameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject playerDamageScreen;
     public GameObject playerDeadMenu;
-    public GameObject winMenu;
+    public GameObject winMenu; 
+    public GameObject newWave;
     public TextMeshProUGUI enemiesLeft;
+    public TextMeshProUGUI waveNumber;
+   
+
+    [Header("----- Enemy Stuff -----")]
+    public GameObject[] enemy;
+
 
     public bool isPaused;
     public int enemiesToKill;
+    public int currentWaveNumber = 1;
     public GameObject spawnPosition;
 
+    public GameObject[] spawnLocations;
+    float targetTime = 5.0f;
+    float orgTime;
 
     // Vision
     public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>();
@@ -46,7 +57,10 @@ public class gameManager : MonoBehaviour
 
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
+        playerScript = player.GetComponent<playerController>(); 
+        
+        updateUI();
+        orgTime = targetTime;
     }
     // Update is called once per frame
     void Update()
@@ -90,14 +104,48 @@ public class gameManager : MonoBehaviour
         enemiesToKill--;
         updateUI();
 
-        if (enemiesToKill <= 0)
+        if (enemiesToKill <= 0 )
+        {
+            updateWaveNumber();
+            if (currentWaveNumber < 5)
+            {
+                StartCoroutine(spawnEnemies());
+            }
+           
+        }
+
+        if (currentWaveNumber == 5)
+        {
             youWin();
+        }
+            
+           
+    }
+    public void updateWaveNumber()
+    {
+        currentWaveNumber++;
+        updateUI();
     }
     public void updateUI()
     {
         enemiesLeft.text = enemiesToKill.ToString("F0");
+        waveNumber.text = currentWaveNumber.ToString("F0");
     }
 
+    IEnumerator spawnEnemies()
+    {
+        newWave.SetActive(true);
+        yield return new WaitForSeconds(5.0f); 
+        newWave.SetActive(false);
+
+      
+        for (int i = 0; i < spawnLocations.Length; i++)
+        {
+            int randomInt = Random.Range(0, 3); 
+            Instantiate(enemy[randomInt], spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
+        }
+       
+    }
 
     // Vision Registers
     public void VisionRegister(DetectableTarget target)
