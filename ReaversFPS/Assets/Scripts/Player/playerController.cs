@@ -146,11 +146,12 @@ public class playerController : MonoBehaviour
             isShooting = false;
         }
     }
-    public void respawn()
+    public void Respawn()
     {
         controller.enabled = false;
         HP = startHP;
         transform.position = gameManager.instance.spawnPosition.transform.position;
+        gameManager.instance.playerDeadMenu.SetActive(false);
         controller.enabled = true;
     }
 }
