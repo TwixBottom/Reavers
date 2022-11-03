@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public enum EHeardSoundCategory
+{
+    EFootstep,
+    EJump
+}
+
 public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
@@ -21,9 +27,22 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     public int enemiesToKill;
 
+
+    // Vision
+    public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>();
+    // Hearing
+    public List<HearingSensor> allSensors { get; private set; } = new List<HearingSensor>();
+
     // Start is called before the first frame update
     void Awake()
-    {
+    { 
+        if (instance != null)
+        {
+            Debug.LogError("Multiple DetectableTargetManager found: " + gameObject.name);
+            Destroy(gameObject);
+            return;
+        }
+
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
@@ -76,5 +95,37 @@ public class gameManager : MonoBehaviour
     public void updateUI()
     {
         enemiesLeft.text = enemiesToKill.ToString("F0");
+    }
+
+
+    // Vision Registers
+    public void VisionRegister(DetectableTarget target)
+    {
+        allTargets.Add(target);
+    }
+
+    public void VisionDeregister(DetectableTarget target)
+    {
+        allTargets.Remove(target);
+    }
+
+    // Hearing Registers
+    public void HearingRegister(HearingSensor sensor)
+    {
+        allSensors.Add(sensor);
+    }
+
+    public void HearingDeregister(HearingSensor sensor)
+    {
+        allSensors.Remove(sensor);
+    }
+
+    public void OnSoundEmitted(GameObject source, Vector3 location, EHeardSoundCategory category, float intensity)
+    {
+        // Notify all of the sensores
+        foreach (var sensor in allSensors)
+        {
+            sensor.OnHeardSound(source, location, category, intensity);
+        }
     }
 }
