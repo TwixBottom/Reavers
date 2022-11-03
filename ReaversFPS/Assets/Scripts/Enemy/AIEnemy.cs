@@ -154,7 +154,6 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
 
     public void ReportCanSee(DetectableTarget target)
     {
-        Debug.Log("CanSee00");
         Awareness.ReportCanSee(target);
     }
 

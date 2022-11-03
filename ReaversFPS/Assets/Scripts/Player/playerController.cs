@@ -128,8 +128,6 @@ public class playerController : MonoBehaviour
     {
         if (!isShooting && Input.GetButton("Shoot"))
         {
-            Debug.Log("Shooting");
-
             isShooting = true;
 
             RaycastHit hit;
