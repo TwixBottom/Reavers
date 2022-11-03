@@ -73,6 +73,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     // Start is called before the first frame update
     void Start()
     {
+        gameManager.instance.enemiesToKill++;
         gameManager.instance.updateUI();
     }
 

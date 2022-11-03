@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.Events;
 
 public class playerController : MonoBehaviour
 {
@@ -21,17 +21,31 @@ public class playerController : MonoBehaviour
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
 
-    float startHP;
+    float startHP; 
+    float playerStartSpeed;
+    int jumpTimes;
+
     Vector3 move;
     private Vector3 playerVelocity;
-    int jumpTimes;
+    
     bool isSprinting;
     bool isShooting;
-    float playerStartSpeed;
+
+    protected float TimeUntilNextFootstep = -1f;
+    protected Rigidbody CharacterRB;
+
+    [Header("Events")]
+    [SerializeField] UnityEvent OnPlayFootstepAudio;
+    [SerializeField] UnityEvent OnPlayJumpAudio;
+    [SerializeField] UnityEvent OnPlayDoubleJumpAudio;
+    [SerializeField] UnityEvent OnPlayLandAudio;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        CharacterRB = GetComponent<Rigidbody>();
+        isSprinting = false;
         startHP = HP;
         playerStartSpeed = playerSpeed;
     }
@@ -52,6 +66,7 @@ public class playerController : MonoBehaviour
             jumpTimes = 0;
             playerVelocity.y = 0f;
         }
+        
         move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
         controller.Move(move * Time.deltaTime * playerSpeed);
 
@@ -59,10 +74,20 @@ public class playerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
         {
             jumpTimes++;
-            playerVelocity.y = jumpHeight;
+
+            if (isSprinting == false)
+            {
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            }
+            else
+            {
+                playerVelocity.y += Mathf.Sqrt((jumpHeight * 2) * -3.0f * gravityValue);
+            }
+            OnPlayLandAudio?.Invoke();
+            gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EJump, 2.0f);
         }
 
-        playerVelocity.y -= gravityValue * Time.deltaTime;
+        playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
@@ -79,24 +104,32 @@ public class playerController : MonoBehaviour
             playerSpeed /= sprintMod;
             isSprinting = false;
         }
+
+        if (isSprinting)
+        {
+            OnPlayFootstepAudio?.Invoke();
+            gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, isSprinting ? 2f : 1f);
+        }
     }
 
     public void TakeDamage(float dmg)
     {
         HP -= dmg;
 
-        StartCoroutine(gameManager.instance.playerDamageFlash());
-
         if (HP <= 0)
         {
             gameManager.instance.playerDeadMenu.SetActive(true);
             gameManager.instance.Pause();
         }
+        
+        StartCoroutine(gameManager.instance.playerDamageFlash());
     }
     IEnumerator ShootWeapon()
     {
         if (!isShooting && Input.GetButton("Shoot"))
         {
+            Debug.Log("Shooting");
+
             isShooting = true;
 
             RaycastHit hit;

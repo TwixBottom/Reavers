@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        rb.velocity = (gameManager.instance.player.transform.position - rb.position).normalized * speed;
+        rb.velocity = (gameManager.instance.player.transform.position - rb.position) * speed;
         Destroy(gameObject, timer);
     }
 
