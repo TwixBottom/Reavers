@@ -41,6 +41,7 @@ public class playerController : MonoBehaviour
     {
         PlayerMovement();
         PlayerSprint();
+        StartCoroutine(ShootWeapon());
     }
 
     // moves the player
@@ -80,7 +81,7 @@ public class playerController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(float dmg)
     {
         HP -= dmg;
 
@@ -92,4 +93,24 @@ public class playerController : MonoBehaviour
             gameManager.instance.Pause();
         }
     }
+    IEnumerator ShootWeapon()
+    {
+        if (!isShooting && Input.GetButton("Shoot"))
+        {
+            isShooting = true;
+
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+            {
+                if (hit.collider.GetComponent<PlayerDamage>() != null)
+                {
+                    hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
+                }
+            }
+
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+        }
+    }
+
 }
