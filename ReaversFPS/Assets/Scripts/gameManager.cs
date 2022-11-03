@@ -26,6 +26,7 @@ public class gameManager : MonoBehaviour
 
     public bool isPaused;
     public int enemiesToKill;
+    public GameObject spawnPosition;
 
 
     // Vision
