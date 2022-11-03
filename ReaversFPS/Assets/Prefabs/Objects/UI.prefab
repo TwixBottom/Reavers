@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280163870
-  m_fontColor: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3458,6 +3458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerScript: {fileID: 0}
+  spawnPosition: {fileID: 0}
   pauseMenu: {fileID: 1308084068561779124}
   playerDamageScreen: {fileID: 1308084069706083932}
   playerDeadMenu: {fileID: 1308084068654584083}
@@ -3465,23 +3466,14 @@ MonoBehaviour:
   newWave: {fileID: 262396316}
   enemiesLeft: {fileID: 1308084069619266743}
   waveNumber: {fileID: 1308084068403485266}
+  enemiesToKill: 0
+  currentWaveNumber: 1
+  isPaused: 0
   enemy:
   - {fileID: 3079129168932552870, guid: ce0ad92760742bc4996360d59857d328, type: 3}
   - {fileID: 3079129168932552870, guid: 0315bf2fbc123ca43ae8d0f64f7f53fe, type: 3}
   - {fileID: 3079129168932552870, guid: 26442dd0f1da59c43bd0666f64c168e8, type: 3}
-  isPaused: 0
-  enemiesToKill: 0
-  currentWaveNumber: 1
-  spawnPosition: {fileID: 0}
-  spawnLocations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  spawnLocations: []
 --- !u!1 &1308084069782293980
 GameObject:
   m_ObjectHideFlags: 0

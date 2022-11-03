@@ -16,6 +16,7 @@ public class gameManager : MonoBehaviour
     [Header("----- Player Stuff -----")]
     public GameObject player;
     public playerController playerScript;
+    public GameObject spawnPosition;
 
     [Header("----- UI -----")]
     public GameObject pauseMenu;
@@ -25,42 +26,39 @@ public class gameManager : MonoBehaviour
     public GameObject newWave;
     public TextMeshProUGUI enemiesLeft;
     public TextMeshProUGUI waveNumber;
+    public int enemiesToKill;
+    public int currentWaveNumber = 1;
+    public bool isPaused;
    
 
     [Header("----- Enemy Stuff -----")]
-    public GameObject[] enemy;
+    public List<GameObject> enemy;
+    public List<GameObject> spawnLocations;
 
-
-    public bool isPaused;
-    public int enemiesToKill;
-    public int currentWaveNumber = 1;
-    public GameObject spawnPosition;
-
-    public GameObject[] spawnLocations;
     float targetTime = 5.0f;
     float orgTime;
 
-    // Vision
-    public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>();
-    // Hearing
-    public List<HearingSensor> allSensors { get; private set; } = new List<HearingSensor>();
+   
+    public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>(); // Vision
+   
+    public List<HearingSensor> allSensors { get; private set; } = new List<HearingSensor>(); // Hearing
 
     // Start is called before the first frame update
     void Awake()
     { 
-        if (instance != null)
-        {
-            Debug.LogError("Multiple DetectableTargetManager found: " + gameObject.name);
-            Destroy(gameObject);
-            return;
-        }
-
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
-        playerScript = player.GetComponent<playerController>(); 
+        playerScript = player.GetComponent<playerController>();
+        spawnPosition = GameObject.FindGameObjectWithTag("Player Spawn Position");
+
+        orgTime = targetTime;
+        
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)
+        {
+            spawnLocations.Add(GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms")[i]);
+        } 
         
         updateUI();
-        orgTime = targetTime;
     }
     // Update is called once per frame
     void Update()
@@ -117,9 +115,7 @@ public class gameManager : MonoBehaviour
         if (currentWaveNumber == 5)
         {
             youWin();
-        }
-            
-           
+        } 
     }
     public void updateWaveNumber()
     {
@@ -138,8 +134,7 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(5.0f); 
         newWave.SetActive(false);
 
-      
-        for (int i = 0; i < spawnLocations.Length; i++)
+        for (int i = 0; i < spawnLocations.Count; i++)
         {
             int randomInt = Random.Range(0, 3); 
             Instantiate(enemy[randomInt], spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
