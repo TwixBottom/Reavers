@@ -26,11 +26,13 @@ public class gameManager : MonoBehaviour
     public GameObject newWave;
     public TextMeshProUGUI enemiesLeft;
     public TextMeshProUGUI waveNumber;
+    public TextMeshProUGUI ammoLeft;
+    
+    public int ammoCount;
     public int enemiesToKill;
     public int currentWaveNumber = 1;
     public bool isPaused;
    
-
     [Header("----- Enemy Stuff -----")]
     public List<GameObject> enemy;
     public List<GameObject> spawnLocations;
@@ -50,6 +52,7 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         spawnPosition = GameObject.FindGameObjectWithTag("Player Spawn Position");
+        
 
         orgTime = targetTime;
         
@@ -126,8 +129,13 @@ public class gameManager : MonoBehaviour
     {
         enemiesLeft.text = enemiesToKill.ToString("F0");
         waveNumber.text = currentWaveNumber.ToString("F0");
+        ammoLeft.text = ammoCount.ToString("F0");
     }
-
+    public void AmmoCount()
+    {
+        ammoCount--;
+        updateUI();
+    }
     IEnumerator spawnEnemies()
     {
         newWave.SetActive(true);

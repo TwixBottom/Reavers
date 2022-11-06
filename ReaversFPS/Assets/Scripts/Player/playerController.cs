@@ -9,7 +9,7 @@ public class playerController : MonoBehaviour
     [SerializeField] CharacterController controller;
 
     [Header("----- Player Stats -----")]
-    [SerializeField] float HP;
+    [SerializeField] public float HP;
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMod;
     [SerializeField] float jumpHeight;
@@ -21,7 +21,7 @@ public class playerController : MonoBehaviour
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
 
-    float startHP; 
+    public float startHP; 
     float playerStartSpeed;
     int jumpTimes;
 
@@ -131,7 +131,6 @@ public class playerController : MonoBehaviour
             isShooting = true;
 
             RaycastHit hit;
-
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
             {
                 if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
