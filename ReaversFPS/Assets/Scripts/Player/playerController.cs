@@ -20,6 +20,8 @@ public class playerController : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
+    [SerializeField] public int gunAmmo;
+    [SerializeField] int magazineCount;
 
     public float startHP; 
     float playerStartSpeed;
@@ -126,22 +128,35 @@ public class playerController : MonoBehaviour
     }
     IEnumerator ShootWeapon()
     {
-        if (!isShooting && Input.GetButton("Shoot"))
+        if (gunAmmo > 0)
         {
-            isShooting = true;
-
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+            if (!isShooting && Input.GetButton("Shoot"))
             {
-                if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
-                {
-                    hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
-                }
-            }
+                isShooting = true;
 
-            yield return new WaitForSeconds(shootRate);
-            isShooting = false;
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+                {
+                    if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
+                    {
+                        hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
+                    }
+                }
+
+                gunAmmo--;
+
+                yield return new WaitForSeconds(shootRate);
+                isShooting = false;
+            }
         }
+        else if (gunAmmo == 0)
+        {
+            yield return new WaitForSeconds(2.0f);
+            gunAmmo = magazineCount;
+        }
+
+        gameManager.instance.updateUI();
+
     }
     public void Respawn()
     {

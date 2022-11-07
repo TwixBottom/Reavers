@@ -52,7 +52,7 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         spawnPosition = GameObject.FindGameObjectWithTag("Player Spawn Position");
-        
+        ammoCount = playerScript.gunAmmo;
 
         orgTime = targetTime;
         
@@ -120,6 +120,7 @@ public class gameManager : MonoBehaviour
             youWin();
         } 
     }
+
     public void updateWaveNumber()
     {
         currentWaveNumber++;
@@ -129,7 +130,7 @@ public class gameManager : MonoBehaviour
     {
         enemiesLeft.text = enemiesToKill.ToString("F0");
         waveNumber.text = currentWaveNumber.ToString("F0");
-        ammoLeft.text = ammoCount.ToString("F0");
+        ammoLeft.text =   playerScript.gunAmmo.ToString("F0");
     }
     public void AmmoCount()
     {

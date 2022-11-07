@@ -239,6 +239,9 @@ MonoBehaviour:
   shootRate: 0.2
   shootDist: 10000
   shootDamage: 1
+  gunAmmo: 16
+  magazineCount: 16
+  startHP: 0
   OnPlayFootstepAudio:
     m_PersistentCalls:
       m_Calls: []
