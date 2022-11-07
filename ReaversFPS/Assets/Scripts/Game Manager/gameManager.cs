@@ -26,8 +26,9 @@ public class gameManager : MonoBehaviour
     public GameObject newWave;
     public TextMeshProUGUI enemiesLeft;
     public TextMeshProUGUI waveNumber;
-    public TextMeshProUGUI ammoLeft;
-    
+    public TextMeshProUGUI currentAmmo;
+    public TextMeshProUGUI ammoRemaining;
+
     public int ammoCount;
     public int enemiesToKill;
     public int currentWaveNumber = 1;
@@ -130,7 +131,8 @@ public class gameManager : MonoBehaviour
     {
         enemiesLeft.text = enemiesToKill.ToString("F0");
         waveNumber.text = currentWaveNumber.ToString("F0");
-        ammoLeft.text =   playerScript.gunAmmo.ToString("F0");
+        currentAmmo.text =   playerScript.gunAmmo.ToString("F0");
+        ammoRemaining.text = playerScript.reseveGunAmmo.ToString("F0");
     }
     public void AmmoCount()
     {

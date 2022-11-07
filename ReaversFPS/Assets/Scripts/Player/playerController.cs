@@ -20,10 +20,15 @@ public class playerController : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
-    [SerializeField] public int gunAmmo;
-    [SerializeField] int magazineCount;
 
-    public float startHP; 
+    [SerializeField] public int gunAmmo;
+    [SerializeField] public int magazineCount;
+    
+    public int reseveGunAmmo;
+   
+
+    public float startHP;
+    int startAmmo;
     float playerStartSpeed;
     int jumpTimes;
 
@@ -32,9 +37,7 @@ public class playerController : MonoBehaviour
     
     bool isSprinting;
     bool isShooting;
-
-    protected float TimeUntilNextFootstep = -1f;
-    protected Rigidbody CharacterRB;
+    bool isReloding;
 
     [Header("Events")]
     [SerializeField] UnityEvent OnPlayFootstepAudio;
@@ -45,11 +48,12 @@ public class playerController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        CharacterRB = GetComponent<Rigidbody>();
+    { 
         isSprinting = false;
         startHP = HP;
+        startAmmo = gunAmmo;
         playerStartSpeed = playerSpeed;
+        reseveGunAmmo = magazineCount * startAmmo;
     }
 
     // Update is called once per frame
@@ -150,10 +154,27 @@ public class playerController : MonoBehaviour
                 isShooting = false;
             }
         }
-        else if (gunAmmo == 0)
+        else if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0)
         {
+          
+            isReloding = true;
             yield return new WaitForSeconds(2.0f);
-            gunAmmo = magazineCount;
+            isReloding = false;
+
+            if (reseveGunAmmo - startAmmo <= 0)
+            {
+                Debug.Log("IF");
+                gunAmmo = reseveGunAmmo;
+                reseveGunAmmo = 0;
+            }
+            else
+            {
+                Debug.Log("ELSE");
+                gunAmmo = startAmmo;
+                reseveGunAmmo -= startAmmo;
+            }
+
+            gameManager.instance.updateUI();
         }
 
         gameManager.instance.updateUI();
@@ -162,12 +183,25 @@ public class playerController : MonoBehaviour
 
     IEnumerator RelodeWeapon()
     {
-        if (!isShooting && Input.GetButtonDown("Reload"))
+        if (!isReloding && Input.GetButtonDown("Reload") && reseveGunAmmo > 0 && gunAmmo != startAmmo)
         {
-            isShooting = true;
+            int ammoLeft = startAmmo - gunAmmo;
+            
+            isReloding = true;
             yield return new WaitForSeconds(2.0f);
-            isShooting = false;
-            gunAmmo = magazineCount;
+            isReloding = false;
+
+            if (reseveGunAmmo - ammoLeft <= 0)
+            {
+                gunAmmo += ammoLeft;
+                reseveGunAmmo = 0;
+            }
+            else
+            {
+                gunAmmo += ammoLeft;
+                reseveGunAmmo -= ammoLeft;
+            }
+            
             gameManager.instance.updateUI();
         }
     }
@@ -176,6 +210,8 @@ public class playerController : MonoBehaviour
     {
         controller.enabled = false;
         HP = startHP;
+        gunAmmo = startAmmo;
+        reseveGunAmmo = startAmmo * magazineCount;
         transform.position = gameManager.instance.spawnPosition.transform.position;
         gameManager.instance.playerDeadMenu.SetActive(false);
         controller.enabled = true;

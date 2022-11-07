@@ -240,7 +240,8 @@ MonoBehaviour:
   shootDist: 10000
   shootDamage: 1
   gunAmmo: 16
-  magazineCount: 16
+  magazineCount: 2
+  reseveGunAmmo: 0
   startHP: 0
   OnPlayFootstepAudio:
     m_PersistentCalls:
