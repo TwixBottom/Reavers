@@ -20,14 +20,10 @@ public class playerController : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
-
     [SerializeField] public int gunAmmo;
     [SerializeField] public int magazineCount;
-    
-    public int reseveGunAmmo;
+    [SerializeField] List<gunStats> gunList = new List<gunStats>();
    
-
-    public float startHP;
     int startAmmo;
     float playerStartSpeed;
     int jumpTimes;
@@ -43,7 +39,10 @@ public class playerController : MonoBehaviour
     [SerializeField] UnityEvent OnPlayFootstepAudio;
     [SerializeField] UnityEvent OnPlayJumpAudio;
     [SerializeField] UnityEvent OnPlayDoubleJumpAudio;
-    [SerializeField] UnityEvent OnPlayLandAudio;
+    [SerializeField] UnityEvent OnPlayLandAudio; 
+    
+    public float startHP; 
+    public int reseveGunAmmo;
 
 
     // Start is called before the first frame update
@@ -131,6 +130,7 @@ public class playerController : MonoBehaviour
         
         StartCoroutine(gameManager.instance.playerDamageFlash());
     }
+
     IEnumerator ShootWeapon()
     {
         if (gunAmmo > 0)

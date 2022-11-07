@@ -10,7 +10,7 @@ public class gunStats : ScriptableObject
     public int magazineCount;
     public int damage;
     public int fireRate;
-    public float range;
+    public int shootDistance;
     public AudioClip audioClip;
     public GameObject model;
     public GameObject effectFlash;
