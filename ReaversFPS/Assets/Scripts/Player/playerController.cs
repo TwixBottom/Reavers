@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.Events;
 
 public class playerController : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class playerController : MonoBehaviour
     [SerializeField] CharacterController controller;
 
     [Header("----- Player Stats -----")]
-    [SerializeField] float HP;
+    [SerializeField] public float HP;
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMod;
     [SerializeField] float jumpHeight;
@@ -20,24 +20,41 @@ public class playerController : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDist;
     [SerializeField] int shootDamage;
+    [SerializeField] public int gunAmmo;
+    [SerializeField] public int magazineCount;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject hitEffect;
     [SerializeField] List<gunStats> gunStatList = new List<gunStats>();
 
-    float startHP;
+    int startAmmo;
+    float playerStartSpeed;
+    int jumpTimes;
+
     Vector3 move;
     private Vector3 playerVelocity;
-    int jumpTimes;
+
     bool isSprinting;
     bool isShooting;
-    float playerStartSpeed;
+    bool isReloding;
+
+    [Header("Events")]
+    [SerializeField] UnityEvent OnPlayFootstepAudio;
+    [SerializeField] UnityEvent OnPlayJumpAudio;
+    [SerializeField] UnityEvent OnPlayDoubleJumpAudio;
+    [SerializeField] UnityEvent OnPlayLandAudio;
+
+    public float startHP;
+    public int reseveGunAmmo;
     int selectedGun;
 
     // Start is called before the first frame update
     void Start()
     {
+        isSprinting = false;
         startHP = HP;
+        startAmmo = gunAmmo;
         playerStartSpeed = playerSpeed;
+        reseveGunAmmo = magazineCount * startAmmo;
     }
 
     // Update is called once per frame
@@ -46,17 +63,19 @@ public class playerController : MonoBehaviour
         PlayerMovement();
         PlayerSprint();
         StartCoroutine(ShootWeapon());
+        StartCoroutine(RelodeWeapon());
         gunSelect();
     }
 
     // moves the player
     void PlayerMovement()
     {
-        if(controller.isGrounded && playerVelocity.y < 0)
+        if (controller.isGrounded && playerVelocity.y < 0)
         {
             jumpTimes = 0;
             playerVelocity.y = 0f;
         }
+
         move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
         controller.Move(move * Time.deltaTime * playerSpeed);
 
@@ -64,10 +83,20 @@ public class playerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
         {
             jumpTimes++;
-            playerVelocity.y = jumpHeight;
+
+            if (isSprinting == false)
+            {
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            }
+            else
+            {
+                playerVelocity.y += Mathf.Sqrt((jumpHeight * 2) * -3.0f * gravityValue);
+            }
+            OnPlayLandAudio?.Invoke();
+            gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EJump, 2.0f);
         }
 
-        playerVelocity.y -= gravityValue * Time.deltaTime;
+        playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
@@ -83,6 +112,12 @@ public class playerController : MonoBehaviour
         {
             playerSpeed /= sprintMod;
             isSprinting = false;
+        }
+
+        if (isSprinting)
+        {
+            OnPlayFootstepAudio?.Invoke();
+            gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, isSprinting ? 2f : 1f);
         }
     }
 
@@ -100,41 +135,111 @@ public class playerController : MonoBehaviour
     }
     IEnumerator ShootWeapon()
     {
-        if (!isShooting && Input.GetButton("Shoot"))
+        if (gunAmmo > 0)
         {
-            isShooting = true;
-
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+            if (gunStatList.Count > 0 && !isShooting && Input.GetButton("Shoot"))
             {
-                if (hit.collider.GetComponent<PlayerDamage>() != null)
+                isShooting = true;
+
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
-                    hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
+                    if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
+                    {
+                        hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
+                    }
+
+                    //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
+
                 }
+
+                gunAmmo--;
+
+                yield return new WaitForSeconds(shootRate);
+                isShooting = false;
+            }
+        }
+        else if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0)
+        {
+
+            isReloding = true;
+            yield return new WaitForSeconds(2.0f);
+            isReloding = false;
+
+            if (reseveGunAmmo - startAmmo <= 0)
+            {
+                Debug.Log("IF");
+                gunAmmo = reseveGunAmmo;
+                reseveGunAmmo = 0;
+            }
+            else
+            {
+                Debug.Log("ELSE");
+                gunAmmo = startAmmo;
+                reseveGunAmmo -= startAmmo;
             }
 
-            yield return new WaitForSeconds(shootRate);
-            isShooting = false;
+            gameManager.instance.updateUI();
+        }
+
+        gameManager.instance.updateUI();
+
+    }
+    IEnumerator RelodeWeapon()
+    {
+        if (!isReloding && Input.GetButtonDown("Reload") && reseveGunAmmo > 0 && gunAmmo != startAmmo)
+        {
+            int ammoLeft = startAmmo - gunAmmo;
+
+            isReloding = true;
+            yield return new WaitForSeconds(2.0f);
+            isReloding = false;
+
+            if (reseveGunAmmo - ammoLeft <= 0)
+            {
+                gunAmmo += ammoLeft;
+                reseveGunAmmo = 0;
+            }
+            else
+            {
+                gunAmmo += ammoLeft;
+                reseveGunAmmo -= ammoLeft;
+            }
+
+            gameManager.instance.updateUI();
         }
     }
-    public void respawn()
+
+    public void Respawn()
     {
         controller.enabled = false;
         HP = startHP;
+        gunAmmo = startAmmo;
+        reseveGunAmmo = startAmmo * magazineCount;
         transform.position = gameManager.instance.spawnPosition.transform.position;
+        gameManager.instance.playerDeadMenu.SetActive(false);
         controller.enabled = true;
     }
+
+
+
 
     public void gunPickup(gunStats gunStat)
     {
         shootRate = gunStat.fireRate;
         shootDist = gunStat.shootDistance;
         shootDamage = gunStat.damage;
+        gunAmmo = gunStat.ammoCount;
+        startAmmo = gunStat.ammoCount;
+        magazineCount = gunStat.magazineCount;
+        reseveGunAmmo = gunStat.magazineCount * gunStat.ammoCount;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat.model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat.model.GetComponent<MeshRenderer>().sharedMaterial;
 
-        if(!gunStatList.Contains(gunStat))
+
+        //gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat.model.GetComponent<MeshFilter>().sharedMesh;
+        //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        if (!gunStatList.Contains(gunStat))
             gunStatList.Add(gunStat);
     }
 
