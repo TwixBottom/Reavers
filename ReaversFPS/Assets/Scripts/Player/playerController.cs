@@ -58,6 +58,7 @@ public class playerController : MonoBehaviour
         PlayerMovement();
         PlayerSprint();
         StartCoroutine(ShootWeapon());
+        StartCoroutine(RelodeWeapon());
     }
 
     // moves the player
@@ -158,6 +159,19 @@ public class playerController : MonoBehaviour
         gameManager.instance.updateUI();
 
     }
+
+    IEnumerator RelodeWeapon()
+    {
+        if (!isShooting && Input.GetButtonDown("Reload"))
+        {
+            isShooting = true;
+            yield return new WaitForSeconds(2.0f);
+            isShooting = false;
+            gunAmmo = magazineCount;
+            gameManager.instance.updateUI();
+        }
+    }
+
     public void Respawn()
     {
         controller.enabled = false;
@@ -166,4 +180,6 @@ public class playerController : MonoBehaviour
         gameManager.instance.playerDeadMenu.SetActive(false);
         controller.enabled = true;
     }
+
+    
 }
