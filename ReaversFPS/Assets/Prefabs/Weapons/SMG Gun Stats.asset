@@ -22,4 +22,4 @@ MonoBehaviour:
   effectFlash: {fileID: 0}
   effectHit: {fileID: 0}
   currentAmmo: 16
-  ammoReserves: 16
+  ammoReserves: 0

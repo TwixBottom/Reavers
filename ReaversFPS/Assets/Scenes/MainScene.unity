@@ -130,9 +130,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6358832127326687722, guid: fde0c4249f3547644b8c69e0ca39623b, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 951
+      objectReference: {fileID: 0}
     - target: {fileID: 6358832128208527874, guid: fde0c4249f3547644b8c69e0ca39623b, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6358832128208527874, guid: fde0c4249f3547644b8c69e0ca39623b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -327,7 +331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 73169554a4b4b4c47b1132d7f876239b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 73169554a4b4b4c47b1132d7f876239b, type: 3}
       propertyPath: m_LocalScale.x
@@ -476,7 +480,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &857220695
 PrefabInstance:
@@ -819,8 +823,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6967423
-  m_Center: {x: 0, y: 0.1989126, z: 0.21871817}
+  m_Radius: 6.5973916
+  m_Center: {x: 0, y: 0.19891262, z: -1.1658478}
 --- !u!23 &1118211051
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -878,13 +882,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1118211048}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.88, y: 0.5971167, z: 61.32744}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.541832, y: -1.2608001, z: -5.918007}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 2044820523}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1141282485
 PrefabInstance:
@@ -1006,8 +1010,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6967423
-  m_Center: {x: 0, y: 0.1989126, z: 0.21871817}
+  m_Radius: 4.421728
+  m_Center: {x: 0, y: 2.2375174, z: 1.9050995}
 --- !u!23 &1484259410
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1065,13 +1069,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1484259407}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.51, y: 0.5971167, z: 61.32744}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.618169, y: -1.2608001, z: -5.918007}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 2044820523}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1578703243
 GameObject:
@@ -1108,7 +1112,7 @@ Transform:
   - {fileID: 632264091}
   - {fileID: 1325892982}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1773936888
 PrefabInstance:
@@ -1498,7 +1502,7 @@ Transform:
   - {fileID: 429716747}
   - {fileID: 1469215970}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2000795378
 PrefabInstance:
@@ -1557,6 +1561,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f2960a4a92b35342a48420b06de4e20, type: 3}
+--- !u!1 &2044820522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2044820523}
+  m_Layer: 0
+  m_Name: Weapons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2044820523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044820522}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.661832, y: 1.8579168, z: 67.245445}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1484259412}
+  - {fileID: 1118211053}
+  - {fileID: 5933710247430195228}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2072339743 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7109614374543106745, guid: 4f2960a4a92b35342a48420b06de4e20, type: 3}
@@ -1575,7 +1613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1652429717732967357, guid: 01ea04c9e513ba84ba2fb2eaf75a6ded, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1652429717732967357, guid: 01ea04c9e513ba84ba2fb2eaf75a6ded, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1668,13 +1706,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6418498790526571174}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.929854, y: 0.5971167, z: 61.32744}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.498168, y: -1.2608001, z: -5.918007}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 2044820523}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6418498790526571174
 GameObject:
@@ -1785,5 +1823,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6967423
-  m_Center: {x: 0, y: 0.1989126, z: 0.21871817}
+  m_Radius: 5.392901
+  m_Center: {x: 0, y: 0.19891262, z: 0.7478205}

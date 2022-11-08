@@ -132,6 +132,7 @@ public class playerController : MonoBehaviour
         }
     }
 
+
     public void TakeDamage(float dmg)
     {
         HP -= dmg;
@@ -144,6 +145,8 @@ public class playerController : MonoBehaviour
             gameManager.instance.Pause();
         }
     }
+
+
     IEnumerator ShootWeapon()
     {
         if (gunAmmo > 0)
@@ -200,6 +203,8 @@ public class playerController : MonoBehaviour
         gameManager.instance.updateUI();
 
     }
+
+
     IEnumerator RelodeWeapon()
     {
         if (!isReloding && Input.GetButtonDown("Reload") && reseveGunAmmo > 0 && gunAmmo != startAmmo)
@@ -225,6 +230,7 @@ public class playerController : MonoBehaviour
         }
     }
 
+
     public void Respawn()
     {
         controller.enabled = false;
@@ -235,8 +241,6 @@ public class playerController : MonoBehaviour
         gameManager.instance.playerDeadMenu.SetActive(false);
         controller.enabled = true;
     }
-
-
 
 
     public void gunPickup(gunStats gunStat)
@@ -287,6 +291,7 @@ public class playerController : MonoBehaviour
         }
     }
 
+
     public void selectWeapon()
     {
         shootRate = gunStatList[selectedGun].fireRate;
@@ -300,6 +305,7 @@ public class playerController : MonoBehaviour
         gunAmmo = gunStatList[selectedGun].currentAmmo;
         reseveGunAmmo = gunStatList[selectedGun].ammoReserves;
     }
+
 
     void gunSelect()
     { 
@@ -321,6 +327,7 @@ public class playerController : MonoBehaviour
             
         }
     }
+
 
     void saveWeaponAmmo()
     {
@@ -346,6 +353,8 @@ public class playerController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
+
+
     IEnumerator LerpFOV(bool isAiming)
     {
         float timeElapsed = 0;
