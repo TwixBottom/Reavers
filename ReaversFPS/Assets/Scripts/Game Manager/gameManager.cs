@@ -81,12 +81,14 @@ public class gameManager : MonoBehaviour
     }
     public void Pause()
     {
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
     }
     public void unPause()
     {
+        isPaused = false;
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;

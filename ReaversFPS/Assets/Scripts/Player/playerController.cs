@@ -16,6 +16,7 @@ public class playerController : MonoBehaviour
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityValue;
     [SerializeField] int jumpMax;
+    [SerializeField] gunStats startinWeapon;
 
     [Header("----- Gun Stats -----")]
     [SerializeField] float shootRate;
@@ -26,6 +27,7 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject hitEffect;
     [SerializeField] List<gunStats> gunStatList = new List<gunStats>();
+    
     //FOV
     float lerpDuration = 0.2f;
     float endValue = 15;
@@ -59,12 +61,14 @@ public class playerController : MonoBehaviour
     void Start()
     {
         fovOriginal = playerCamera.fieldOfView;
-
+       
         isSprinting = false;
         startHP = HP;
         startAmmo = gunAmmo;
         playerStartSpeed = playerSpeed;
-        reseveGunAmmo = magazineCount * startAmmo;
+        reseveGunAmmo = magazineCount * startAmmo; 
+        
+        gunPickup(startinWeapon);
     }
 
     // Update is called once per frame
@@ -74,6 +78,7 @@ public class playerController : MonoBehaviour
         PlayerSprint();
         StartCoroutine(aimDownSights());
         StartCoroutine(ShootWeapon());
+        StartCoroutine(BladeSwipe());   
         StartCoroutine(RelodeWeapon());
         gunSelect();
     }
@@ -146,10 +151,38 @@ public class playerController : MonoBehaviour
         }
     }
 
+    IEnumerator BladeSwipe()
+    {
+        if (gunStatList[selectedGun].name == "Knife Stats")
+        {
+            if (gunStatList.Count > 0 && !isShooting && Input.GetButton("Shoot"))
+            {
+                isShooting = true;
+
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+                {
+                    if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
+                    {
+                        hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
+                    }
+
+                    //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
+
+                    //OnPlayShootAudio?.Invoke();
+                    //gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EShoot, 2.0f);
+
+                }
+
+                yield return new WaitForSeconds(shootRate);
+                isShooting = false;
+            }
+        }
+    }
 
     IEnumerator ShootWeapon()
     {
-        if (gunAmmo > 0)
+        if (gunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats" && !gameManager.instance.isPaused)
         {
             if (gunStatList.Count > 0 && !isShooting && Input.GetButton("Shoot"))
             {
@@ -177,7 +210,7 @@ public class playerController : MonoBehaviour
                 isShooting = false;
             }
         }
-        else if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0)
+        else if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats")
         {
 
             isReloding = true;
@@ -207,7 +240,7 @@ public class playerController : MonoBehaviour
 
     IEnumerator RelodeWeapon()
     {
-        if (!isReloding && Input.GetButtonDown("Reload") && reseveGunAmmo > 0 && gunAmmo != startAmmo)
+        if (!isReloding && Input.GetButtonDown("Reload") && reseveGunAmmo > 0 && gunAmmo != startAmmo && gunStatList[selectedGun].name != "Knife Stats")
         {
             int ammoLeft = startAmmo - gunAmmo;
 
@@ -235,8 +268,6 @@ public class playerController : MonoBehaviour
     {
         controller.enabled = false;
         HP = startHP;
-        gunAmmo = startAmmo;
-        reseveGunAmmo = startAmmo * magazineCount;
         transform.position = gameManager.instance.spawnPosition.transform.position;
         gameManager.instance.playerDeadMenu.SetActive(false);
         controller.enabled = true;
@@ -253,11 +284,19 @@ public class playerController : MonoBehaviour
 
             if (list == selectedGun)
             {
-                reseveGunAmmo += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
+                if (gunStat.maxAmmo > reseveGunAmmo)
+                {
+                    reseveGunAmmo += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
+                }
+                
             }
             else
             {
-                gunStatList[list].ammoReserves += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
+                if (gunStat.maxAmmo > gunStatList[list].ammoReserves)
+                {
+                    gunStatList[list].ammoReserves += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
+                }
+                
             }
         } 
 
@@ -278,14 +317,17 @@ public class playerController : MonoBehaviour
 
         if (!gunStatList.Contains(gunStat))
         {
-        
-            if (gunStatList.Count != 0)
-            {
-                gunStat.ammoReserves = gunStat.magazineCount * gunStat.ammoCount;
-                gunStat.currentAmmo = gunStat.ammoCount;
-            }
+
+            gunStat.ammoReserves = gunStat.magazineCount * gunStat.ammoCount;
+            gunStat.currentAmmo = gunStat.ammoCount;
 
             gunStatList.Add(gunStat);
+            
+            if (gunStatList.Count == 2)
+            {
+                selectedGun++;
+                selectWeapon();
+            }
 
             
         }
@@ -308,23 +350,25 @@ public class playerController : MonoBehaviour
 
 
     void gunSelect()
-    { 
-       
-        if (gunStatList.Count > 1)
+    {
+        if (!isReloding)
         {
-            saveWeaponAmmo();
-            
-            if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunStatList.Count - 1)
+            if (gunStatList.Count > 1)
             {
-                selectedGun++;
-                selectWeapon();
+                saveWeaponAmmo();
+
+                if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunStatList.Count - 1)
+                {
+                    selectedGun++;
+                    selectWeapon();
+                }
+                else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+                {
+                    selectedGun--;
+                    selectWeapon();
+                }
+
             }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
-            {
-                selectedGun--;
-                selectWeapon();
-            }
-            
         }
     }
 

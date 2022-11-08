@@ -94,11 +94,14 @@ MonoBehaviour:
   _OnOff: 0
   model: {fileID: 5352639514415625750}
   agent: {fileID: 3079129168932552873}
+  anim: {fileID: 5352639514411501782}
   HP: 5
   playerFaceSpeed: 10
+  animLerpSpeed: 1
   bullet: {fileID: 3035923114701414865, guid: fd7015f1f0ce554418e1bda23f2644e3, type: 3}
   shootPos: {fileID: 2192842746137301220}
   shootRate: 1.3
+  weaponDrop: {fileID: 5089904534753989877, guid: 7f0f6cb2ade0bb449a077a112d0998ad, type: 3}
 --- !u!114 &3079129168932552878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,8 +302,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c51443fd34665e149aa99d30f62d8a0b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}
+--- !u!95 &5352639514411501782 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}
+  m_PrefabInstance: {fileID: 5352639514418838966}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &5352639514415625750 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 13700000, guid: f4209d51d1ad0434299f2d498ee076ba, type: 3}

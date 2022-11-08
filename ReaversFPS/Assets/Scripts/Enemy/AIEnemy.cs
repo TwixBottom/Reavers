@@ -29,16 +29,19 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     [Header("Components")]
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Animator anim;
 
 
     [Header("EnemyStats")]
     [SerializeField] int HP;
     [SerializeField] int playerFaceSpeed;
+    [SerializeField] int animLerpSpeed;
 
     [Header("Gun Stats")]
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
     [SerializeField] float shootRate;
+    [SerializeField] GameObject weaponDrop;
 
     public Vector3 EyeLocation => transform.position;
     public Vector3 EyeDirection => transform.forward;
@@ -73,6 +76,8 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     // Start is called before the first frame update
     void Start()
     {
+       
+
         gameManager.instance.enemiesToKill++;
         gameManager.instance.updateUI();
     }
@@ -80,8 +85,12 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * animLerpSpeed));
+
+        Debug.Log(anim.GetFloat("Speed"));
+
         if (chase)
-        {
+        {  
             playerDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
 
             agent.SetDestination(gameManager.instance.player.transform.position);
@@ -109,12 +118,17 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     {
         HP -= dmg;
 
+        OnDetected(gameManager.instance.player);
+
         StartCoroutine(flashDamage());
 
         if (HP <= 0)
         {
             Destroy(gameObject);
             gameManager.instance.updateEnemyNumbers();
+            
+            
+            Instantiate(weaponDrop, gameObject.transform.position, gameObject.transform.rotation);
         }
     }
 
@@ -144,6 +158,8 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     IEnumerator shootPlayer()
     {
         isShooting = true;
+
+        anim.SetTrigger("Shoot");
 
         Instantiate(bullet, shootPos.position, transform.rotation);
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe99bd44dc0974043b10158cb65ba077, type: 3}
   m_Name: Assault Gun Stats
   m_EditorClassIdentifier: 
-  ammoCount: 9
+  ammoCount: 12
   magazineCount: 2
   damage: 2
   fireRate: 0.1
@@ -23,3 +23,4 @@ MonoBehaviour:
   effectHit: {fileID: 0}
   currentAmmo: 9
   ammoReserves: 29
+  maxAmmo: 72

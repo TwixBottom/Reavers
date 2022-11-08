@@ -89,16 +89,19 @@ MonoBehaviour:
   _VisionConeColour: {r: 1, g: 0, b: 0, a: 0.25}
   _HearingRange: 15
   _HearingRangeColour: {r: 1, g: 1, b: 0, a: 0.25}
-  _ProximityDetectionRange: 3
+  _ProximityDetectionRange: 0
   _ProximityRangeColor: {r: 1, g: 1, b: 1, a: 0.25}
   _OnOff: 1
   model: {fileID: 923407477233215141}
   agent: {fileID: 3079129168932552873}
+  anim: {fileID: 923407477228988583}
   HP: 8
   playerFaceSpeed: 10
+  animLerpSpeed: 1
   bullet: {fileID: 3035923114701414865, guid: 7b1a70e2c3cf11d47b7f5d1ce0019804, type: 3}
   shootPos: {fileID: 3079129168802555169}
   shootRate: 1.5
+  weaponDrop: {fileID: 331050976856056891, guid: eb6c3a5ea5b81a14fba3c20de0c42261, type: 3}
 --- !u!114 &3079129168932552878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,8 +298,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.314
       objectReference: {fileID: 0}
+    - target: {fileID: 9517976, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c51443fd34665e149aa99d30f62d8a0b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}
+--- !u!95 &923407477228988583 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9517976, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}
+  m_PrefabInstance: {fileID: 923407477238485823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &923407477233215141 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 13743514, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}

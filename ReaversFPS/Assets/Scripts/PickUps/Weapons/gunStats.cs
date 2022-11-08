@@ -20,4 +20,5 @@ public class gunStats : ScriptableObject
     [Header("DO NOT TOUCH")]
     public int currentAmmo;
     public int ammoReserves;
+    public int maxAmmo;
 }
