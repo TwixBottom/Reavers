@@ -7,6 +7,7 @@ public class playerController : MonoBehaviour
 {
     [Header("----- Components ------")]
     [SerializeField] CharacterController controller;
+    [SerializeField] Camera playerCamera;
 
     [Header("----- Player Stats -----")]
     [SerializeField] public float HP;
@@ -25,6 +26,10 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject hitEffect;
     [SerializeField] List<gunStats> gunStatList = new List<gunStats>();
+    //FOV
+    float lerpDuration = 0.2f;
+    float endValue = 15;
+    float valueToLerp;
 
     int startAmmo;
     float playerStartSpeed;
@@ -47,9 +52,13 @@ public class playerController : MonoBehaviour
     public int reseveGunAmmo;
     int selectedGun;
 
+    float fovOriginal;
+
     // Start is called before the first frame update
     void Start()
     {
+        fovOriginal = playerCamera.fieldOfView;
+
         isSprinting = false;
         startHP = HP;
         startAmmo = gunAmmo;
@@ -62,6 +71,7 @@ public class playerController : MonoBehaviour
     {
         PlayerMovement();
         PlayerSprint();
+        StartCoroutine(aimDownSights());
         StartCoroutine(ShootWeapon());
         StartCoroutine(RelodeWeapon());
         gunSelect();
@@ -256,6 +266,49 @@ public class playerController : MonoBehaviour
                 selectedGun--;
             }
             gunPickup(gunStatList[selectedGun]);
+        }
+    }
+
+    IEnumerator aimDownSights()
+    {
+        //gunStatList.Count > 0 && 
+        if (Input.GetButtonDown("Fire2")) //bool needed to not allow fov change when menu is open
+        {
+            if (playerCamera.fieldOfView != fovOriginal)
+            {
+                StartCoroutine(LerpFOV(false));
+            }
+            else
+            {
+                StartCoroutine(LerpFOV(true));
+            }
+            yield return new WaitForSeconds(1);
+        }
+    }
+    IEnumerator LerpFOV(bool isAiming)
+    {
+        float timeElapsed = 0;
+        while (timeElapsed < lerpDuration)
+        {
+            if (isAiming)
+            {
+                playerCamera.fieldOfView = Mathf.Lerp(fovOriginal, endValue, timeElapsed / lerpDuration);
+            }
+            else
+            {
+                playerCamera.fieldOfView = Mathf.Lerp(endValue, fovOriginal, timeElapsed / lerpDuration);
+
+            }
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        if (isAiming)
+        {
+            playerCamera.fieldOfView = endValue;
+        }
+        else
+        {
+            playerCamera.fieldOfView = fovOriginal;
         }
     }
 }
