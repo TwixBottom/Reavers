@@ -168,6 +168,7 @@ public class playerController : MonoBehaviour
                 }
 
                 gunAmmo--;
+                saveWeaponAmmo();
 
                 yield return new WaitForSeconds(shootRate);
                 isShooting = false;
@@ -185,15 +186,15 @@ public class playerController : MonoBehaviour
                 Debug.Log("IF");
                 gunAmmo = reseveGunAmmo;
                 reseveGunAmmo = 0;
+                saveWeaponAmmo();
             }
             else
             {
                 Debug.Log("ELSE");
                 gunAmmo = startAmmo;
                 reseveGunAmmo -= startAmmo;
+                saveWeaponAmmo();
             }
-
-            gameManager.instance.updateUI();
         }
 
         gameManager.instance.updateUI();
@@ -240,37 +241,93 @@ public class playerController : MonoBehaviour
 
     public void gunPickup(gunStats gunStat)
     {
-        shootRate = gunStat.fireRate;
-        shootDist = gunStat.shootDistance;
-        shootDamage = gunStat.damage;
-        gunAmmo = gunStat.ammoCount;
-        startAmmo = gunStat.ammoCount;
-        magazineCount = gunStat.magazineCount;
-        reseveGunAmmo = gunStat.magazineCount * gunStat.ammoCount;
 
+        if (gunStatList.Contains(gunStat))
+        {
 
+            int list = gunStatList.IndexOf(gunStat);
+
+            if (list == selectedGun)
+            {
+                reseveGunAmmo += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
+            }
+            else
+            {
+                gunStatList[list].ammoReserves += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
+            }
+        } 
+
+        if (gunStatList.Count == 0)
+        {
+
+            shootRate = gunStat.fireRate;
+            shootDist = gunStat.shootDistance;
+            shootDamage = gunStat.damage;
+            gunAmmo = gunStat.ammoCount;
+            startAmmo = gunStat.ammoCount;
+            magazineCount = gunStat.magazineCount;
+            reseveGunAmmo = gunStat.magazineCount * gunStat.ammoCount;
+
+            //gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat.model.GetComponent<MeshFilter>().sharedMesh;
+            //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+        }
+
+        if (!gunStatList.Contains(gunStat))
+        {
+        
+            if (gunStatList.Count != 0)
+            {
+                gunStat.ammoReserves = gunStat.magazineCount * gunStat.ammoCount;
+                gunStat.currentAmmo = gunStat.ammoCount;
+            }
+
+            gunStatList.Add(gunStat);
+
+            
+        }
+    }
+
+    public void selectWeapon()
+    {
+        shootRate = gunStatList[selectedGun].fireRate;
+        shootDist = gunStatList[selectedGun].shootDistance;
+        shootDamage = gunStatList[selectedGun].damage;
+        startAmmo = gunStatList[selectedGun].ammoCount;
 
         //gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat.model.GetComponent<MeshFilter>().sharedMesh;
         //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat.model.GetComponent<MeshRenderer>().sharedMaterial;
 
-        if (!gunStatList.Contains(gunStat))
-            gunStatList.Add(gunStat);
+        gunAmmo = gunStatList[selectedGun].currentAmmo;
+        reseveGunAmmo = gunStatList[selectedGun].ammoReserves;
     }
 
     void gunSelect()
-    {
+    { 
+       
         if (gunStatList.Count > 1)
         {
+            saveWeaponAmmo();
+            
             if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunStatList.Count - 1)
             {
                 selectedGun++;
+                selectWeapon();
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
             {
                 selectedGun--;
+                selectWeapon();
             }
-            gunPickup(gunStatList[selectedGun]);
+            
         }
+    }
+
+    void saveWeaponAmmo()
+    {
+        gunStatList[selectedGun].ammoReserves = reseveGunAmmo;
+        gunStatList[selectedGun].currentAmmo = gunAmmo;
+
+        gameManager.instance.updateUI();
     }
 
     IEnumerator aimDownSights()

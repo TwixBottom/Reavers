@@ -11,8 +11,12 @@ public class gunStats : ScriptableObject
     public int damage;
     public float fireRate;
     public int shootDistance;
+   
     public AudioClip audioClip;
     public GameObject model;
     public GameObject effectFlash;
     public GameObject effectHit;
+
+    public int currentAmmo;
+    public int ammoReserves;
 }

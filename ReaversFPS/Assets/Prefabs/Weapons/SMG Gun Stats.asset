@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe99bd44dc0974043b10158cb65ba077, type: 3}
-  m_Name: New Gun Stats
+  m_Name: SMG Gun Stats
   m_EditorClassIdentifier: 
   ammoCount: 16
-  magazineCount: 3
+  magazineCount: 1
   damage: 1
   fireRate: 0.2
   shootDistance: 1000
@@ -21,3 +21,5 @@ MonoBehaviour:
   model: {fileID: -927199367670048503, guid: 54d027096ec13a44da2aa38f08ce45db, type: 3}
   effectFlash: {fileID: 0}
   effectHit: {fileID: 0}
+  currentAmmo: 16
+  ammoReserves: 48
