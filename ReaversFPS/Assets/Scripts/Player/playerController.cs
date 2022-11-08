@@ -47,6 +47,7 @@ public class playerController : MonoBehaviour
     [SerializeField] UnityEvent OnPlayJumpAudio;
     [SerializeField] UnityEvent OnPlayDoubleJumpAudio;
     [SerializeField] UnityEvent OnPlayLandAudio;
+    [SerializeField] UnityEvent OnPlayShootAudio;
 
     public float startHP;
     public int reseveGunAmmo;
@@ -160,6 +161,9 @@ public class playerController : MonoBehaviour
                     }
 
                     //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
+
+                    OnPlayShootAudio?.Invoke();
+                    gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EShoot, 2.0f);
 
                 }
 

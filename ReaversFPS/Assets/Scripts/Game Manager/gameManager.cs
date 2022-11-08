@@ -6,7 +6,8 @@ using TMPro;
 public enum EHeardSoundCategory
 {
     EFootstep,
-    EJump
+    EJump,
+    EShoot
 }
 
 public class gameManager : MonoBehaviour

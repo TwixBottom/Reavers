@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 6358832128208528127}
+  playerCamera: {fileID: 6358832127326687722}
   HP: 25
   playerSpeed: 4
   sprintMod: 1.5
