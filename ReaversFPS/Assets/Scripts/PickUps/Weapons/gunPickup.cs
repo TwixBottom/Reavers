@@ -6,6 +6,11 @@ public class gunPickup : MonoBehaviour
 {
     [SerializeField] gunStats gunStats;
 
+    void Update()
+    {
+        transform.Rotate(0, 50 * Time.deltaTime, 0);
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

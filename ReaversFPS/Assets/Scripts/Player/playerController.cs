@@ -268,8 +268,8 @@ public class playerController : MonoBehaviour
             magazineCount = gunStat.magazineCount;
             reseveGunAmmo = gunStat.magazineCount * gunStat.ammoCount;
 
-            //gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat.model.GetComponent<MeshFilter>().sharedMesh;
-            //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat.model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat.model.GetComponent<MeshRenderer>().sharedMaterial;
         }
 
         if (!gunStatList.Contains(gunStat))
@@ -294,8 +294,8 @@ public class playerController : MonoBehaviour
         shootDamage = gunStatList[selectedGun].damage;
         startAmmo = gunStatList[selectedGun].ammoCount;
 
-        //gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat.model.GetComponent<MeshFilter>().sharedMesh;
-        //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunStatList[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStatList[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
 
         gunAmmo = gunStatList[selectedGun].currentAmmo;
         reseveGunAmmo = gunStatList[selectedGun].ammoReserves;
