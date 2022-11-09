@@ -40,7 +40,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     [Header("Gun Stats")]
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
-    [SerializeField] float shootRate;
+    [SerializeField] public float shootRate;
     [SerializeField] GameObject weaponDrop;
 
     public Vector3 EyeLocation => transform.position;
@@ -57,15 +57,15 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     public Color ProximityDetectionColor => _ProximityRangeColor;
     public float CosVisionConeAngle { get; private set; } = 0.0f;
 
-    Vector3 playerDirection;
+    public Vector3 playerDirection;
 
     AwarenessSystem Awareness;
 
     public bool OnOff => _OnOff;
-
-    bool chase = false;
-    bool isShooting;
-    bool playerInRange;
+    public bool isShooting;
+    public bool playerInRange;
+    public bool tookDamage = false;
+    bool chase;
 
     void Awake()
     {
@@ -76,8 +76,6 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     // Start is called before the first frame update
     void Start()
     {
-       
-
         gameManager.instance.enemiesToKill++;
         gameManager.instance.updateUI();
     }
@@ -88,10 +86,8 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * animLerpSpeed));
 
         if (chase)
-        {  
+        {
             playerDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
-
-            agent.SetDestination(gameManager.instance.player.transform.position);
 
             if (playerInRange == true)
             {
@@ -105,7 +101,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
         }
     }
 
-    void facePlayer()
+    public void facePlayer()
     {
         playerDirection.y = 0;
         Quaternion rot = Quaternion.LookRotation(playerDirection);
@@ -115,8 +111,6 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     public void TakeDamage(int dmg)
     {
         HP -= dmg;
-
-        OnDetected(gameManager.instance.player);
 
         StartCoroutine(flashDamage());
 
@@ -153,7 +147,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
         model.material.color = Color.white;
     }
 
-    IEnumerator shootPlayer()
+    public IEnumerator shootPlayer()
     {
         isShooting = true;
 
@@ -177,7 +171,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     }
 
     public void ReportInProximity(DetectableTarget target)
-    {
+    {      
         Awareness.ReportInProximity(target);
     }
 
@@ -222,8 +216,6 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
 
         chase = false;
     }
-
-
 }
 
 #if UNITY_EDITOR

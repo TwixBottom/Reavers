@@ -57,11 +57,13 @@ public class playerController : MonoBehaviour
 
     float fovOriginal;
 
+    public DetectableTarget target;
+
     // Start is called before the first frame update
     void Start()
     {
         fovOriginal = playerCamera.fieldOfView;
-       
+        target = GetComponent<DetectableTarget>();
         isSprinting = false;
         startHP = HP;
         startAmmo = gunAmmo;
@@ -108,6 +110,7 @@ public class playerController : MonoBehaviour
             {
                 playerVelocity.y += Mathf.Sqrt((jumpHeight * 2) * -3.0f * gravityValue);
             }
+            
             OnPlayLandAudio?.Invoke();
             gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EJump, 2.0f);
         }

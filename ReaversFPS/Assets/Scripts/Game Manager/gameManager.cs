@@ -7,7 +7,8 @@ public enum EHeardSoundCategory
 {
     EFootstep,
     EJump,
-    EShoot
+    EShoot,
+    EHit
 }
 
 public class gameManager : MonoBehaviour

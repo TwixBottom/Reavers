@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class TrackedTarget
+public class TrackedTarget
 {
     public DetectableTarget Detectable;
     public Vector3 rawPosition;
@@ -89,6 +89,8 @@ public class AwarenessSystem : MonoBehaviour
 
     AIEnemy LinkedAI;
 
+    public Dictionary<GameObject, TrackedTarget> activeTargets => Targets;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -159,7 +161,7 @@ public class AwarenessSystem : MonoBehaviour
 
     public void ReportCanSee(DetectableTarget target)
     {
-        // Determine where the player is in teh field of view
+        // Determine where the player is in the field of view
         Vector3 vectorToTarget = (target.transform.position - LinkedAI.EyeLocation).normalized;
         float dotProduct = Vector3.Dot(vectorToTarget, LinkedAI.EyeDirection);
 
