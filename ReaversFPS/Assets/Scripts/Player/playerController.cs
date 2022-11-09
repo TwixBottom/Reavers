@@ -184,7 +184,7 @@ public class playerController : MonoBehaviour
     {
         if (gunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats" && !gameManager.instance.isPaused)
         {
-            if (gunStatList.Count > 0 && !isShooting && Input.GetButton("Shoot"))
+            if (gunStatList.Count > 0 && !isShooting && !isReloding && Input.GetButton("Shoot"))
             {
                 isShooting = true;
 
@@ -210,28 +210,28 @@ public class playerController : MonoBehaviour
                 isShooting = false;
             }
         }
-        else if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats")
-        {
+        //else if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats")
+        //{
 
-            isReloding = true;
-            yield return new WaitForSeconds(2.0f);
-            isReloding = false;
+        //    isReloding = true;
+        //    yield return new WaitForSeconds(2.0f);
+        //    isReloding = false;
 
-            if (reseveGunAmmo - startAmmo <= 0)
-            {
-                Debug.Log("IF");
-                gunAmmo = reseveGunAmmo;
-                reseveGunAmmo = 0;
-                saveWeaponAmmo();
-            }
-            else
-            {
-                Debug.Log("ELSE");
-                gunAmmo = startAmmo;
-                reseveGunAmmo -= startAmmo;
-                saveWeaponAmmo();
-            }
-        }
+        //    if (reseveGunAmmo - startAmmo <= 0)
+        //    {
+        //        Debug.Log("IF");
+        //        gunAmmo = reseveGunAmmo;
+        //        reseveGunAmmo = 0;
+        //        saveWeaponAmmo();
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("ELSE");
+        //        gunAmmo = startAmmo;
+        //        reseveGunAmmo -= startAmmo;
+        //        saveWeaponAmmo();
+        //    }
+        //}
 
         gameManager.instance.updateUI();
 
@@ -240,27 +240,52 @@ public class playerController : MonoBehaviour
 
     IEnumerator RelodeWeapon()
     {
-        if (!isReloding && Input.GetButtonDown("Reload") && reseveGunAmmo > 0 && gunAmmo != startAmmo && gunStatList[selectedGun].name != "Knife Stats")
+        if (Input.GetButtonDown("Reload"))
         {
-            int ammoLeft = startAmmo - gunAmmo;
-
-            isReloding = true;
-            yield return new WaitForSeconds(2.0f);
-            isReloding = false;
-
-            if (reseveGunAmmo - ammoLeft <= 0)
+            if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats")
             {
-                gunAmmo += ammoLeft;
-                reseveGunAmmo = 0;
-            }
-            else
-            {
-                gunAmmo += ammoLeft;
-                reseveGunAmmo -= ammoLeft;
-            }
 
-            gameManager.instance.updateUI();
+                isReloding = true;
+                yield return new WaitForSeconds(2.0f);
+                isReloding = false;
+
+                if (reseveGunAmmo - startAmmo <= 0)
+                {
+                    Debug.Log("IF");
+                    gunAmmo = reseveGunAmmo;
+                    reseveGunAmmo = 0;
+                    saveWeaponAmmo();
+                }
+                else
+                {
+                    Debug.Log("ELSE");
+                    gunAmmo = startAmmo;
+                    reseveGunAmmo -= startAmmo;
+                    saveWeaponAmmo();
+                }
+            }
+            else if (!isReloding && reseveGunAmmo > 0 && gunAmmo != startAmmo && gunStatList[selectedGun].name != "Knife Stats")
+            {
+                int ammoLeft = startAmmo - gunAmmo;
+
+                isReloding = true;
+                yield return new WaitForSeconds(2.0f);
+                isReloding = false;
+
+                if (reseveGunAmmo - ammoLeft <= 0)
+                {
+                    gunAmmo += ammoLeft;
+                    reseveGunAmmo = 0;
+                }
+                else
+                {
+                    gunAmmo += ammoLeft;
+                    reseveGunAmmo -= ammoLeft;
+                }
+            }
         }
+
+        gameManager.instance.updateUI();
     }
 
 
