@@ -87,8 +87,6 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     {
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * animLerpSpeed));
 
-        Debug.Log(anim.GetFloat("Speed"));
-
         if (chase)
         {  
             playerDirection = (gameManager.instance.player.transform.position - transform.position).normalized;

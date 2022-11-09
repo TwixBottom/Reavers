@@ -284,16 +284,30 @@ public class playerController : MonoBehaviour
 
             if (list == selectedGun)
             {
-                if (gunStat.maxAmmo > reseveGunAmmo)
+                if (gunStat.maxAmmo <= reseveGunAmmo + (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount)
                 {
+                    Debug.Log("Equip Gun Max Ammo");
+
+                    reseveGunAmmo = gunStat.maxAmmo;
+                }
+                else if (gunStat.maxAmmo > reseveGunAmmo)
+                {
+                    Debug.Log("Equip Gun Not Max Ammo");
                     reseveGunAmmo += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
                 }
                 
             }
             else
             {
-                if (gunStat.maxAmmo > gunStatList[list].ammoReserves)
+                if (gunStat.maxAmmo <= gunStatList[list].ammoReserves + (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount)
                 {
+                    Debug.Log("Unequiped Gun Max Ammo");
+
+                    gunStatList[list].ammoReserves = gunStat.maxAmmo;
+                }
+                else if (gunStat.maxAmmo > gunStatList[list].ammoReserves) 
+                {
+                    Debug.Log("Unequiped Gun Not Max Ammo");
                     gunStatList[list].ammoReserves += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
                 }
                 
