@@ -22,6 +22,8 @@ public class BaseGoal : MonoBehaviour, IGoal
 
     protected BaseAction LinkedAction;
 
+    protected AIEnemy LinkedAI;
+
     // Start is called before the first frame update
     void Awake()
     {

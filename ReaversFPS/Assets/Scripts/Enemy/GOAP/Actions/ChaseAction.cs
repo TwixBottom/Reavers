@@ -39,7 +39,6 @@ public class ChaseAction : BaseAction
 
     public override void OnTick()
     {
-        agent.MoveTo(chaseGoal.moveTarget);      
-            
+        agent.MoveTo(chaseGoal.moveTarget);
     }
 }

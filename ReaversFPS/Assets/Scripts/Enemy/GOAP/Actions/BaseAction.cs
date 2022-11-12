@@ -7,6 +7,8 @@ public class BaseAction : MonoBehaviour
     protected EnemyNavigation agent;
     protected AwarenessSystem sensors;
     protected BaseGoal LinkedGoal;
+
+    protected AIEnemy LinkedAI;
   
     void Awake()
     {
