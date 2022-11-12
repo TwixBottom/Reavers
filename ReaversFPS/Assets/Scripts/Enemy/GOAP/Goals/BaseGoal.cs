@@ -29,6 +29,7 @@ public class BaseGoal : MonoBehaviour, IGoal
     {
         agent = GetComponent<EnemyNavigation>();
         sensors = GetComponent<AwarenessSystem>();
+        LinkedAI = GetComponent<AIEnemy>();
     }
 
     void Start()

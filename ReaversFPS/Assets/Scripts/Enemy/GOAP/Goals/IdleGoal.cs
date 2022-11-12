@@ -8,6 +8,11 @@ public class IdleGoal : BaseGoal
 
     public override int CalculatePriority()
     {
+        if (LinkedAI.isDead == true)
+        {
+            priority = 100;
+        }
+
         return priority;
     }
 

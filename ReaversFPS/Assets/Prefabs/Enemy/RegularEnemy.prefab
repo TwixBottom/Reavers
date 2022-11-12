@@ -103,6 +103,7 @@ MonoBehaviour:
   model: {fileID: 5352639514415625750}
   agent: {fileID: 3079129168932552873}
   anim: {fileID: 5352639514411501782}
+  coll: {fileID: 3079129168932552872}
   HP: 5
   playerFaceSpeed: 10
   animLerpSpeed: 1
@@ -113,6 +114,8 @@ MonoBehaviour:
   playerDirection: {x: 0, y: 0, z: 0}
   isShooting: 0
   playerInRange: 0
+  isDead: 0
+  tookDamage: 0
 --- !u!114 &3079129168932552878
 MonoBehaviour:
   m_ObjectHideFlags: 0

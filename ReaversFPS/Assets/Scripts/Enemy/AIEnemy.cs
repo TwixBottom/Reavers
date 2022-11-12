@@ -30,6 +30,8 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator anim;
+    [SerializeField] Collider coll;
+    [SerializeField] AudioSource audio;
 
 
     [Header("EnemyStats")]
@@ -42,6 +44,14 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     [SerializeField] Transform shootPos;
     [SerializeField] public float shootRate;
     [SerializeField] GameObject weaponDrop;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip[] ShootAudio;
+    [Range(0, 1)][SerializeField] float ShootVol;
+    [SerializeField] AudioClip[] WalkAudio;
+    [Range(0, 1)][SerializeField] float WalkVol;
+    [SerializeField] AudioClip[] HitAudio;
+    [Range(0, 1)][SerializeField] float HitVol;
 
     public Vector3 EyeLocation => transform.position;
     public Vector3 EyeDirection => transform.forward;
@@ -64,6 +74,10 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     public bool OnOff => _OnOff;
     public bool isShooting;
     public bool playerInRange;
+    public bool isDead;
+    bool isMoving = false;
+    bool isHit = false;
+
     public bool tookDamage = false;
     bool chase;
 
@@ -83,22 +97,38 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     // Update is called once per frame
     void Update()
     {
-        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * animLerpSpeed));
-
-        if (chase)
+        if (isDead != true)
         {
-            playerDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * animLerpSpeed));
 
-            if (playerInRange == true)
+            if (chase)
             {
-                facePlayer();
+                playerDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
 
-                if (isShooting == false)
+                if (playerInRange == true)
                 {
-                    StartCoroutine(shootPlayer());
+                    facePlayer();
+
+                    if (isShooting == false)
+                    {
+                        StartCoroutine(shootPlayer());
+                    }
                 }
             }
         }
+
+        if (!agent.isStopped && isMoving == false && isDead != true)
+        {
+            StartCoroutine(WalkingAudio());
+        }
+    }
+
+    IEnumerator WalkingAudio()
+    {
+        isMoving = true;
+        audio.PlayOneShot(WalkAudio[Random.Range(0, WalkAudio.Length)], WalkVol);
+        yield return new WaitForSeconds(0.5f);
+        isMoving = false;
     }
 
     public void facePlayer()
@@ -114,14 +144,47 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
 
         StartCoroutine(flashDamage());
 
+        if (isHit != true)
+        {
+            StartCoroutine(HitSoundEffect());
+
+        }
+
         if (HP <= 0)
         {
-            Destroy(gameObject);
+            isDead = true;
+
+            anim.SetBool("isDead", true);
+
+           coll.enabled = false;
+
             gameManager.instance.updateEnemyNumbers();
-            
-            
-            Instantiate(weaponDrop, gameObject.transform.position, gameObject.transform.rotation);
+
+            StartCoroutine(SpawnDrop());
         }
+    }
+
+    IEnumerator HitSoundEffect()
+    {
+        isHit = true;
+        audio.PlayOneShot(HitAudio[Random.Range(0, HitAudio.Length)], HitVol);
+        yield return new WaitForSeconds(0.4f);
+        isHit = false;
+    }
+
+
+    IEnumerator SpawnDrop()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Instantiate(weaponDrop, gameObject.transform.position, gameObject.transform.rotation);
+        StartCoroutine(DespawnEnemy());
+
+    }
+
+    IEnumerator DespawnEnemy()
+    {
+        yield return new WaitForSeconds(10);
+        Destroy(gameObject);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -152,6 +215,8 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
         isShooting = true;
 
         anim.SetTrigger("Shoot");
+
+        audio.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
 
         Instantiate(bullet, shootPos.position, transform.rotation);
 
