@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public enum EHeardSoundCategory
@@ -30,6 +31,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI waveNumber;
     public TextMeshProUGUI currentAmmo;
     public TextMeshProUGUI ammoRemaining;
+    public Image HPBar;
 
     public int ammoCount;
     public int enemiesToKill;

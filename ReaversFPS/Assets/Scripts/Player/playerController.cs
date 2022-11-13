@@ -10,7 +10,7 @@ public class playerController : MonoBehaviour
     [SerializeField] Camera playerCamera;
 
     [Header("----- Player Stats -----")]
-    [SerializeField] public float HP;
+    [SerializeField] float HP;
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMod;
     [SerializeField] float jumpHeight;
@@ -139,13 +139,17 @@ public class playerController : MonoBehaviour
             gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, isSprinting ? 2f : 1f);
         }
     }
-
+    void updatePlayerHBar()
+    {
+        gameManager.instance.HPBar.fillAmount = HP / startHP;
+    }
 
     public void TakeDamage(float dmg)
     {
         HP -= dmg;
 
         StartCoroutine(gameManager.instance.playerDamageFlash());
+        updatePlayerHBar();
 
         if (HP <= 0)
         {
@@ -296,6 +300,7 @@ public class playerController : MonoBehaviour
     {
         controller.enabled = false;
         HP = startHP;
+        updatePlayerHBar();
         transform.position = gameManager.instance.spawnPosition.transform.position;
         gameManager.instance.playerDeadMenu.SetActive(false);
         controller.enabled = true;
