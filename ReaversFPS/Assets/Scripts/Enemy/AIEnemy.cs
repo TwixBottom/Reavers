@@ -48,8 +48,6 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     [Header("Audio")]
     [SerializeField] AudioClip[] ShootAudio;
     [Range(0, 1)][SerializeField] float ShootVol;
-    [SerializeField] AudioClip[] WalkAudio;
-    [Range(0, 1)][SerializeField] float WalkVol;
     [SerializeField] AudioClip[] HitAudio;
     [Range(0, 1)][SerializeField] float HitVol;
 
@@ -117,19 +115,19 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
             }
         }
 
-        if (!agent.isStopped && isMoving == false && isDead != true)
-        {
-            StartCoroutine(WalkingAudio());
-        }
+        //if (!agent.isStopped && isMoving == false && isDead != true)
+        //{
+        //    StartCoroutine(WalkingAudio());
+        //}
     }
 
-    IEnumerator WalkingAudio()
-    {
-        isMoving = true;
-        audio.PlayOneShot(WalkAudio[Random.Range(0, WalkAudio.Length)], WalkVol);
-        yield return new WaitForSeconds(0.5f);
-        isMoving = false;
-    }
+    //IEnumerator WalkingAudio()
+    //{
+    //    isMoving = true;
+    //    audio.PlayOneShot(WalkAudio[Random.Range(0, WalkAudio.Length)], WalkVol);
+    //    yield return new WaitForSeconds(0.5f);
+    //    isMoving = false;
+    //}
 
     public void facePlayer()
     {
