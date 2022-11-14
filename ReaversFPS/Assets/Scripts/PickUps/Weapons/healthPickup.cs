@@ -22,13 +22,25 @@ public class healthPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (gameManager.instance.playerScript.startHP <= gameManager.instance.playerScript.startHP + healthToRecover)
+            float combHP = gameManager.instance.playerScript.HP + healthToRecover;
+            float startHP = gameManager.instance.playerScript.startHP;
+
+            if (gameManager.instance.playerScript.HP + healthToRecover > gameManager.instance.playerScript.startHP)
             {
+                healthToRecover %= gameManager.instance.playerScript.startHP;
+                if (combHP > startHP)
+                {
+                    healthToRecover = 0;
+                }
+                gameManager.instance.playerScript.TakeDamage(-healthToRecover); // += healthToRecover;
                 Debug.Log("The Health Kit exceeds the current health");
             }
-            else if (gameManager.instance.playerScript.startHP > gameManager.instance.playerScript.startHP + healthToRecover)
+            else if (gameManager.instance.playerScript.HP + healthToRecover <= gameManager.instance.playerScript.startHP)
             {
+
+                gameManager.instance.playerScript.TakeDamage(-healthToRecover); // += healthToRecover;
                 Debug.Log("The Health Kit does not exceeds the current health");
+                
             }
             //gameManager.instance.playerScript.HP += healthToRecover;
             Destroy(gameObject);

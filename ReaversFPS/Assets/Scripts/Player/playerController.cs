@@ -10,7 +10,7 @@ public class playerController : MonoBehaviour
     [SerializeField] Camera playerCamera;
 
     [Header("----- Player Stats -----")]
-    [SerializeField] float HP;
+    [SerializeField] public float HP;
     [SerializeField] float playerSpeed;
     [SerializeField] float sprintMod;
     [SerializeField] float jumpHeight;
@@ -148,7 +148,10 @@ public class playerController : MonoBehaviour
     {
         HP -= dmg;
 
-        StartCoroutine(gameManager.instance.playerDamageFlash());
+        if (dmg >= 0)
+        {
+            StartCoroutine(gameManager.instance.playerDamageFlash());
+        }
         updatePlayerHBar();
 
         if (HP <= 0)
