@@ -27,8 +27,9 @@ public class gameManager : MonoBehaviour
     public GameObject playerDeadMenu;
     public GameObject winMenu; 
     public GameObject newWave;
+    public GameObject hostagePrompt;
     public TextMeshProUGUI enemiesLeft;
-    public TextMeshProUGUI waveNumber;
+    public TextMeshProUGUI waveNumber; 
     public TextMeshProUGUI currentAmmo;
     public TextMeshProUGUI ammoRemaining;
     public Image HPBar;

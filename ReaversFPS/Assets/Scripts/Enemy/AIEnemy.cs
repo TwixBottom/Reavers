@@ -31,7 +31,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator anim;
     [SerializeField] Collider coll;
-    [SerializeField] AudioSource audio;
+    [SerializeField] AudioSource aud;
 
 
     [Header("EnemyStats")]
@@ -165,7 +165,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     IEnumerator HitSoundEffect()
     {
         isHit = true;
-        audio.PlayOneShot(HitAudio[Random.Range(0, HitAudio.Length)], HitVol);
+        aud.PlayOneShot(HitAudio[Random.Range(0, HitAudio.Length)], HitVol);
         yield return new WaitForSeconds(0.4f);
         isHit = false;
     }
@@ -214,7 +214,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
 
         anim.SetTrigger("Shoot");
 
-        audio.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
+        aud.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
 
         Instantiate(bullet, shootPos.position, transform.rotation);
 

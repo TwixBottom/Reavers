@@ -23,6 +23,7 @@ public class BaseGoal : MonoBehaviour, IGoal
     protected BaseAction LinkedAction;
 
     protected AIEnemy LinkedAI;
+    protected AIHostage LinkedHostage;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,6 +31,7 @@ public class BaseGoal : MonoBehaviour, IGoal
         agent = GetComponent<EnemyNavigation>();
         sensors = GetComponent<AwarenessSystem>();
         LinkedAI = GetComponent<AIEnemy>();
+        LinkedHostage = GetComponent<AIHostage>();
     }
 
     void Start()

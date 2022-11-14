@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FeedbackDisplay: {fileID: 0}
-  _VisionConeAngle: 70
+  _VisionConeAngle: 80
   _VisionConeRange: 20
   _VisionConeColour: {r: 1, g: 0, b: 0, a: 0.25}
   _HearingRange: 20
@@ -105,7 +105,7 @@ MonoBehaviour:
   agent: {fileID: 3079129168932552873}
   anim: {fileID: 5352639514411501782}
   coll: {fileID: 3079129168932552872}
-  audio: {fileID: 982801106}
+  aud: {fileID: 982801106}
   HP: 5
   playerFaceSpeed: 10
   animLerpSpeed: 1
@@ -116,17 +116,6 @@ MonoBehaviour:
   ShootAudio:
   - {fileID: 8300000, guid: 4b074e1d6c39ef64fa68df2ba6512bba, type: 3}
   ShootVol: 0.4
-  WalkAudio:
-  - {fileID: 8300000, guid: 179a0d848a788b14e86e273f3b260bee, type: 3}
-  - {fileID: 8300000, guid: c2925a5f18c7b2641bbdc7d28d1cc64f, type: 3}
-  - {fileID: 8300000, guid: bef1b5d7c597a7d448b1f6a384103dc8, type: 3}
-  - {fileID: 8300000, guid: 3bc4723f4305ca24ab03480443df26ce, type: 3}
-  - {fileID: 8300000, guid: ba56c06238379b84d93ac4edeb39819e, type: 3}
-  - {fileID: 8300000, guid: 84cf457fec7694f42a13794cb3cbf314, type: 3}
-  - {fileID: 8300000, guid: ba9cc9d36a04fb94f85c344c13b2e82a, type: 3}
-  - {fileID: 8300000, guid: 3c4e17d3afac9524c8c2c19b57adfe05, type: 3}
-  - {fileID: 8300000, guid: 5b5da97d5bf364d44b08d61e4896b175, type: 3}
-  WalkVol: 0.2
   HitAudio:
   - {fileID: 8300000, guid: 289d9acfcb330a749b1ae6e086fa007c, type: 3}
   - {fileID: 8300000, guid: 8d0028fe091864f47b2cdb4198fc6dc9, type: 3}

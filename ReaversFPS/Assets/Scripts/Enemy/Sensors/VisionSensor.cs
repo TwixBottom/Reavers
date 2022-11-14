@@ -52,7 +52,7 @@ public class VisionSensor : MonoBehaviour
 
             if (Physics.Raycast(LinkedAI.EyeLocation, distanceCheck, out hit, LinkedAI.VisionConeRange, detectionMask, QueryTriggerInteraction.Collide))
             {
-                if (hit.collider.GetComponentInParent<DetectableTarget>() == candidateTarget)
+                if (hit.collider.GetComponentInParent<DetectableTarget>() == candidateTarget && candidateTarget.name == "Player")
                 {
                     LinkedAI.ReportCanSee(candidateTarget);
                 }

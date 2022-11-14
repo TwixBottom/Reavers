@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleGoal : BaseGoal
+public class HostageIdleGoal : BaseGoal
 {
     [SerializeField] int priority = 10;
 
     public override int CalculatePriority()
     {
 
-        if (LinkedAI.isDead)
+        if (LinkedHostage.isDead)
         {
             priority = 100;
         }
