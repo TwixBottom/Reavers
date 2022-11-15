@@ -20,6 +20,7 @@ public class gameManager : MonoBehaviour
     public GameObject player;
     public playerController playerScript;
     public GameObject spawnPosition;
+    public Transform cam;
 
     [Header("----- UI -----")]
     public GameObject pauseMenu;
@@ -59,7 +60,7 @@ public class gameManager : MonoBehaviour
         playerScript = player.GetComponent<playerController>();
         spawnPosition = GameObject.FindGameObjectWithTag("Player Spawn Position");
         ammoCount = playerScript.gunAmmo;
-
+        cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         orgTime = targetTime;
         
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)

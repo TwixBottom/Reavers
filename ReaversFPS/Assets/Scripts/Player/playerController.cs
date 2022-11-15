@@ -8,6 +8,7 @@ public class playerController : MonoBehaviour
     [Header("----- Components ------")]
     [SerializeField] CharacterController controller;
     [SerializeField] Camera playerCamera;
+    [SerializeField] AudioSource aud;
 
     [Header("----- Player Stats -----")]
     [SerializeField] public float HP;
@@ -27,7 +28,29 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject hitEffect;
     [SerializeField] List<gunStats> gunStatList = new List<gunStats>();
-    
+
+    [Header("----- Projectile Stats -----")]
+    [SerializeField] GameObject granade;
+    [SerializeField] public int totalThrows;
+    [SerializeField] float throwCooldown;
+
+    [Header("----- Player Physics -----")]
+    [SerializeField] float pushBackTime;
+
+    [Header("----- Player Physics -----")]
+    [SerializeField] AudioClip[] JumpAudio;
+    [Range(0, 1)][SerializeField] float JumpVol;
+    [SerializeField] AudioClip[] ShootAudio;
+    [Range(0, 1)][SerializeField] float ShootVol;
+    [SerializeField] AudioClip[] HurtAudio;
+    [Range(0, 1)][SerializeField] float HurtVol;
+    [SerializeField] AudioClip[] SprintAudio;
+    [Range(0, 1)][SerializeField] float SprintVol;
+    [SerializeField] AudioClip[] ReloadAudio;
+    [Range(0, 1)][SerializeField] float ReloadVol;
+    [SerializeField] AudioClip[] NoAmmoAudio;
+    [Range(0, 1)][SerializeField] float NoAmmoVol;
+
     //FOV
     float lerpDuration = 0.2f;
     float endValue = 15;
@@ -38,18 +61,15 @@ public class playerController : MonoBehaviour
     int jumpTimes;
 
     Vector3 move;
+    public Vector3 pushBack;
     private Vector3 playerVelocity;
 
     bool isSprinting;
     bool isShooting;
     bool isReloding;
-
-    [Header("Events")]
-    [SerializeField] UnityEvent OnPlayFootstepAudio;
-    [SerializeField] UnityEvent OnPlayJumpAudio;
-    [SerializeField] UnityEvent OnPlayDoubleJumpAudio;
-    [SerializeField] UnityEvent OnPlayLandAudio;
-    [SerializeField] UnityEvent OnPlayShootAudio;
+    bool isJumping;
+    bool sprintSoundEffects = false;
+    bool readyToThrow = true;
 
     public float startHP;
     public int reseveGunAmmo;
@@ -57,13 +77,11 @@ public class playerController : MonoBehaviour
 
     float fovOriginal;
 
-    public DetectableTarget target;
 
     // Start is called before the first frame update
     void Start()
     {
         fovOriginal = playerCamera.fieldOfView;
-        target = GetComponent<DetectableTarget>();
         isSprinting = false;
         startHP = HP;
         startAmmo = gunAmmo;
@@ -76,11 +94,14 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime);
+
         PlayerMovement();
         PlayerSprint();
         StartCoroutine(aimDownSights());
         StartCoroutine(ShootWeapon());
-        StartCoroutine(BladeSwipe());   
+        StartCoroutine(BladeSwipe());
+        StartCoroutine(Throw());
         StartCoroutine(RelodeWeapon());
         gunSelect();
     }
@@ -92,14 +113,19 @@ public class playerController : MonoBehaviour
         {
             jumpTimes = 0;
             playerVelocity.y = 0f;
+            isJumping = false;
         }
 
         move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        controller.Move((move + pushBack) * Time.deltaTime * playerSpeed);
 
         // changes the height position of the player
         if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
         {
+            isJumping = true;
+
+            aud.PlayOneShot(JumpAudio[Random.Range(0, JumpAudio.Length)], JumpVol);
+
             jumpTimes++;
 
             if (isSprinting == false)
@@ -111,7 +137,6 @@ public class playerController : MonoBehaviour
                 playerVelocity.y += Mathf.Sqrt((jumpHeight * 2) * -3.0f * gravityValue);
             }
             
-            OnPlayLandAudio?.Invoke();
             gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EJump, 2.0f);
         }
 
@@ -135,10 +160,23 @@ public class playerController : MonoBehaviour
 
         if (isSprinting)
         {
-            OnPlayFootstepAudio?.Invoke();
             gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, isSprinting ? 2f : 1f);
+
+            if (sprintSoundEffects == false && isJumping != true)
+            {
+                StartCoroutine(SprintSoundEffects());
+            }
         }
     }
+
+    IEnumerator SprintSoundEffects()
+    {
+        sprintSoundEffects = true;
+        aud.PlayOneShot(SprintAudio[Random.Range(0, SprintAudio.Length)], SprintVol);
+        yield return new WaitForSeconds(0.5f);
+        sprintSoundEffects = false;
+    }
+
     public void updatePlayerHBar()
     {
         gameManager.instance.HPBar.fillAmount = HP / startHP;
@@ -148,11 +186,10 @@ public class playerController : MonoBehaviour
     {
         HP -= dmg;
 
-        if (dmg >= 0)
-        {
-            StartCoroutine(gameManager.instance.playerDamageFlash());
-        }
+        StartCoroutine(gameManager.instance.playerDamageFlash());
         updatePlayerHBar();
+
+        aud.PlayOneShot(HurtAudio[Random.Range(0, HurtAudio.Length)], HurtVol);
 
         if (HP <= 0)
         {
@@ -178,14 +215,30 @@ public class playerController : MonoBehaviour
                     }
 
                     //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
-
-                    //OnPlayShootAudio?.Invoke();
-                    //gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EShoot, 2.0f);
-
                 }
 
                 yield return new WaitForSeconds(shootRate);
                 isShooting = false;
+            }
+        }
+    }
+
+    IEnumerator Throw()
+    {
+        if (totalThrows > 0 && !gameManager.instance.isPaused)
+        {
+            if (readyToThrow == true && Input.GetButton("Throw"))
+            {
+                readyToThrow = false;
+
+                Instantiate(granade, gameObject.transform.position, gameObject.transform.rotation);
+
+                totalThrows--;
+
+                yield return new WaitForSeconds(throwCooldown);
+
+                readyToThrow = true;
+
             }
         }
     }
@@ -198,6 +251,8 @@ public class playerController : MonoBehaviour
             {
                 isShooting = true;
 
+                aud.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
+
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
@@ -208,7 +263,6 @@ public class playerController : MonoBehaviour
 
                     //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
 
-                    OnPlayShootAudio?.Invoke();
                     gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EShoot, 2.0f);
 
                 }
@@ -220,28 +274,20 @@ public class playerController : MonoBehaviour
                 isShooting = false;
             }
         }
-        //else if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats")
-        //{
+        else if (gunAmmo == 0 && gunStatList[selectedGun].name != "Knife Stats" && !gameManager.instance.isPaused && Input.GetButton("Shoot"))
+        {
+            if (!isShooting && !isReloding)
+            {
+                isShooting = true;
 
-        //    isReloding = true;
-        //    yield return new WaitForSeconds(2.0f);
-        //    isReloding = false;
+                aud.PlayOneShot(NoAmmoAudio[Random.Range(0, NoAmmoAudio.Length)], ShootVol);
 
-        //    if (reseveGunAmmo - startAmmo <= 0)
-        //    {
-        //        Debug.Log("IF");
-        //        gunAmmo = reseveGunAmmo;
-        //        reseveGunAmmo = 0;
-        //        saveWeaponAmmo();
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("ELSE");
-        //        gunAmmo = startAmmo;
-        //        reseveGunAmmo -= startAmmo;
-        //        saveWeaponAmmo();
-        //    }
-        //}
+                yield return new WaitForSeconds(shootRate);
+
+                isShooting = false;
+            }
+
+        }
 
         gameManager.instance.updateUI();
 
@@ -252,8 +298,10 @@ public class playerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Reload"))
         {
+            
             if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats")
             {
+                aud.PlayOneShot(ReloadAudio[Random.Range(0, ReloadAudio.Length)], ReloadVol);
 
                 isReloding = true;
                 yield return new WaitForSeconds(2.0f);
@@ -274,6 +322,8 @@ public class playerController : MonoBehaviour
             }
             else if (!isReloding && reseveGunAmmo > 0 && gunAmmo != startAmmo && gunStatList[selectedGun].name != "Knife Stats")
             {
+                aud.PlayOneShot(ReloadAudio[Random.Range(0, ReloadAudio.Length)], ReloadVol);
+
                 int ammoLeft = startAmmo - gunAmmo;
 
                 isReloding = true;

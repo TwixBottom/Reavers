@@ -5,24 +5,39 @@ using UnityEngine;
 public class explosion : MonoBehaviour
 {
     [SerializeField] int forceAmount;
-    [SerializeField] int dmg;
-    [SerializeField] SphereCollider blastzone;
+    [SerializeField] SphereCollider coll;
+    [SerializeField] int damage;
 
-
+    bool damaged;
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 0.5f);
+        ExplosionDMG();
+        Destroy(gameObject, 0.1f);
     }
 
-    public void OnTriggerEnter(Collider other)
+    void ExplosionDMG()
     {
-        Debug.Log("collided");
-        if (other.CompareTag("Player"))
+        Collider[] hitColliders = Physics.OverlapSphere(coll.transform.position, coll.radius);
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            //dammage minus the position of the player
-            gameManager.instance.playerScript.transform.localPosition = ((other.transform.position - transform.position).normalized) * forceAmount;
-            gameManager.instance.playerScript.TakeDamage(dmg);
+
+            if (hitColliders[i].GetComponent<IDamage>() != null && !hitColliders[i].transform.CompareTag("Player"))
+            {
+                hitColliders[i].GetComponent<IDamage>().TakeDamage(damage);
+            }
+            if (hitColliders[i].transform.CompareTag("Player"))
+            {
+                if (damaged == false)
+                {
+
+                    damaged = true;
+                    gameManager.instance.playerScript.pushBack = ((hitColliders[i].transform.position - transform.position).normalized) * forceAmount;
+                    gameManager.instance.playerScript.TakeDamage(damage);
+
+                }
+
+            }
         }
     }
 }

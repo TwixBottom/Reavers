@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class healthPickup : MonoBehaviour
 {
-
     [SerializeField] float healthToRecover;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -30,7 +29,7 @@ public class healthPickup : MonoBehaviour
             {
                 return;
             }
-            
+
             if (combHP > startHP)
             {
                 gameManager.instance.playerScript.HP = gameManager.instance.playerScript.startHP;

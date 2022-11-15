@@ -44,7 +44,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5469334588377769628
 MonoBehaviour:
@@ -59,5 +59,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceAmount: 10
-  dmg: 5
-  blastzone: {fileID: 8243455746221499178}
+  coll: {fileID: 8243455746221499178}
