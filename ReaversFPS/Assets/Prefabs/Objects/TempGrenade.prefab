@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 7130934858220220359}
   - component: {fileID: 7130934858220220353}
   - component: {fileID: 7130934858220220354}
+  - component: {fileID: 1649606466}
   m_Layer: 0
   m_Name: TempGrenade
   m_TagString: Untagged
@@ -568,6 +569,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1649606466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7130934858220220358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9a3bb4e1c3a61d4582a45dffb00c985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeVec: {x: 0, y: 0, z: -8}
+  explosion: {fileID: 8272444323268144643, guid: 0900c1fa58e74be44b5fd617f5a78c05, type: 3}
+  rb: {fileID: 7130934858220220353}
+  time: 3
 --- !u!1 &7130934858564885155
 GameObject:
   m_ObjectHideFlags: 0

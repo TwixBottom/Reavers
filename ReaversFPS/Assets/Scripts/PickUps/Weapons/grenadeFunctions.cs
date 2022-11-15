@@ -5,35 +5,19 @@ using UnityEngine;
 public class grenadeFunctions : MonoBehaviour
 {
 
-    SphereCollider blastzone;
-    [SerializeField] float grenadeDamage; 
+    [SerializeField] Vector3 rangeVec;
 
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject explosion;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] int time;
+
+    IEnumerator Start()
     {
-        
-    }
+        rb.velocity = (rangeVec - rb.position) / time - (Physics.gravity * (time / 2));
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        yield return new WaitForSeconds(time + 1);
+        Instantiate(explosion, transform.position, explosion.transform.rotation);
 
-    public void OnTriggerEnter(Collider other)
-    {
-        other = blastzone;
-
-        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
-        {
-            gameManager.instance.playerScript.TakeDamage(grenadeDamage);
-            //gameManager.instance.AIEnemy.TakeDamage(grenadeDamage);
-        }
-    }
-
-    IEnumerator grenadeBlast()
-    {
-        //blastzone.enabled;
-        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }
