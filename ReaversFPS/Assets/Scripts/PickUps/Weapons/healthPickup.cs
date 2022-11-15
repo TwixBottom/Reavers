@@ -16,6 +16,7 @@ public class healthPickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.Rotate(0, 50 * Time.deltaTime, 0);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -32,32 +33,14 @@ public class healthPickup : MonoBehaviour
             
             if (combHP > startHP)
             {
-                //healthToRecover %= gameManager.instance.playerScript.startHP;
-                //if (combHP > startHP)
-                //{
-                //    healthToRecover = 0;
-                //}
-                //gameManager.instance.playerScript.TakeDamage(-healthToRecover); // += healthToRecover;
-                //Debug.Log("The Health Kit exceeds the current health");
-
                 gameManager.instance.playerScript.HP = gameManager.instance.playerScript.startHP;
-
-                Destroy(gameObject);
-
             }
             else
             {
-
                 gameManager.instance.playerScript.HP += healthToRecover;
-
-                //gameManager.instance.playerScript.TakeDamage(-healthToRecover); // += healthToRecover;
-                //Debug.Log("The Health Kit does not exceeds the current health");
-
-                Destroy(gameObject);
-
             }
-            //gameManager.instance.playerScript.HP += healthToRecover;
             gameManager.instance.playerScript.updatePlayerHBar();
+            Destroy(gameObject);
         }
     }
 }
