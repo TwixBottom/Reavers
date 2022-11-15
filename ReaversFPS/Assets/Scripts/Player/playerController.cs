@@ -139,7 +139,7 @@ public class playerController : MonoBehaviour
             gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, isSprinting ? 2f : 1f);
         }
     }
-    void updatePlayerHBar()
+    public void updatePlayerHBar()
     {
         gameManager.instance.HPBar.fillAmount = HP / startHP;
     }
@@ -261,14 +261,12 @@ public class playerController : MonoBehaviour
 
                 if (reseveGunAmmo - startAmmo <= 0)
                 {
-                    Debug.Log("IF");
                     gunAmmo = reseveGunAmmo;
                     reseveGunAmmo = 0;
                     saveWeaponAmmo();
                 }
                 else
                 {
-                    Debug.Log("ELSE");
                     gunAmmo = startAmmo;
                     reseveGunAmmo -= startAmmo;
                     saveWeaponAmmo();
@@ -284,7 +282,7 @@ public class playerController : MonoBehaviour
 
                 if (reseveGunAmmo - ammoLeft <= 0)
                 {
-                    gunAmmo += ammoLeft;
+                    gunAmmo += reseveGunAmmo;
                     reseveGunAmmo = 0;
                 }
                 else
