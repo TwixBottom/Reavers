@@ -172,9 +172,9 @@ public class playerController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
-                    if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
+                    if (hit.collider.GetComponent<IDamage>() != null && hit.collider.tag == "Enemy")
                     {
-                        hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
+                        hit.collider.GetComponent<IDamage>().TakeDamage(shootDamage);
                     }
 
                     //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
@@ -201,9 +201,9 @@ public class playerController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
-                    if (hit.collider.GetComponent<PlayerDamage>() != null && hit.collider.tag == "Enemy")
+                    if (hit.collider.GetComponent<IDamage>() != null && hit.collider.tag == "Enemy")
                     {
-                        hit.collider.GetComponent<PlayerDamage>().TakeDamage(shootDamage);
+                        hit.collider.GetComponent<IDamage>().TakeDamage(shootDamage);
                     }
 
                     //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);

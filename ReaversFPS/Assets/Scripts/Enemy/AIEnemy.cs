@@ -9,7 +9,7 @@ using UnityEditor;
 #endif
 
 [RequireComponent(typeof(AwarenessSystem))]
-public class AIEnemy : MonoBehaviour, PlayerDamage
+public class AIEnemy : MonoBehaviour, IDamage
 {
     [SerializeField] TextMeshProUGUI FeedbackDisplay;
 
@@ -73,7 +73,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
     public bool isShooting;
     public bool playerInRange;
     public bool isDead;
-    bool isMoving = false;
+    //bool isMoving = false;
     bool isHit = false;
 
     public bool tookDamage = false;
@@ -154,7 +154,7 @@ public class AIEnemy : MonoBehaviour, PlayerDamage
 
             anim.SetBool("isDead", true);
 
-           coll.enabled = false;
+            coll.enabled = false;
 
             gameManager.instance.updateEnemyNumbers();
 

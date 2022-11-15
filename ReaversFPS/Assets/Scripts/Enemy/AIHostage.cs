@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIHostage : MonoBehaviour, PlayerDamage
+public class AIHostage : MonoBehaviour, IDamage
 {
 
     [Header("Components")]

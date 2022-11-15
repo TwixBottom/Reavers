@@ -105,7 +105,7 @@ MonoBehaviour:
   agent: {fileID: 3079129168932552873}
   anim: {fileID: 923407477228988583}
   coll: {fileID: 3079129168932552872}
-  audio: {fileID: 1296316035774872280}
+  aud: {fileID: 1296316035774872280}
   HP: 8
   playerFaceSpeed: 10
   animLerpSpeed: 1
