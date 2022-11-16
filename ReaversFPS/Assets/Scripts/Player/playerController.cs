@@ -209,7 +209,7 @@ public class playerController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
-                    if (hit.collider.GetComponent<IDamage>() != null && hit.collider.tag == "Enemy")
+                    if (hit.collider.GetComponent<IDamage>() != null && hit.collider.tag == "Enemy" || hit.collider.tag == "Hostage")
                     {
                         hit.collider.GetComponent<IDamage>().TakeDamage(shootDamage);
                     }
@@ -256,7 +256,7 @@ public class playerController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
-                    if (hit.collider.GetComponent<IDamage>() != null && hit.collider.tag == "Enemy")
+                    if (hit.collider.GetComponent<IDamage>() != null && hit.collider.tag == "Enemy" || hit.collider.tag == "Hostage")
                     {
                         hit.collider.GetComponent<IDamage>().TakeDamage(shootDamage);
                     }

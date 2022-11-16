@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public enum EHeardSoundCategory
 {
@@ -29,7 +30,11 @@ public class gameManager : MonoBehaviour
     public GameObject winMenu; 
     public GameObject newWave;
     public GameObject hostagePrompt;
+    public GameObject waveLabel;
+    public GameObject enemiesLabel;
+    public GameObject HostageLabel;
     public TextMeshProUGUI enemiesLeft;
+    public TextMeshProUGUI hostageLeft;
     public TextMeshProUGUI waveNumber; 
     public TextMeshProUGUI currentAmmo;
     public TextMeshProUGUI ammoRemaining;
@@ -38,6 +43,7 @@ public class gameManager : MonoBehaviour
     public int ammoCount;
     public int enemiesToKill;
     public int currentWaveNumber = 1;
+    public int hostageToRescue;
     public bool isPaused;
    
     [Header("----- Enemy Stuff -----")]
@@ -47,7 +53,12 @@ public class gameManager : MonoBehaviour
     float targetTime = 5.0f;
     float orgTime;
 
-   
+    public bool survival;
+    public bool hostage;
+    public bool defuse;
+
+    Scene m_scene;
+
     public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>(); // Vision
    
     public List<HearingSensor> allSensors { get; private set; } = new List<HearingSensor>(); // Hearing
@@ -56,6 +67,7 @@ public class gameManager : MonoBehaviour
     void Awake()
     { 
         instance = this;
+        m_scene = SceneManager.GetActiveScene();
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         spawnPosition = GameObject.FindGameObjectWithTag("Player Spawn Position");
@@ -67,6 +79,16 @@ public class gameManager : MonoBehaviour
         {
             spawnLocations.Add(GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms")[i]);
         } 
+        
+        if ( m_scene.name == "MainScene")
+        { 
+           enemiesLabel.SetActive(true);
+           waveLabel.SetActive(true);
+        }
+        else if (hostage == true)
+        {
+            HostageLabel.SetActive(true);
+        }
         
         updateUI();
     }
@@ -106,8 +128,12 @@ public class gameManager : MonoBehaviour
     }
     public void youWin()
     {
-        winMenu.SetActive(true);
         Pause();
+        newWave.SetActive(false);
+        hostagePrompt.SetActive(false);
+        
+        winMenu.SetActive(true);
+        
     }
     public void updateEnemyNumbers()
     {
@@ -130,6 +156,17 @@ public class gameManager : MonoBehaviour
         } 
     }
 
+    public void updateHostageNumbers()
+    {
+        hostageToRescue--;
+        updateUI();
+
+        if (hostageToRescue <= 0)
+        {
+            youWin();
+        }
+    }
+
     public void updateWaveNumber()
     {
         currentWaveNumber++;
@@ -138,6 +175,7 @@ public class gameManager : MonoBehaviour
     public void updateUI()
     {
         enemiesLeft.text = enemiesToKill.ToString("F0");
+        hostageLeft.text = hostageToRescue.ToString("F0");
         waveNumber.text = currentWaveNumber.ToString("F0");
         currentAmmo.text =   playerScript.gunAmmo.ToString("F0");
         ammoRemaining.text = playerScript.reseveGunAmmo.ToString("F0");

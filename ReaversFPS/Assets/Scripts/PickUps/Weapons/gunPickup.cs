@@ -13,6 +13,7 @@ public class gunPickup : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.name);
         if (other.CompareTag("Player"))
         {
             gameManager.instance.playerScript.gunPickup(gunStats);

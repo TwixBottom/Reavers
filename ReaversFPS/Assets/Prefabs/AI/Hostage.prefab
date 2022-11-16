@@ -979,7 +979,7 @@ GameObject:
   - component: {fileID: 1114451846087922217}
   m_Layer: 0
   m_Name: Hostage
-  m_TagString: Untagged
+  m_TagString: Hostage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1021,6 +1021,7 @@ MonoBehaviour:
   playerInRange: 0
   isDead: 0
   isFollowing: 0
+  rescued: 0
 --- !u!114 &1114451846087922216
 MonoBehaviour:
   m_ObjectHideFlags: 0
