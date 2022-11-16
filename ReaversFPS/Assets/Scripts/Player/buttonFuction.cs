@@ -21,9 +21,8 @@ public class buttonFuction : MonoBehaviour
         gameManager.instance.unPause();
         gameManager.instance.playerScript.Respawn();
     }
-
     public void Quit()
     {
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
     }
 }
