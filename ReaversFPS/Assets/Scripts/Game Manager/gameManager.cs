@@ -34,6 +34,7 @@ public class gameManager : MonoBehaviour
     public GameObject enemiesLabel;
     public GameObject HostageLabel;
     public TextMeshProUGUI enemiesLeft;
+    public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
     public TextMeshProUGUI waveNumber; 
     public TextMeshProUGUI currentAmmo;
@@ -174,6 +175,7 @@ public class gameManager : MonoBehaviour
     }
     public void updateUI()
     {
+        grenadesLeft.text = playerScript.totalThrows.ToString("F0");
         enemiesLeft.text = enemiesToKill.ToString("F0");
         hostageLeft.text = hostageToRescue.ToString("F0");
         waveNumber.text = currentWaveNumber.ToString("F0");
