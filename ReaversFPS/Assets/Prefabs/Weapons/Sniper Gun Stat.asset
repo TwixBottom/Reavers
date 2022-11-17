@@ -18,9 +18,10 @@ MonoBehaviour:
   fireRate: 0.8
   shootDistance: 1000
   audioClip: {fileID: 0}
-  model: {fileID: 919132149155446097, guid: 60d91f925d8c1e442bb6596dfb94ffff, type: 3}
+  model: {fileID: 6595219947881911654, guid: f6936f30c2bab984abb1354a7f2c7ddf, type: 3}
   effectFlash: {fileID: 0}
   effectHit: {fileID: 0}
-  currentAmmo: 3
-  ammoReserves: 25
+  shootPos: {fileID: 0}
+  currentAmmo: 5
+  ammoReserves: 10
   maxAmmo: 30

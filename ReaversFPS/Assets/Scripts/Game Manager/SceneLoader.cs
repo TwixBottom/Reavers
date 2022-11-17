@@ -9,6 +9,12 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("MainScene");
     }
+
+    public void LoadHostageMap()
+    {
+        SceneManager.LoadScene("HostageMap");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

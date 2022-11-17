@@ -90,7 +90,7 @@ public class EnemyNavigation : MonoBehaviour
         return transform.position;
     }
 
-    protected virtual void CancelCurrentCommand()
+    public void CancelCurrentCommand()
     {
         // clear the current path
         agent.ResetPath();

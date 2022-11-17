@@ -54,8 +54,6 @@ public class gameManager : MonoBehaviour
     float targetTime = 5.0f;
     float orgTime;
 
-    public bool survival;
-    public bool hostage;
     public bool defuse;
 
     Scene m_scene;
@@ -66,7 +64,8 @@ public class gameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Awake()
-    { 
+    {
+        unPause();
         instance = this;
         m_scene = SceneManager.GetActiveScene();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -86,7 +85,7 @@ public class gameManager : MonoBehaviour
            enemiesLabel.SetActive(true);
            waveLabel.SetActive(true);
         }
-        else if (hostage == true)
+        else
         {
             HostageLabel.SetActive(true);
         }
@@ -144,14 +143,14 @@ public class gameManager : MonoBehaviour
         if (enemiesToKill <= 0 )
         {
             updateWaveNumber();
-            if (currentWaveNumber < 5)
+            if (currentWaveNumber <= 5)
             {
                 StartCoroutine(spawnEnemies());
             }
            
         }
 
-        if (currentWaveNumber == 5)
+        if (currentWaveNumber > 5)
         {
             youWin();
         } 

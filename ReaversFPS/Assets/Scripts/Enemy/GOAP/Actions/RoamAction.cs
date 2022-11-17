@@ -6,6 +6,8 @@ public class RoamAction : BaseAction
 {
     [SerializeField] float searchrange = 10.0f;
 
+    bool wait;
+
     List<System.Type> supportedGoals = new List<System.Type>(new System.Type[] { typeof(RoamGoal) });
 
     public override List<System.Type> getSupporterGoals()
@@ -21,15 +23,19 @@ public class RoamAction : BaseAction
     public override void OnActivated(BaseGoal linkedGoal)
     {
         base.OnActivated(linkedGoal);
-
-        Vector3 location = agent.PickLocationInRange(searchrange);
-
-        agent.MoveTo(location);
+       
+        if (wait == false)
+        {
+            Vector3 location = agent.PickLocationInRange(searchrange);
+            agent.MoveTo(location);
+            StartCoroutine(waitForNextMove());
+        }
+       
     }
 
     public override void OnDeactivated()
     {
-
+        agent.CancelCurrentCommand();
     }
 
     public override void OnTick()
@@ -39,5 +45,12 @@ public class RoamAction : BaseAction
         {
             OnActivated(LinkedGoal);
         }
+    }
+
+    IEnumerator waitForNextMove()
+    {
+        wait = true;
+        yield return new WaitForSeconds(5.0f);
+        wait = false;
     }
 }

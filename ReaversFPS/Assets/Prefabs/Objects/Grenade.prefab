@@ -583,7 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 8272444323268144643, guid: 0900c1fa58e74be44b5fd617f5a78c05, type: 3}
   rb: {fileID: 7130934858220220353}
-  timeToExplode: 4
+  timeToExplode: 3
   throwForce: 15
   throwUpwardForce: 5
 --- !u!1 &7130934858564885155

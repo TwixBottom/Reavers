@@ -11,6 +11,10 @@ public class playerController : MonoBehaviour
     [SerializeField] CharacterController controller;
     [SerializeField] Camera playerCamera;
     [SerializeField] AudioSource aud;
+    [SerializeField] GameObject smgShootPos;
+    [SerializeField] GameObject rifleShootPos;
+    [SerializeField] GameObject sniperShootPos;
+
 
     [Header("----- Player Stats -----")]
     [SerializeField] public float HP;
@@ -29,8 +33,7 @@ public class playerController : MonoBehaviour
     [SerializeField] public int magazineCount;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject hitEffect;
-    [SerializeField] Image flashImage;
-    public Sprite[] numFlashes;
+    [SerializeField] GameObject flashImage;
     [SerializeField] List<gunStats> gunStatList = new List<gunStats>();
 
     [Header("----- Projectile Stats -----")]
@@ -312,13 +315,11 @@ public class playerController : MonoBehaviour
 
     void FindRecoil()
     {
-        gunModel.transform.localPosition -= Vector3.forward * 0.1f;
-
         if (gunStatList[selectedGun].name == "Sniper Gun Stat")
             gunModel.transform.localPosition -= Vector3.forward * 0.5f;
-        else if (gunStatList[selectedGun].name == "Assault Gun Stat")
+        else if (gunStatList[selectedGun].name == "Assault Gun Stats")
                 gunModel.transform.localPosition -= Vector3.forward * 0.3f;
-        else if (gunStatList[selectedGun].name == "SMG Gun Stat")
+        else if (gunStatList[selectedGun].name == "SMG Gun Stats")
                 gunModel.transform.localPosition -= Vector3.forward * 0.1f;
     }
 

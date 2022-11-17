@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoamGoal : BaseGoal
 {
-    [SerializeField] int roamPriority = 30;
+    [SerializeField] int roamPriority = 20;
 
     [SerializeField] float priorityBuildRate = 1.0f;
     [SerializeField] float priorityDecayRate = 0.1f;
@@ -38,6 +38,12 @@ public class RoamGoal : BaseGoal
 
     public override bool CanRun()
     {
-        return true;
+        if (LinkedAI.isDead == false)
+        {
+            return true;
+        }
+
+        return false;
+       
     }
 }
