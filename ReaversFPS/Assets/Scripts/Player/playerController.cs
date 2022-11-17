@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class playerController : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class playerController : MonoBehaviour
     [SerializeField] public int magazineCount;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject hitEffect;
+    [SerializeField] Image flashImage;
+    public Sprite[] numFlashes;
     [SerializeField] List<gunStats> gunStatList = new List<gunStats>();
 
     [Header("----- Projectile Stats -----")]
@@ -50,6 +53,8 @@ public class playerController : MonoBehaviour
     [Range(0, 1)][SerializeField] float ReloadVol;
     [SerializeField] AudioClip[] NoAmmoAudio;
     [Range(0, 1)][SerializeField] float NoAmmoVol;
+
+    
 
     //FOV
     float lerpDuration = 0.2f;
@@ -77,6 +82,10 @@ public class playerController : MonoBehaviour
 
     float fovOriginal;
 
+    public Vector3 normalPosition;
+    public Vector3 aimingPosition;
+
+    public float aimSmooth = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -94,6 +103,7 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime);
 
         PlayerMovement();
@@ -250,6 +260,7 @@ public class playerController : MonoBehaviour
             if (gunStatList.Count > 0 && !isShooting && !isReloding && Input.GetButton("Shoot"))
             {
                 isShooting = true;
+                //StartCoroutine(MuzzleFlash());
 
                 aud.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
 
@@ -261,12 +272,11 @@ public class playerController : MonoBehaviour
                         hit.collider.GetComponent<IDamage>().TakeDamage(shootDamage);
                     }
 
-                    //Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
+                    Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
 
                     gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EShoot, 2.0f);
 
                 }
-
                 gunAmmo--;
                 saveWeaponAmmo();
 
@@ -292,6 +302,17 @@ public class playerController : MonoBehaviour
         gameManager.instance.updateUI();
 
     }
+
+
+
+    //IEnumerator MuzzleFlash()
+    //{
+    //    flashImage.sprite = numFlashes[Random.Range(0, numFlashes.Length)];
+    //    flashImage.color = Color.white;
+    //    yield return new WaitForSeconds(shootRate);
+    //    flashImage.sprite = null;
+    //    flashImage.color = new Color(0, 0, 0, 0);
+    //}
 
 
     IEnumerator RelodeWeapon()

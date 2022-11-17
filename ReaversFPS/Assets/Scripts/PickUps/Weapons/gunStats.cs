@@ -16,6 +16,7 @@ public class gunStats : ScriptableObject
     public GameObject model;
     public GameObject effectFlash;
     public GameObject effectHit;
+    public GameObject shootPos;
 
     [Header("DO NOT TOUCH")]
     public int currentAmmo;
