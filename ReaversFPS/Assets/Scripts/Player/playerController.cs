@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -40,7 +41,7 @@ public class playerController : MonoBehaviour
     [Header("----- Player Physics -----")]
     [SerializeField] float pushBackTime;
 
-    [Header("----- Player Physics -----")]
+    [Header("----- Player Audio -----")]
     [SerializeField] AudioClip[] JumpAudio;
     [Range(0, 1)][SerializeField] float JumpVol;
     [SerializeField] AudioClip[] ShootAudio;
@@ -87,9 +88,14 @@ public class playerController : MonoBehaviour
 
     public float aimSmooth = 10;
 
+    public bool randomizeRecoil;
+    public Vector2 randRecoilConstraints;
+    public Vector2 recoilPattern;
+
     // Start is called before the first frame update
     void Start()
     {
+        normalPosition = gunModel.transform.localPosition;
         fovOriginal = playerCamera.fieldOfView;
         isSprinting = false;
         startHP = HP;
@@ -103,7 +109,7 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        FindAim();
         pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime);
 
         PlayerMovement();
@@ -260,6 +266,7 @@ public class playerController : MonoBehaviour
             if (gunStatList.Count > 0 && !isShooting && !isReloding && Input.GetButton("Shoot"))
             {
                 isShooting = true;
+                FindRecoil();
                 //StartCoroutine(MuzzleFlash());
 
                 aud.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
@@ -303,7 +310,26 @@ public class playerController : MonoBehaviour
 
     }
 
+    void FindRecoil()
+    {
+        gunModel.transform.localPosition -= Vector3.forward * 0.1f;
 
+        if (gunStatList[selectedGun].name == "Sniper Gun Stat")
+            gunModel.transform.localPosition -= Vector3.forward * 0.5f;
+        else if (gunStatList[selectedGun].name == "Assault Gun Stat")
+                gunModel.transform.localPosition -= Vector3.forward * 0.3f;
+        else if (gunStatList[selectedGun].name == "SMG Gun Stat")
+                gunModel.transform.localPosition -= Vector3.forward * 0.1f;
+    }
+
+    void FindAim()
+    {
+        Vector3 targetPos = normalPosition;
+
+        Vector3 desiredPos = Vector3.Lerp(gunModel.transform.localPosition, targetPos, Time.deltaTime * aimSmooth);
+
+        gunModel.transform.localPosition = desiredPos;
+    }
 
     //IEnumerator MuzzleFlash()
     //{
