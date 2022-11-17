@@ -20,7 +20,7 @@ public class gameManager : MonoBehaviour
     [Header("----- Player Stuff -----")]
     public GameObject player;
     public playerController playerScript;
-    public GameObject spawnPosition;
+    public Transform spawnPosition;
     public Transform cam;
 
     [Header("----- UI -----")]
@@ -70,7 +70,7 @@ public class gameManager : MonoBehaviour
         m_scene = SceneManager.GetActiveScene();
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
-        spawnPosition = GameObject.FindGameObjectWithTag("Player Spawn Position");
+        spawnPosition = GameObject.FindGameObjectWithTag("Player Spawn Position").transform;
         ammoCount = playerScript.gunAmmo;
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         orgTime = targetTime;
@@ -89,7 +89,12 @@ public class gameManager : MonoBehaviour
         {
             HostageLabel.SetActive(true);
         }
-        
+
+        if (spawnPosition == null)
+        {
+            spawnPosition = player.transform;
+        }
+
         updateUI();
     }
     // Update is called once per frame

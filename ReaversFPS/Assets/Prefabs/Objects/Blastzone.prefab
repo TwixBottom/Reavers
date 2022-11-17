@@ -60,3 +60,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceAmount: 10
   coll: {fileID: 8243455746221499178}
+  damage: 5

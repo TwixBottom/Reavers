@@ -7,7 +7,7 @@ public class AIHostage : MonoBehaviour, IDamage
 {
 
     [Header("Components")]
-    //[SerializeField] Renderer model;
+    [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Animator anim;
     [SerializeField] Collider coll;
@@ -68,14 +68,18 @@ public class AIHostage : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
+            gameManager.instance.hostagePrompt.SetActive(false);
+
             isDead = true;
 
             anim.SetBool("isDead", true);
 
             coll.enabled = false;
-
-            gameManager.instance.updateHostageNumbers();
-
+            
+            if (rescued != true)
+            {
+                gameManager.instance.updateHostageNumbers();
+            }
         }
     }
 
