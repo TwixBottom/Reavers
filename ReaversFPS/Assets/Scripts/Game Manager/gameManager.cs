@@ -34,6 +34,7 @@ public class gameManager : MonoBehaviour
     public GameObject enemiesLabel;
     public GameObject HostageLabel;
     public GameObject DefuseLabel;
+    public GameObject InteractBar;
     public TextMeshProUGUI enemiesLeft;
     public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
@@ -42,6 +43,8 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI ammoRemaining;
     public TextMeshProUGUI defuseTimer;
     public Image HPBar;
+    public Image interactBarFill;
+   
 
     public int ammoCount;
     public int enemiesToKill;
