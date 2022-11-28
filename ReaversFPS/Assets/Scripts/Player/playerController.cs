@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -123,6 +124,8 @@ public class playerController : MonoBehaviour
         StartCoroutine(Throw());
         StartCoroutine(RelodeWeapon());
         gunSelect();
+        Interact();
+
     }
 
     // moves the player
@@ -569,6 +572,25 @@ public class playerController : MonoBehaviour
         else
         {
             playerCamera.fieldOfView = fovOriginal;
+        }
+    }
+
+    void Interact()
+    {
+        
+        if (Input.GetButton("Interact"))
+        {
+            gameManager.instance.interactBarFill.fillAmount += Time.deltaTime/2;
+        }
+        else
+        {
+            gameManager.instance.interactBarFill.fillAmount -= Time.deltaTime/2;
+        }
+
+        if (gameManager.instance.interactBarFill.fillAmount == 1)
+        {
+            Debug.Log("complete");
+            gameManager.instance.InteractBar.SetActive(false);
         }
     }
 }
