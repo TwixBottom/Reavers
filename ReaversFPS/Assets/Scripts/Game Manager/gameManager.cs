@@ -33,12 +33,14 @@ public class gameManager : MonoBehaviour
     public GameObject waveLabel;
     public GameObject enemiesLabel;
     public GameObject HostageLabel;
+    public GameObject DefuseLabel;
     public TextMeshProUGUI enemiesLeft;
     public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
     public TextMeshProUGUI waveNumber; 
     public TextMeshProUGUI currentAmmo;
     public TextMeshProUGUI ammoRemaining;
+    public TextMeshProUGUI defuseTimer;
     public Image HPBar;
 
     public int ammoCount;
@@ -85,9 +87,13 @@ public class gameManager : MonoBehaviour
            enemiesLabel.SetActive(true);
            waveLabel.SetActive(true);
         }
-        else
+        else if (m_scene.name == "Hostage Map")
         {
             HostageLabel.SetActive(true);
+        }
+        else
+        {
+            DefuseLabel.SetActive(true);
         }
 
         if (spawnPosition == null)
