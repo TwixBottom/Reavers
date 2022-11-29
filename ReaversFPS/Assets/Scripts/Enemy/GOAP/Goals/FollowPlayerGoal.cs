@@ -26,6 +26,8 @@ public class FollowPlayerGoal : BaseGoal
 
         if (LinkedHostage.isFollowing == true)
         {
+            Debug.Log("Can run");
+
             return true;
         }
 

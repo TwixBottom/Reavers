@@ -90,7 +90,7 @@ public class gameManager : MonoBehaviour
            enemiesLabel.SetActive(true);
            waveLabel.SetActive(true);
         }
-        else if (m_scene.name == "Hostage Map")
+        else if (m_scene.name == "HostageMap")
         {
             HostageLabel.SetActive(true);
         }

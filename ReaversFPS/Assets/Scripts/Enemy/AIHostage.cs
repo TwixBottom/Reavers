@@ -20,8 +20,10 @@ public class AIHostage : MonoBehaviour, IDamage
     public bool playerInRange;
     public bool isDead = false;
     public bool isFollowing = false;
+    public bool saved = false;
 
-    public bool rescued = false;
+    bool rescued = false;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -38,22 +40,28 @@ public class AIHostage : MonoBehaviour, IDamage
 
             if (playerInRange == true && rescued == false)
             {
-                gameManager.instance.hostagePrompt.SetActive(true);
+                //gameManager.instance.InteractBar.SetActive(true);
 
-                if (Input.GetButtonDown("Interact"))
+                if (gameManager.instance.playerScript.interact == true) 
                 { 
+                    
+
                     rescued = true;
 
-                    anim.SetBool("isRescude", true);
+                    //anim.SetBool("isRescude", true);
                     
-                    gameManager.instance.updateHostageNumbers();
+                    //gameManager.instance.updateHostageNumbers();
                    
-                    //isFollowing = !isFollowing;
+                    isFollowing = !isFollowing;
+                    
+                    Debug.Log(isFollowing);
+                    
+                    gameManager.instance.playerScript.interact = false;
                 }
             }
             else if (rescued == true && playerInRange == false)
             {
-                gameManager.instance.hostagePrompt.SetActive(false);
+                gameManager.instance.InteractBar.SetActive(false);
             }
 
            
@@ -68,7 +76,7 @@ public class AIHostage : MonoBehaviour, IDamage
 
         if (HP <= 0)
         {
-            gameManager.instance.hostagePrompt.SetActive(false);
+            gameManager.instance.InteractBar.SetActive(false);
 
             isDead = true;
 
@@ -76,7 +84,7 @@ public class AIHostage : MonoBehaviour, IDamage
 
             coll.enabled = false;
             
-            if (rescued != true)
+            if (saved != true)
             {
                 gameManager.instance.updateHostageNumbers();
             }
@@ -94,13 +102,8 @@ public class AIHostage : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player") && !isDead && rescued == false)
         {
-            //if (rescued != true)
-            //{
-            //    
-            //    rescued = true;
-            //}
-            
-            gameManager.instance.hostagePrompt.SetActive(true);
+                    
+            gameManager.instance.InteractBar.SetActive(true);
 
             playerInRange = true;
 
@@ -109,9 +112,9 @@ public class AIHostage : MonoBehaviour, IDamage
 
     public void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && !isDead)
+        if (other.CompareTag("Player") && !isDead && rescued == false)
         {
-            gameManager.instance.hostagePrompt.SetActive(false);
+            gameManager.instance.InteractBar.SetActive(false);
 
             playerInRange = false;
         }

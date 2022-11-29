@@ -92,6 +92,7 @@ public class playerController : MonoBehaviour
 
     public float aimSmooth = 10;
 
+    public bool interact;
     public bool randomizeRecoil;
     public Vector2 randRecoilConstraints;
     public Vector2 recoilPattern;
@@ -589,8 +590,10 @@ public class playerController : MonoBehaviour
 
         if (gameManager.instance.interactBarFill.fillAmount == 1)
         {
+            interact = true;
             Debug.Log("complete");
             gameManager.instance.InteractBar.SetActive(false);
+            gameManager.instance.interactBarFill.fillAmount = 0;
         }
     }
 }

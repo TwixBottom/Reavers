@@ -4,29 +4,21 @@ using UnityEngine;
 
 public class HostageExtract : MonoBehaviour
 {
-
-    [SerializeField] SphereCollider coll;
-
-    public void OnTriggerStay(Collider other)
+    void Start()
     {
-      
-        
-        Collider[] hitColliders = Physics.OverlapSphere(coll.transform.position, coll.radius);
-        
-        for (int i = 0; i < hitColliders.Length; i++)
-        {    
-            Debug.Log(hitColliders[i].name);     
-            
-            if (hitColliders[i].GetComponent<IDamage>() != null && !hitColliders[i].transform.CompareTag("Player"))
-            {
-                
-                
-                if (other.CompareTag("Hostage"))
-                {
-                    Debug.Log("hello");
-                }
-            }
-           
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+
+        if (!other.CompareTag("Player"))
+        {
+            Debug.Log("Hostage");
         }
     }
 }
