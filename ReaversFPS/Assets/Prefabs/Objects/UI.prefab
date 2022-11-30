@@ -4353,6 +4353,7 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   spawnPosition: {fileID: 0}
   cam: {fileID: 0}
+  reticle: {fileID: 1537122727357277298}
   pauseMenu: {fileID: 6034381328632208782}
   playerDamageScreen: {fileID: 4888632334252859545}
   playerDeadMenu: {fileID: 1183690256736014033}
