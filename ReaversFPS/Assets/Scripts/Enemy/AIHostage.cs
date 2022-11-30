@@ -102,7 +102,8 @@ public class AIHostage : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player") && !isDead && rescued == false)
         {
-                    
+            gameManager.instance.playerScript.interactable = true;
+
             gameManager.instance.InteractBar.SetActive(true);
 
             playerInRange = true;
@@ -114,6 +115,8 @@ public class AIHostage : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player") && !isDead && rescued == false)
         {
+            gameManager.instance.playerScript.interactable = false;
+
             gameManager.instance.InteractBar.SetActive(false);
 
             playerInRange = false;

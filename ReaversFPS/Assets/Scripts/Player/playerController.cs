@@ -92,6 +92,7 @@ public class playerController : MonoBehaviour
 
     public float aimSmooth = 10;
 
+    public bool interactable;
     public bool interact;
     public bool randomizeRecoil;
     public Vector2 randRecoilConstraints;
@@ -125,7 +126,12 @@ public class playerController : MonoBehaviour
         StartCoroutine(Throw());
         StartCoroutine(RelodeWeapon());
         gunSelect();
-        Interact();
+
+        if (interactable == true)
+        {
+            Interact();
+        }
+       
 
     }
 
