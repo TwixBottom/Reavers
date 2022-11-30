@@ -24,6 +24,8 @@ public class AIHostage : MonoBehaviour, IDamage
 
     public bool rescued = false;
     bool once = false;
+    bool spawn = true;
+    bool endSpawn;
 
     // Start is called before the first frame update
     void Start()
@@ -67,8 +69,11 @@ public class AIHostage : MonoBehaviour, IDamage
 
                 gameManager.instance.updateHostageNumbers();
             }
+        }
 
-           
+        if (saved == true && endSpawn == false)
+        {
+            StartCoroutine(Spawner());
         }
     }
 
@@ -93,6 +98,33 @@ public class AIHostage : MonoBehaviour, IDamage
                 gameManager.instance.updateHostageNumbers();
             }
         }
+    }
+
+    IEnumerator Spawner()
+    {
+        if (spawn == true)
+        {
+            StartCoroutine(SpawnEnemies());
+        }
+
+        yield return new WaitForSeconds(10);
+
+        endSpawn = true;
+
+    }
+    
+    IEnumerator SpawnEnemies()
+    {
+        spawn = false;
+
+        for (int i = 0; i < gameManager.instance.spawnLocations.Count; i++)
+        {
+            Instantiate(gameManager.instance.enemy[0], gameManager.instance.spawnLocations[i].transform.position, gameManager.instance.spawnLocations[i].transform.rotation);
+        }
+     
+        yield return new WaitForSeconds(5);
+
+        spawn = true;
     }
 
     //IEnumerator flashDamage()
