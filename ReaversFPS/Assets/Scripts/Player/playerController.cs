@@ -16,7 +16,6 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject rifleShootPos;
     [SerializeField] GameObject sniperShootPos;
 
-
     [Header("----- Player Stats -----")]
     [SerializeField] public float HP;
     [SerializeField] float playerSpeed;
@@ -563,11 +562,12 @@ public class playerController : MonoBehaviour
             if (isAiming)
             {
                 playerCamera.fieldOfView = Mathf.Lerp(fovOriginal, endValue, timeElapsed / lerpDuration);
+                gameManager.instance.reticle.SetActive(false);
             }
             else
             {
                 playerCamera.fieldOfView = Mathf.Lerp(endValue, fovOriginal, timeElapsed / lerpDuration);
-
+                gameManager.instance.reticle.SetActive(true);
             }
             timeElapsed += Time.deltaTime;
             yield return null;
