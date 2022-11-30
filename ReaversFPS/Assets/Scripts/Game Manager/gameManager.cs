@@ -24,6 +24,7 @@ public class gameManager : MonoBehaviour
     public Transform cam;
 
     [Header("----- UI -----")]
+    public GameObject reticle;
     public GameObject pauseMenu;
     public GameObject playerDamageScreen;
     public GameObject playerDeadMenu;
