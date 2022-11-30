@@ -9,7 +9,7 @@ public class HostageIdleGoal : BaseGoal
     public override int CalculatePriority()
     {
 
-        if (LinkedHostage.isDead)
+        if (LinkedHostage.isDead || LinkedHostage.saved)
         {
             priority = 100;
         }

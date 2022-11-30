@@ -22,8 +22,8 @@ public class AIHostage : MonoBehaviour, IDamage
     public bool isFollowing = false;
     public bool saved = false;
 
-    bool rescued = false;
-    
+    public bool rescued = false;
+    bool once = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,13 +45,8 @@ public class AIHostage : MonoBehaviour, IDamage
                 if (gameManager.instance.playerScript.interact == true) 
                 { 
                     
-
                     rescued = true;
-
-                    //anim.SetBool("isRescude", true);
-                    
-                    //gameManager.instance.updateHostageNumbers();
-                   
+            
                     isFollowing = !isFollowing;
                     
                     Debug.Log(isFollowing);
@@ -62,6 +57,15 @@ public class AIHostage : MonoBehaviour, IDamage
             else if (rescued == true && playerInRange == false)
             {
                 gameManager.instance.InteractBar.SetActive(false);
+            }
+
+            if (saved == true && once == false)
+            {
+                once = true;
+
+                anim.SetBool("isRescude", true);
+
+                gameManager.instance.updateHostageNumbers();
             }
 
            

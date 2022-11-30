@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HostageExtract : MonoBehaviour
 {
+    AIHostage hostage;
+
     void Start()
     {
     }
@@ -14,11 +16,17 @@ public class HostageExtract : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
+       
+        if (other.CompareTag("Hostage"))
+        { 
+            hostage = other.GetComponent<AIHostage>();
 
-        if (!other.CompareTag("Player"))
-        {
-            Debug.Log("Hostage");
+            if (hostage.saved != true)
+            {
+                hostage.saved = true;
+
+                Debug.Log("Hostage");
+            }
         }
     }
 }
