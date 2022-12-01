@@ -81,6 +81,7 @@ public class gameManager : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         orgTime = targetTime;
         
+
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)
         {
             spawnLocations.Add(GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms")[i]);
@@ -158,7 +159,7 @@ public class gameManager : MonoBehaviour
         if (enemiesToKill <= 0 )
         {
             updateWaveNumber();
-            if (currentWaveNumber <= 5)
+            if (currentWaveNumber <= 5 && m_scene.name == "MainScene")
             {
                 StartCoroutine(spawnEnemies());
             }

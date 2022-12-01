@@ -24,12 +24,15 @@ public class FollowPlayerGoal : BaseGoal
     public override bool CanRun()
     {
 
-        if (LinkedHostage.isFollowing == true)
+        if (LinkedHostage.isFollowing == true && Vector3.Distance(gameManager.instance.player.transform.position, transform.position) < 25)
         {
             Debug.Log("Can run");
 
             return true;
         }
+
+        LinkedHostage.isFollowing = false;
+        LinkedHostage.rescued = false;
 
         return false;
     }

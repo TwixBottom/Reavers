@@ -21,8 +21,8 @@ public class AIHostage : MonoBehaviour, IDamage
     public bool isDead = false;
     public bool isFollowing = false;
     public bool saved = false;
-
     public bool rescued = false;
+
     bool once = false;
     bool spawn = true;
     bool endSpawn;
