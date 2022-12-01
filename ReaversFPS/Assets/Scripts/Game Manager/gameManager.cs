@@ -35,10 +35,12 @@ public class gameManager : MonoBehaviour
     public GameObject enemiesLabel;
     public GameObject HostageLabel;
     public GameObject DefuseLabel;
+    public GameObject BombLabel;
     public GameObject InteractBar;
     public TextMeshProUGUI enemiesLeft;
     public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
+    public TextMeshProUGUI BombLeft;
     public TextMeshProUGUI waveNumber; 
     public TextMeshProUGUI currentAmmo;
     public TextMeshProUGUI ammoRemaining;
@@ -51,6 +53,7 @@ public class gameManager : MonoBehaviour
     public int enemiesToKill;
     public int currentWaveNumber = 1;
     public int hostageToRescue;
+    public int bombsToDefuse;
     public bool isPaused;
    
     [Header("----- Enemy Stuff -----")]
@@ -96,8 +99,9 @@ public class gameManager : MonoBehaviour
         {
             HostageLabel.SetActive(true);
         }
-        else
+        else 
         {
+            BombLabel.SetActive(true);
             DefuseLabel.SetActive(true);
         }
 
@@ -183,6 +187,17 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    public void updateBombNumbers()
+    {
+        bombsToDefuse--;
+        updateUI();
+
+        if (bombsToDefuse <= 0)
+        {
+            youWin();
+        }
+    }
+
     public void updateWaveNumber()
     {
         currentWaveNumber++;
@@ -193,6 +208,7 @@ public class gameManager : MonoBehaviour
         grenadesLeft.text = playerScript.totalThrows.ToString("F0");
         enemiesLeft.text = enemiesToKill.ToString("F0");
         hostageLeft.text = hostageToRescue.ToString("F0");
+        BombLeft.text = bombsToDefuse.ToString("F0");
         waveNumber.text = currentWaveNumber.ToString("F0");
         currentAmmo.text =   playerScript.gunAmmo.ToString("F0");
         ammoRemaining.text = playerScript.reseveGunAmmo.ToString("F0");
