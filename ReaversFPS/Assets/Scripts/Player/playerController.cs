@@ -16,6 +16,10 @@ public class playerController : MonoBehaviour
     [SerializeField] GameObject rifleShootPos;
     [SerializeField] GameObject sniperShootPos;
 
+    [Header("----- DroneComponents ------")]
+    [SerializeField] GameObject drone;
+    [SerializeField] CharacterController droneController;
+
     [Header("----- Player Stats -----")]
     [SerializeField] public float HP;
     [SerializeField] float playerSpeed;
@@ -58,7 +62,9 @@ public class playerController : MonoBehaviour
     [SerializeField] AudioClip[] NoAmmoAudio;
     [Range(0, 1)][SerializeField] float NoAmmoVol;
 
-    
+    bool inDrone = false;
+    Vector3 droneVelocity;
+    bool switching;
 
     //FOV
     float lerpDuration = 0.2f;
@@ -106,32 +112,38 @@ public class playerController : MonoBehaviour
         startHP = HP;
         startAmmo = gunAmmo;
         playerStartSpeed = playerSpeed;
-        reseveGunAmmo = magazineCount * startAmmo; 
-        
+        reseveGunAmmo = magazineCount * startAmmo;
+        droneController = drone.GetComponent<CharacterController>();
         gunPickup(startinWeapon);
     }
 
     // Update is called once per frame
     void Update()
     {
-        FindAim();
-        pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime);
-
-        PlayerMovement();
-        PlayerSprint();
-        StartCoroutine(aimDownSights());
-        StartCoroutine(ShootWeapon());
-        StartCoroutine(BladeSwipe());
-        StartCoroutine(Throw());
-        StartCoroutine(RelodeWeapon());
-        gunSelect();
 
         if (interactable == true)
         {
             Interact();
         }
-       
-
+        
+        if(inDrone == true)
+        {
+            ToggleDrone();
+            DroneMovement();
+        }
+        else
+        {
+            FindAim();
+            pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime);
+            PlayerMovement();
+            PlayerSprint();
+            StartCoroutine(aimDownSights());
+            StartCoroutine(ShootWeapon());
+            StartCoroutine(BladeSwipe());
+            StartCoroutine(Throw());
+            StartCoroutine(RelodeWeapon());
+            gunSelect();
+        }
     }
 
     // moves the player
@@ -172,6 +184,37 @@ public class playerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
+    void DroneMovement()
+    {
+        if (droneController.isGrounded && droneVelocity.y < 0)
+        {
+            jumpTimes = 0;
+            droneVelocity.y = 0f;
+            isJumping = false;
+        }
+
+        move = drone.transform.right * Input.GetAxis("Horizontal") + drone.transform.forward * Input.GetAxis("Vertical");
+        controller.Move((move + pushBack) * Time.deltaTime * playerSpeed);
+
+        // changes the height position of the player
+        if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
+        {
+            isJumping = true;
+
+            aud.PlayOneShot(JumpAudio[Random.Range(0, JumpAudio.Length)], JumpVol);
+
+            jumpTimes++;
+
+                droneVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+
+            gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EJump, 0.5f);
+        }
+
+        droneVelocity.y += gravityValue * Time.deltaTime;
+        droneController.Move(droneVelocity * Time.deltaTime);
+    }
+
+
     // makes the player sprint
     void PlayerSprint()
     {
@@ -193,6 +236,32 @@ public class playerController : MonoBehaviour
             if (sprintSoundEffects == false && isJumping != true)
             {
                 StartCoroutine(SprintSoundEffects());
+            }
+        }
+    }
+
+    IEnumerator ToggleDrone()
+    {
+        if(Input.GetButtonDown("Toggle"))
+        {
+            if(switching != true)
+            {
+                switching = true;
+                //Check if it's the player or the drone
+                if(inDrone == false)
+                {
+                    //Switch the camera to drone camera
+                    //Set the bool inDrone to true
+                    yield return new WaitForSeconds(1);
+                    switching = false;
+                }
+                else if(inDrone == true)
+                {
+                    //Switch camera to player camera
+                    //Set the bool inDrone to false
+                    yield return new WaitForSeconds(1);
+                    switching = false;
+                }
             }
         }
     }
