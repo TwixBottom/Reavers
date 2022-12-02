@@ -62,7 +62,7 @@ public class playerController : MonoBehaviour
     [SerializeField] AudioClip[] NoAmmoAudio;
     [Range(0, 1)][SerializeField] float NoAmmoVol;
 
-    bool inDrone = false;
+    public bool inDrone = false;
     Vector3 droneVelocity;
     bool switching;
 
@@ -113,13 +113,14 @@ public class playerController : MonoBehaviour
         startAmmo = gunAmmo;
         playerStartSpeed = playerSpeed;
         reseveGunAmmo = magazineCount * startAmmo;
-        droneController = drone.GetComponent<CharacterController>();
+        //droneController = drone.GetComponent<CharacterController>();
         gunPickup(startinWeapon);
     }
 
     // Update is called once per frame
     void Update()
     {
+        StartCoroutine(ToggleDrone());
 
         if (interactable == true)
         {
@@ -127,9 +128,8 @@ public class playerController : MonoBehaviour
         }
         
         if(inDrone == true)
-        {
-            ToggleDrone();
-            DroneMovement();
+        {   
+            //DroneMovement();
         }
         else
         {
@@ -251,14 +251,14 @@ public class playerController : MonoBehaviour
                 if(inDrone == false)
                 {
                     //Switch the camera to drone camera
-                    //Set the bool inDrone to true
+                    inDrone = true;
                     yield return new WaitForSeconds(1);
                     switching = false;
                 }
                 else if(inDrone == true)
                 {
                     //Switch camera to player camera
-                    //Set the bool inDrone to false
+                    inDrone = false;
                     yield return new WaitForSeconds(1);
                     switching = false;
                 }
