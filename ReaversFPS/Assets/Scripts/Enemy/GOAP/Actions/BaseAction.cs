@@ -14,6 +14,7 @@ public class BaseAction : MonoBehaviour
     {
         agent = GetComponent<EnemyNavigation>();
         sensors = GetComponent<AwarenessSystem>();
+        LinkedAI = GetComponent<AIEnemy>();
     }
 
     public virtual List<System.Type> getSupporterGoals()

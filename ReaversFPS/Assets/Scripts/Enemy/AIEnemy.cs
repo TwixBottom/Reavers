@@ -73,9 +73,15 @@ public class AIEnemy : MonoBehaviour, IDamage
     public bool isShooting;
     public bool playerInRange;
     public bool isDead;
+
+    public bool canShoot;
+    public bool canThrowGrenade;
+    public int grenadeCounter = 1;
+
     //bool isMoving = false;
     bool isHit = false;
 
+    
     public bool tookDamage = false;
     bool chase;
 
@@ -240,14 +246,18 @@ public class AIEnemy : MonoBehaviour, IDamage
 
     public void OnSuspicious()
     {
-        Debug.Log("I Hear You");
+        //Debug.Log("I Hear You");
+
+        canThrowGrenade = false;
 
         chase = true;
     }
 
     public void OnDetected(GameObject target)
     {
-        Debug.Log("I See You " + target.gameObject.name);
+        //Debug.Log("I See You " + target.gameObject.name);
+
+        canThrowGrenade = false;
 
         chase = true;
     }
@@ -256,6 +266,8 @@ public class AIEnemy : MonoBehaviour, IDamage
     {
         Debug.Log("Shoot");
 
+        canThrowGrenade = true;
+
         chase = true;
     }
 
@@ -263,19 +275,25 @@ public class AIEnemy : MonoBehaviour, IDamage
     {
         Debug.Log("Where Are You " + target.gameObject.name);
 
+        canThrowGrenade = true;
+
         chase = false;
     }
 
     public void OnLostSuspicion()
     {
-        Debug.Log("Where Did You Go");
+        //Debug.Log("Where Did You Go");
+
+        canThrowGrenade = false;
 
         chase = false;
     }
 
     public void OnFullyLost()
     {
-        Debug.Log("Must Be Nothing");
+        //Debug.Log("Must Be Nothing");
+
+        canThrowGrenade = false;
 
         chase = false;
     }

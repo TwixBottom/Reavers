@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 3079129168932552872}
   - component: {fileID: 3079129168932552873}
   - component: {fileID: 982801106}
+  - component: {fileID: 1810806597}
+  - component: {fileID: 1810806598}
   m_Layer: 8
   m_Name: RegularEnemy
   m_TagString: Enemy
@@ -100,7 +102,7 @@ MonoBehaviour:
   _HearingRangeColour: {r: 1, g: 1, b: 0, a: 0.25}
   _ProximityDetectionRange: 3
   _ProximityRangeColor: {r: 1, g: 1, b: 1, a: 0.25}
-  _OnOff: 1
+  _OnOff: 0
   model: {fileID: 5352639514415625750}
   agent: {fileID: 3079129168932552873}
   anim: {fileID: 5352639514411501782}
@@ -128,6 +130,9 @@ MonoBehaviour:
   isShooting: 0
   playerInRange: 0
   isDead: 0
+  canShoot: 0
+  canThrowGrenade: 0
+  grenadeCounter: 1
   tookDamage: 0
 --- !u!114 &3079129168932552878
 MonoBehaviour:
@@ -185,7 +190,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -203,7 +208,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -214,7 +219,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   VisionMinAwareness: 1
-  VisionAwarenessBuildRate: 1000
+  VisionAwarenessBuildRate: 10
   HearingMinAwareness: 0
   HearingAwarenessBuildRate: 5
   ProximityMinAwareness: 0
@@ -473,6 +478,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1810806597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079129168932552870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe5c5a692f6f7a41a5707c1455d9fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grenade: {fileID: 7130934858220220358, guid: 87c3c0c626192d648ba78402ce388c13, type: 3}
+--- !u!114 &1810806598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079129168932552870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 861365b6823518247a0cda58d691aa82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 60
 --- !u!1001 &5352639514418838966
 PrefabInstance:
   m_ObjectHideFlags: 0
