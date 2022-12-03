@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7130934857261439433}
   - component: {fileID: 7130934857261439435}
   - component: {fileID: 7130934857261439434}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7130934857474390623}
   - component: {fileID: 7130934857474390617}
   - component: {fileID: 7130934857474390616}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 7130934857577422561}
   - component: {fileID: 7130934857577422563}
   - component: {fileID: 7130934857577422562}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 7130934857587189234}
   - component: {fileID: 7130934857587189244}
   - component: {fileID: 7130934857587189235}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Clipbase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 7130934857637809654}
   - component: {fileID: 7130934857637809648}
   - component: {fileID: 7130934857637809655}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: GrenadeBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 7130934857770228155}
   - component: {fileID: 7130934857770228133}
   - component: {fileID: 7130934857770228132}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,9 +516,9 @@ GameObject:
   - component: {fileID: 7130934858220220353}
   - component: {fileID: 7130934858220220354}
   - component: {fileID: 8135790980559426269}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: EnemyGrenade
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 7130934858564885164}
   - component: {fileID: 7130934858564885166}
   - component: {fileID: 7130934858564885165}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 7130934858655094126}
   - component: {fileID: 7130934858655094120}
   - component: {fileID: 7130934858655094127}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

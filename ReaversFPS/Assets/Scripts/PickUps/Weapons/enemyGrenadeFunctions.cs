@@ -15,12 +15,6 @@ public class enemyGrenadeFunctions : MonoBehaviour
     {
         Vector3 direction = (gameManager.instance.player.transform.position - gameObject.transform.position);
 
-        Debug.Log("player" + gameManager.instance.player.transform.position);
-
-        Debug.Log("Transform: " + transform.position);
-
-        Debug.Log("Gameobject: " + gameObject.transform.position);
-
         rb.velocity = (direction / 2) - (Physics.gravity * (2 / 2));
 
         yield return new WaitForSeconds(timeToExplode);
