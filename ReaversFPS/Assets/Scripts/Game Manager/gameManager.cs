@@ -37,6 +37,8 @@ public class gameManager : MonoBehaviour
     public GameObject DefuseLabel;
     public GameObject BombLabel;
     public GameObject InteractBar;
+    public GameObject pointsLabel;
+    public TextMeshProUGUI pointsEarned;
     public TextMeshProUGUI enemiesLeft;
     public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
@@ -47,6 +49,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI defuseTimer;
     public Image HPBar;
     public Image interactBarFill;
+
    
 
     public int ammoCount;
@@ -64,6 +67,7 @@ public class gameManager : MonoBehaviour
     float orgTime;
 
     public bool defuse;
+    public int points;
 
     Scene m_scene;
 
@@ -83,6 +87,7 @@ public class gameManager : MonoBehaviour
         ammoCount = playerScript.gunAmmo;
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         orgTime = targetTime;
+        pointsLabel.SetActive(false);
         
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)
@@ -151,7 +156,8 @@ public class gameManager : MonoBehaviour
         Pause();
         newWave.SetActive(false);
         hostagePrompt.SetActive(false);
-        
+        points += 10000;
+        pointsLabel.SetActive(true);
         winMenu.SetActive(true);
         
     }
@@ -200,6 +206,7 @@ public class gameManager : MonoBehaviour
 
     public void updateWaveNumber()
     {
+        points += 1000;
         currentWaveNumber++;
         updateUI();
     }
@@ -207,6 +214,7 @@ public class gameManager : MonoBehaviour
     {
         grenadesLeft.text = playerScript.totalThrows.ToString("F0");
         enemiesLeft.text = enemiesToKill.ToString("F0");
+        pointsEarned.text = points.ToString("F0");
         hostageLeft.text = hostageToRescue.ToString("F0");
         BombLeft.text = bombsToDefuse.ToString("F0");
         waveNumber.text = currentWaveNumber.ToString("F0");

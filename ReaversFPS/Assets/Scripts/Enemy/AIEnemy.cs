@@ -148,6 +148,8 @@ public class AIEnemy : MonoBehaviour, IDamage
 
         StartCoroutine(flashDamage());
 
+        gameManager.instance.points += 50;
+
         if (isHit != true)
         {
             StartCoroutine(HitSoundEffect());
@@ -157,6 +159,8 @@ public class AIEnemy : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             isDead = true;
+
+            gameManager.instance.points += 300;
 
             anim.SetBool("isDead", true);
 

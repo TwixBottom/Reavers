@@ -20,6 +20,7 @@ public class BombSite : MonoBehaviour
         if (defused != true && playerInRange == true && gameManager.instance.playerScript.interact == true)
         {
             defused = true;
+            gameManager.instance.points += 500;
             gameManager.instance.updateBombNumbers();
             Debug.Log("Bomb Defused");
         }

@@ -67,6 +67,8 @@ public class AIHostage : MonoBehaviour, IDamage
 
                 anim.SetBool("isRescude", true);
 
+                gameManager.instance.points += 800;
+
                 gameManager.instance.updateHostageNumbers();
             }
         }
@@ -81,11 +83,13 @@ public class AIHostage : MonoBehaviour, IDamage
     {
         HP -= dmg;
 
-        //StartCoroutine(flashDamage());
+        gameManager.instance.points -= 50;
 
         if (HP <= 0)
         {
             gameManager.instance.InteractBar.SetActive(false);
+
+            gameManager.instance.points -= 500;
 
             isDead = true;
 

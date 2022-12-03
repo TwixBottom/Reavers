@@ -291,6 +291,7 @@ public class playerController : MonoBehaviour
         if (HP <= 0)
         {
             gameManager.instance.playerDeadMenu.SetActive(true);
+            gameManager.instance.pointsLabel.SetActive(true);
             gameManager.instance.Pause();
         }
     }
@@ -477,6 +478,7 @@ public class playerController : MonoBehaviour
     {
         controller.enabled = false;
         HP = startHP;
+        gameManager.instance.pointsLabel.SetActive(false);
         updatePlayerHBar();
         transform.position = gameManager.instance.spawnPosition.transform.position;
         gameManager.instance.playerDeadMenu.SetActive(false);

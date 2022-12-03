@@ -16,6 +16,7 @@ public class gunPickup : MonoBehaviour
         Debug.Log(other.name);
         if (other.CompareTag("Player"))
         {
+            gameManager.instance.points += 10;
             gameManager.instance.playerScript.gunPickup(gunStats);
             Destroy(gameObject);
         }
