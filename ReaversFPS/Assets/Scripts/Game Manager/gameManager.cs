@@ -166,10 +166,10 @@ public class gameManager : MonoBehaviour
         enemiesToKill--;
         updateUI();
 
-        if (enemiesToKill <= 0 )
+        if (enemiesToKill <= 0 && m_scene.name == "MainScene")
         {
             updateWaveNumber();
-            if (currentWaveNumber <= 5 && m_scene.name == "MainScene")
+            if (currentWaveNumber <= 5)
             {
                 StartCoroutine(spawnEnemies());
             }

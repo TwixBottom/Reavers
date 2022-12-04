@@ -22,6 +22,9 @@ public class BombSite : MonoBehaviour
             defused = true;
             gameManager.instance.points += 500;
             gameManager.instance.updateBombNumbers();
+
+            gameManager.instance.playerScript.interact = false;
+
             Debug.Log("Bomb Defused");
         }
         
