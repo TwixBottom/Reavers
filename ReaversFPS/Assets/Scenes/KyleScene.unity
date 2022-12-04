@@ -238,63 +238,6 @@ MonoBehaviour:
   masterMixer: {fileID: 24100000, guid: 886a55757ac2a88408e2d11d4b7e7ea7, type: 2}
   musicSlider: {fileID: 72868245}
   sfxSlider: {fileID: 1054370349}
---- !u!1001 &774562627
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4363394679571779360, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_Name
-      value: Audio Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 851.02136
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 351.87482
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.9068274
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4363394679571779361, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 201d4e45402bf3a43ac25fa22db597f4, type: 3}
 --- !u!1 &852065519
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,9 +358,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2261518624976389865, guid: 8fe40bcb72470b74e9995ceeb430ff3a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4010463728306776964, guid: 8fe40bcb72470b74e9995ceeb430ff3a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4448921969895317538, guid: 8fe40bcb72470b74e9995ceeb430ff3a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4448921969895317538, guid: 8fe40bcb72470b74e9995ceeb430ff3a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4448921969895317538, guid: 8fe40bcb72470b74e9995ceeb430ff3a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5686294949392917200, guid: 8fe40bcb72470b74e9995ceeb430ff3a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6153552803974921142, guid: 8fe40bcb72470b74e9995ceeb430ff3a, type: 3}
       propertyPath: m_Pivot.x
