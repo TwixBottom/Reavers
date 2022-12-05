@@ -21,7 +21,7 @@ public class explosion : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(coll.transform.position, coll.radius);
         for (int i = 0; i < hitColliders.Length; i++)
         {
-
+            Debug.Log(hitColliders[i]);
             if (hitColliders[i].GetComponent<IDamage>() != null && !hitColliders[i].transform.CompareTag("Player"))
             {
                 hitColliders[i].GetComponent<IDamage>().TakeDamage(damage);

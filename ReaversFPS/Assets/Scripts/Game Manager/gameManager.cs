@@ -159,7 +159,7 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
     public void unPause()
-    {
+    {      
         isPaused = false;
         Time.timeScale = 1;
         Cursor.visible = false;

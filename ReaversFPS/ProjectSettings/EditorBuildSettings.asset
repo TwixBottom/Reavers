@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HostageMap.unity
     guid: 4c2363ac9d2123c43abc5978c55861e8
+  - enabled: 1
+    path: Assets/Scenes/DefuseMap.unity
+    guid: d64d93a427403ab47b749c95d4099993
   m_configObjects: {}

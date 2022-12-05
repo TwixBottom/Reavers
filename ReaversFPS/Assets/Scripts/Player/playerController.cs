@@ -219,7 +219,7 @@ public class playerController : MonoBehaviour
         }
 
         move = drone.transform.right * Input.GetAxis("Horizontal") + drone.transform.forward * Input.GetAxis("Vertical");
-        droneController.Move((move + pushBack) * Time.deltaTime * playerSpeed);
+        droneController.Move((move + pushBack) * Time.deltaTime * (playerSpeed * 2));
 
         // changes the height position of the player
         if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
@@ -677,12 +677,12 @@ public class playerController : MonoBehaviour
             if (isAiming)
             {
                 playerCamera.fieldOfView = Mathf.Lerp(fovOriginal, endValue, timeElapsed / lerpDuration);
-                gameManager.instance.reticle.SetActive(false);
+                //gameManager.instance.reticle.SetActive(false);
             }
             else
             {
                 playerCamera.fieldOfView = Mathf.Lerp(endValue, fovOriginal, timeElapsed / lerpDuration);
-                gameManager.instance.reticle.SetActive(true);
+                //gameManager.instance.reticle.SetActive(true);
             }
             timeElapsed += Time.deltaTime;
             yield return null;
@@ -723,7 +723,7 @@ public class playerController : MonoBehaviour
                 if (Physics.Raycast(droneCamera.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, 100000))
                 {
 
-                    if (hit.collider.tag == "Hostage" || hit.collider.tag == "Bomb")
+                    if (hit.collider.tag == "Bomb")
                     {
                         Debug.Log("Hit Objective");
 

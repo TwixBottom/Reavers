@@ -22,9 +22,10 @@ public class grenadeFunctions : MonoBehaviour
         Vector3 forceToAdd = gameManager.instance.cam.transform.forward * throwForce + transform.up * throwUpwardForce;
         rb.AddForce(forceToAdd, ForceMode.Impulse);
         yield return new WaitForSeconds(timeToExplode);
+        
         Instantiate(explosion, gameObject.transform.position, explosion.transform.rotation);
         Instantiate(explosionEffect, gameObject.transform.position, explosionEffect.transform.rotation);
-        grenadeAud.PlayOneShot(grenadeExplosionAud[Random.Range(0, grenadeExplosionAud.Length)], HitVol);
+        //grenadeAud.PlayOneShot(grenadeExplosionAud[Random.Range(0, grenadeExplosionAud.Length)], HitVol);
         Destroy(gameObject);
     }
 
