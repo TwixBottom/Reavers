@@ -33,19 +33,22 @@ public class EnemyNavigation : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        // have a path and near the end point?
-        if (!agent.pathPending && !agent.isOnOffMeshLink && DestinationSet && (agent.remainingDistance <= agent.stoppingDistance))
+        if (agent.enabled == true)
         {
-            DestinationSet = false;
-            ReachedDestination = true;
-        }
+            // have a path and near the end point?
+            if (!agent.pathPending && !agent.isOnOffMeshLink && DestinationSet && (agent.remainingDistance <= agent.stoppingDistance))
+            {
+                DestinationSet = false;
+                ReachedDestination = true;
+            }
 
-        // are we on an offmesh link?
-        if (agent.isOnOffMeshLink)
-        {
-            // have we started moving along the link
-            if (OffMeshLinkStatus == EOffmeshLinkStatus.NotStarted)
-                StartCoroutine(FollowOffmeshLink());
+            // are we on an offmesh link?
+            if (agent.isOnOffMeshLink)
+            {
+                // have we started moving along the link
+                if (OffMeshLinkStatus == EOffmeshLinkStatus.NotStarted)
+                    StartCoroutine(FollowOffmeshLink());
+            }
         }
     }
 

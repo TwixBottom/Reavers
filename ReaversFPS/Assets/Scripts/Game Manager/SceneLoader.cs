@@ -15,6 +15,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("HostageMap");
     }
 
+    public void LoadDefuseMap()
+    {
+        SceneManager.LoadScene("DefuseMap");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

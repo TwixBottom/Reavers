@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 5953694406225348154}
   - component: {fileID: 144743975682075363}
   - component: {fileID: 1469215987}
+  - component: {fileID: 5012044554483843051}
+  - component: {fileID: 1700468487321697890}
   m_Layer: 8
   m_Name: SniperEnemy
   m_TagString: Enemy
@@ -106,6 +108,9 @@ MonoBehaviour:
   anim: {fileID: 743367390929203149}
   coll: {fileID: 6438176406163493493}
   aud: {fileID: 1469215987}
+  seeThroughWalls: {fileID: 4800000, guid: 3d97bb0254537da40997bbf3df63cb06, type: 3}
+  originalShader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  render: {fileID: 743367390924972495}
   HP: 3
   playerFaceSpeed: 10
   animLerpSpeed: 1
@@ -115,7 +120,7 @@ MonoBehaviour:
   weaponDrop: {fileID: 6595219947881911654, guid: f6936f30c2bab984abb1354a7f2c7ddf, type: 3}
   ShootAudio:
   - {fileID: 8300000, guid: 4b074e1d6c39ef64fa68df2ba6512bba, type: 3}
-  ShootVol: 0.1
+  ShootVol: 0.3
   HitAudio:
   - {fileID: 8300000, guid: 289d9acfcb330a749b1ae6e086fa007c, type: 3}
   - {fileID: 8300000, guid: 8d0028fe091864f47b2cdb4198fc6dc9, type: 3}
@@ -123,11 +128,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 96178d2e7dab11d44b8b949ba1c0a742, type: 3}
   - {fileID: 8300000, guid: 4f32d1b5f6c7f9d4a83a5ba2c972ac39, type: 3}
   - {fileID: 8300000, guid: 8155a07aaba798a44bdd7c9c09ccf65b, type: 3}
-  HitVol: 0.05
+  HitVol: 0.1
   playerDirection: {x: 0, y: 0, z: 0}
   isShooting: 0
   playerInRange: 0
   isDead: 0
+  canShoot: 0
+  canThrowGrenade: 0
+  grenadeCounter: 1
   tookDamage: 0
 --- !u!114 &3079129168932552878
 MonoBehaviour:
@@ -473,6 +481,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5012044554483843051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079129168932552870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe5c5a692f6f7a41a5707c1455d9fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grenade: {fileID: 7130934858220220358, guid: 87c3c0c626192d648ba78402ce388c13, type: 3}
+--- !u!114 &1700468487321697890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079129168932552870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 861365b6823518247a0cda58d691aa82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 50
 --- !u!1001 &743367390919693397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -532,6 +566,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c51443fd34665e149aa99d30f62d8a0b, type: 2}
+    - target: {fileID: 9517976, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}
 --- !u!4 &743367390920052065 stripped

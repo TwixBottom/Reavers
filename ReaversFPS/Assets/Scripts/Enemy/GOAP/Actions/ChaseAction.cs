@@ -39,6 +39,9 @@ public class ChaseAction : BaseAction
 
     public override void OnTick()
     {
-        agent.MoveTo(chaseGoal.moveTarget);
+        if (LinkedAI.isDead != true)
+        {
+            agent.MoveTo(chaseGoal.moveTarget);
+        }
     }
 }

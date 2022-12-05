@@ -7,6 +7,10 @@ public class BombSite : MonoBehaviour
 
     bool playerInRange;
     bool defused;
+    bool once;
+
+    [SerializeField] List<GameObject> spawnPositions;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,18 @@ public class BombSite : MonoBehaviour
             gameManager.instance.playerScript.interact = false;
 
             Debug.Log("Bomb Defused");
+        }
+
+        if (defused == true && once == false)
+        {
+            for (int i = 0; i < spawnPositions.Count; i++)
+            {
+                Instantiate(gameManager.instance.enemy[3], spawnPositions[i].transform.position, spawnPositions[i].transform.rotation);
+            }
+
+
+
+            once = true;
         }
         
     }

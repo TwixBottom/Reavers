@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 201566568578172017}
   - component: {fileID: 1881831928602027844}
   - component: {fileID: 1296316035774872280}
+  - component: {fileID: 8537293024880750956}
+  - component: {fileID: 50531690152249270}
   m_Layer: 8
   m_Name: BruteEnemy
   m_TagString: Enemy
@@ -106,6 +108,9 @@ MonoBehaviour:
   anim: {fileID: 923407477228988583}
   coll: {fileID: 3079129168932552872}
   aud: {fileID: 1296316035774872280}
+  seeThroughWalls: {fileID: 4800000, guid: 3d97bb0254537da40997bbf3df63cb06, type: 3}
+  originalShader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  render: {fileID: 923407477233215141}
   HP: 8
   playerFaceSpeed: 10
   animLerpSpeed: 1
@@ -128,6 +133,9 @@ MonoBehaviour:
   isShooting: 0
   playerInRange: 0
   isDead: 0
+  canShoot: 0
+  canThrowGrenade: 0
+  grenadeCounter: 2
   tookDamage: 0
 --- !u!114 &3079129168932552878
 MonoBehaviour:
@@ -473,6 +481,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8537293024880750956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079129168932552870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe5c5a692f6f7a41a5707c1455d9fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grenade: {fileID: 7130934858220220358, guid: 87c3c0c626192d648ba78402ce388c13, type: 3}
+--- !u!114 &50531690152249270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079129168932552870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 861365b6823518247a0cda58d691aa82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 50
 --- !u!1001 &923407477238485823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -532,6 +566,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c51443fd34665e149aa99d30f62d8a0b, type: 2}
+    - target: {fileID: 9517976, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2599104a4a2a5214f8407d03827b5eff, type: 3}
 --- !u!95 &923407477228988583 stripped

@@ -835,7 +835,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -486, y: -35}
+  m_AnchoredPosition: {x: 10, y: -35}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1678839222
@@ -5902,6 +5902,9 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   spawnPosition: {fileID: 0}
   cam: {fileID: 0}
+  healthBarLabel: {fileID: 3897085413602915759}
+  grenadeLabel: {fileID: 1454649595}
+  ammoLabel: {fileID: 2307396650645523621}
   reticle: {fileID: 1537122727357277298}
   pauseMenu: {fileID: 6034381328632208782}
   playerDamageScreen: {fileID: 4888632334252859545}
@@ -5937,6 +5940,7 @@ MonoBehaviour:
   - {fileID: 3079129168932552870, guid: ce0ad92760742bc4996360d59857d328, type: 3}
   - {fileID: 3079129168932552870, guid: 0315bf2fbc123ca43ae8d0f64f7f53fe, type: 3}
   - {fileID: 3079129168932552870, guid: 26442dd0f1da59c43bd0666f64c168e8, type: 3}
+  - {fileID: 8796795586804003206, guid: 293c6e8ded0003248859009f58844dc1, type: 3}
   spawnLocations: []
   objective: []
   defuse: 0

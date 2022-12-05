@@ -24,6 +24,9 @@ public class gameManager : MonoBehaviour
     public Transform cam;
 
     [Header("----- UI -----")]
+    public GameObject healthBarLabel;
+    public GameObject grenadeLabel;
+    public GameObject ammoLabel;
     public GameObject reticle;
     public GameObject pauseMenu;
     public GameObject playerDamageScreen;
@@ -116,7 +119,7 @@ public class gameManager : MonoBehaviour
         else
         {
             BombLabel.SetActive(true);
-            DefuseLabel.SetActive(true);
+           // DefuseLabel.SetActive(true);
         }
 
        
@@ -193,10 +196,10 @@ public class gameManager : MonoBehaviour
            
         }
 
-        if (currentWaveNumber > 5)
-        {
-            youWin();
-        } 
+        //if (currentWaveNumber > 5)
+        //{
+        //    youWin();
+        //} 
     }
 
     public void updateHostageNumbers()

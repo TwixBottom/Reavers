@@ -24,7 +24,7 @@ public class RoamAction : BaseAction
     {
         base.OnActivated(linkedGoal);
        
-        if (wait == false)
+        if (wait == false && LinkedAI.isDead != true)
         {
             Vector3 location = agent.PickLocationInRange(searchrange);
             agent.MoveTo(location);
@@ -50,7 +50,7 @@ public class RoamAction : BaseAction
     IEnumerator waitForNextMove()
     {
         wait = true;
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(2.0f);
         wait = false;
     }
 }

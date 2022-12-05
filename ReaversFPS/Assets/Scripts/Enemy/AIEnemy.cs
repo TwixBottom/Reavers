@@ -32,6 +32,9 @@ public class AIEnemy : MonoBehaviour, IDamage
     [SerializeField] Animator anim;
     [SerializeField] Collider coll;
     [SerializeField] AudioSource aud;
+    [SerializeField] Shader seeThroughWalls;
+    [SerializeField] Shader originalShader;
+    [SerializeField] Renderer render;
 
 
     [Header("EnemyStats")]
@@ -119,7 +122,18 @@ public class AIEnemy : MonoBehaviour, IDamage
                     }
                 }
             }
+            if (gameManager.instance.m_scene.name == "MainScene" && gameManager.instance.enemiesToKill <= 2)
+            {
+                render.material.shader = seeThroughWalls;
+            }
         }
+        else
+        {
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            render.material.shader = originalShader;
+        }
+
+        
 
         //if (!agent.isStopped && isMoving == false && isDead != true)
         //{

@@ -108,6 +108,9 @@ MonoBehaviour:
   anim: {fileID: 5352639514411501782}
   coll: {fileID: 3079129168932552872}
   aud: {fileID: 982801106}
+  seeThroughWalls: {fileID: 4800000, guid: 3d97bb0254537da40997bbf3df63cb06, type: 3}
+  originalShader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  render: {fileID: 5352639514415625750}
   HP: 5
   playerFaceSpeed: 10
   animLerpSpeed: 1

@@ -39,6 +39,9 @@ public class AlwaysFollowPlayerAction : BaseAction
 
     public override void OnTick()
     {
-        agent.MoveTo(gameManager.instance.player.transform.position);
+        if (LinkedAI.isDead != true)
+        {
+            agent.MoveTo(gameManager.instance.player.transform.position);
+        }
     }
 }

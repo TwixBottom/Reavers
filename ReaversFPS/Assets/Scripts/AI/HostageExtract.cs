@@ -6,14 +6,6 @@ public class HostageExtract : MonoBehaviour
 {
     AIHostage hostage;
 
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
     public void OnTriggerEnter(Collider other)
     {
        
@@ -21,10 +13,10 @@ public class HostageExtract : MonoBehaviour
         { 
             hostage = other.GetComponent<AIHostage>();
 
-            if (hostage.saved != true)
+            if (hostage.startExtraction != true)
             {
-                hostage.saved = true;
-
+                hostage.startExtraction = true;
+                hostage.isFollowing = false;
                 Debug.Log("Hostage");
             }
         }

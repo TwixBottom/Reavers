@@ -115,11 +115,16 @@ public class playerController : MonoBehaviour
         startHP = HP;
         startAmmo = gunAmmo;
         playerStartSpeed = playerSpeed;
-        reseveGunAmmo = magazineCount * startAmmo;
-        droneController = drone.GetComponent<CharacterController>();
-        droneCamera.enabled = false;
-        droneCamera.GetComponent<cameraControls>().enabled = false;
+        reseveGunAmmo = magazineCount * startAmmo; 
         gunPickup(startinWeapon);
+        if (gameManager.instance.m_scene.name != "MainScene")
+        {
+            droneController = drone.GetComponent<CharacterController>();
+            droneCamera.enabled = false;
+            droneCamera.GetComponent<cameraControls>().enabled = false;
+        }
+       
+       
     }
 
     // Update is called once per frame
@@ -127,7 +132,11 @@ public class playerController : MonoBehaviour
     {
         if (gameManager.instance.m_scene.name != "MainScene")
         {
-            StartCoroutine(ToggleDrone());
+            if (Input.GetButtonDown("Toggle"))
+            {
+                StartCoroutine(ToggleDrone());
+            }
+                
         }
 
 
@@ -192,6 +201,12 @@ public class playerController : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        if (gameManager.instance.m_scene.name != "MainScene")
+        {
+            droneVelocity.y += gravityValue * Time.deltaTime;
+            droneController.Move(droneVelocity * Time.deltaTime);
+        }
     }
 
     void DroneMovement()
@@ -220,6 +235,9 @@ public class playerController : MonoBehaviour
 
         droneVelocity.y += gravityValue * Time.deltaTime;
         droneController.Move(droneVelocity * Time.deltaTime);
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
     }
 
 
@@ -250,14 +268,17 @@ public class playerController : MonoBehaviour
 
     IEnumerator ToggleDrone()
     {
-        if (Input.GetButtonDown("Toggle"))
-        {
+        //if (Input.GetButtonDown("Toggle"))
+        //{
             if (switching != true)
             {
                 switching = true;
                 //Check if it's the player or the drone
                 if (inDrone == false)
                 {
+                    gameManager.instance.healthBarLabel.SetActive(false);
+                    gameManager.instance.grenadeLabel.SetActive(false);
+                    gameManager.instance.ammoLabel.SetActive(false);
                     gameManager.instance.InteractBar.SetActive(true);
                     //Switch the camera to drone camera
                     playerCamera.enabled = false;
@@ -271,6 +292,9 @@ public class playerController : MonoBehaviour
                 }
                 else if (inDrone == true)
                 {
+                    gameManager.instance.healthBarLabel.SetActive(true);
+                    gameManager.instance.grenadeLabel.SetActive(true);
+                    gameManager.instance.ammoLabel.SetActive(true);
                     gameManager.instance.InteractBar.SetActive(false);
                     //Switch camera to player camera
                     playerCamera.enabled = true;
@@ -283,7 +307,7 @@ public class playerController : MonoBehaviour
                     switching = false;
                 }
             }
-        }
+        //}
     }
 
     IEnumerator SprintSoundEffects()

@@ -21,6 +21,7 @@ public class AIHostage : MonoBehaviour, IDamage
     public bool isDead = false;
     public bool isFollowing = false;
     public bool saved = false;
+    public bool startExtraction = false;
     public bool rescued = false;
 
     bool once = false;
@@ -49,9 +50,7 @@ public class AIHostage : MonoBehaviour, IDamage
                     
                     rescued = true;
             
-                    isFollowing = !isFollowing;
-                    
-                    Debug.Log(isFollowing);
+                    isFollowing = true;
                     
                     gameManager.instance.playerScript.interact = false;
                 }
@@ -73,9 +72,9 @@ public class AIHostage : MonoBehaviour, IDamage
             }
         }
 
-        if (saved == true && endSpawn == false)
+        if (startExtraction == true && saved == false)
         {
-            StartCoroutine(Spawner());
+            StartCoroutine(StartExtraction());
         }
     }
 
@@ -104,17 +103,15 @@ public class AIHostage : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator Spawner()
+    IEnumerator StartExtraction()
     {
         if (spawn == true)
         {
             StartCoroutine(SpawnEnemies());
         }
-
-        yield return new WaitForSeconds(10);
-
-        endSpawn = true;
-
+        
+        yield return new WaitForSeconds(60);
+        saved = true;
     }
     
     IEnumerator SpawnEnemies()
@@ -123,10 +120,10 @@ public class AIHostage : MonoBehaviour, IDamage
 
         for (int i = 0; i < gameManager.instance.spawnLocations.Count; i++)
         {
-            Instantiate(gameManager.instance.enemy[0], gameManager.instance.spawnLocations[i].transform.position, gameManager.instance.spawnLocations[i].transform.rotation);
+            Instantiate(gameManager.instance.enemy[3], gameManager.instance.spawnLocations[i].transform.position, gameManager.instance.spawnLocations[i].transform.rotation);
         }
      
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
 
         spawn = true;
     }
