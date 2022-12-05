@@ -325,10 +325,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 6358832128208528127}
   playerCamera: {fileID: 6358832127326687722}
+  weaponCamera: {fileID: 1460823197}
   aud: {fileID: 2045619112}
   smgShootPos: {fileID: 1400081042}
   rifleShootPos: {fileID: 1723957093}
   sniperShootPos: {fileID: 736965863}
+  drone: {fileID: 0}
+  droneCamera: {fileID: 0}
+  droneController: {fileID: 0}
+  seeThroughWalls: {fileID: 4800000, guid: 3d97bb0254537da40997bbf3df63cb06, type: 3}
   HP: 25
   playerSpeed: 4
   sprintMod: 1.5
@@ -382,12 +387,15 @@ MonoBehaviour:
   NoAmmoAudio:
   - {fileID: 8300000, guid: 59226b263bf399e4296f6120d0dd6686, type: 3}
   NoAmmoVol: 0.15
+  inDrone: 0
   pushBack: {x: 0, y: 0, z: 0}
   startHP: 0
   reseveGunAmmo: 0
   normalPosition: {x: 0, y: 0, z: 0}
   aimingPosition: {x: 0, y: 0, z: 0}
   aimSmooth: 10
+  interactable: 0
+  interact: 0
   randomizeRecoil: 0
   randRecoilConstraints: {x: 0, y: 0}
   recoilPattern: {x: 0, y: 0}

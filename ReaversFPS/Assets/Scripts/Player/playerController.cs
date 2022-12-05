@@ -11,6 +11,7 @@ public class playerController : MonoBehaviour
     [Header("----- Components ------")]
     [SerializeField] CharacterController controller;
     [SerializeField] Camera playerCamera;
+    [SerializeField] Camera weaponCamera;
     [SerializeField] AudioSource aud;
     [SerializeField] GameObject smgShootPos;
     [SerializeField] GameObject rifleShootPos;
@@ -18,7 +19,9 @@ public class playerController : MonoBehaviour
 
     [Header("----- DroneComponents ------")]
     [SerializeField] GameObject drone;
+    [SerializeField] Camera droneCamera;
     [SerializeField] CharacterController droneController;
+    [SerializeField] Shader seeThroughWalls;
 
     [Header("----- Player Stats -----")]
     [SerializeField] public float HP;
@@ -113,23 +116,30 @@ public class playerController : MonoBehaviour
         startAmmo = gunAmmo;
         playerStartSpeed = playerSpeed;
         reseveGunAmmo = magazineCount * startAmmo;
-        //droneController = drone.GetComponent<CharacterController>();
+        droneController = drone.GetComponent<CharacterController>();
+        droneCamera.enabled = false;
+        droneCamera.GetComponent<cameraControls>().enabled = false;
         gunPickup(startinWeapon);
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(ToggleDrone());
+        if (gameManager.instance.m_scene.name != "MainScene")
+        {
+            StartCoroutine(ToggleDrone());
+        }
 
-        if (interactable == true)
+
+
+        if (interactable == true || inDrone == true)
         {
             Interact();
         }
-        
-        if(inDrone == true)
-        {   
-            //DroneMovement();
+
+        if (inDrone == true)
+        {
+            DroneMovement();
         }
         else
         {
@@ -176,7 +186,7 @@ public class playerController : MonoBehaviour
             {
                 playerVelocity.y += Mathf.Sqrt((jumpHeight * 2) * -3.0f * gravityValue);
             }
-            
+
             gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EJump, 2.0f);
         }
 
@@ -194,18 +204,16 @@ public class playerController : MonoBehaviour
         }
 
         move = drone.transform.right * Input.GetAxis("Horizontal") + drone.transform.forward * Input.GetAxis("Vertical");
-        controller.Move((move + pushBack) * Time.deltaTime * playerSpeed);
+        droneController.Move((move + pushBack) * Time.deltaTime * playerSpeed);
 
         // changes the height position of the player
         if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
         {
             isJumping = true;
 
-            aud.PlayOneShot(JumpAudio[Random.Range(0, JumpAudio.Length)], JumpVol);
-
             jumpTimes++;
 
-                droneVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            droneVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
 
             gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EJump, 0.5f);
         }
@@ -242,22 +250,34 @@ public class playerController : MonoBehaviour
 
     IEnumerator ToggleDrone()
     {
-        if(Input.GetButtonDown("Toggle"))
+        if (Input.GetButtonDown("Toggle"))
         {
-            if(switching != true)
+            if (switching != true)
             {
                 switching = true;
                 //Check if it's the player or the drone
-                if(inDrone == false)
+                if (inDrone == false)
                 {
+                    gameManager.instance.InteractBar.SetActive(true);
                     //Switch the camera to drone camera
+                    playerCamera.enabled = false;
+                    weaponCamera.enabled = false;
+                    playerCamera.GetComponent<cameraControls>().enabled = false;
+                    droneCamera.GetComponent<cameraControls>().enabled = true;
+                    droneCamera.enabled = true;
                     inDrone = true;
                     yield return new WaitForSeconds(1);
                     switching = false;
                 }
-                else if(inDrone == true)
+                else if (inDrone == true)
                 {
+                    gameManager.instance.InteractBar.SetActive(false);
                     //Switch camera to player camera
+                    playerCamera.enabled = true;
+                    weaponCamera.enabled = true;
+                    playerCamera.GetComponent<cameraControls>().enabled = true;
+                    droneCamera.GetComponent<cameraControls>().enabled = false;
+                    droneCamera.enabled = false;
                     inDrone = false;
                     yield return new WaitForSeconds(1);
                     switching = false;
@@ -397,9 +417,9 @@ public class playerController : MonoBehaviour
         if (gunStatList[selectedGun].name == "Sniper Gun Stat")
             gunModel.transform.localPosition -= Vector3.forward * 0.5f;
         else if (gunStatList[selectedGun].name == "Assault Gun Stats")
-                gunModel.transform.localPosition -= Vector3.forward * 0.3f;
+            gunModel.transform.localPosition -= Vector3.forward * 0.3f;
         else if (gunStatList[selectedGun].name == "SMG Gun Stats")
-                gunModel.transform.localPosition -= Vector3.forward * 0.1f;
+            gunModel.transform.localPosition -= Vector3.forward * 0.1f;
     }
 
     void FindAim()
@@ -425,7 +445,7 @@ public class playerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Reload"))
         {
-            
+
             if (!isReloding && gunAmmo == 0 && reseveGunAmmo > 0 && gunStatList[selectedGun].name != "Knife Stats")
             {
                 aud.PlayOneShot(ReloadAudio[Random.Range(0, ReloadAudio.Length)], ReloadVol);
@@ -507,7 +527,7 @@ public class playerController : MonoBehaviour
                     Debug.Log("Equip Gun Not Max Ammo");
                     reseveGunAmmo += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
                 }
-                
+
             }
             else
             {
@@ -517,14 +537,14 @@ public class playerController : MonoBehaviour
 
                     gunStatList[list].ammoReserves = gunStat.maxAmmo;
                 }
-                else if (gunStat.maxAmmo > gunStatList[list].ammoReserves) 
+                else if (gunStat.maxAmmo > gunStatList[list].ammoReserves)
                 {
                     Debug.Log("Unequiped Gun Not Max Ammo");
                     gunStatList[list].ammoReserves += (gunStat.magazineCount * gunStat.ammoCount) + gunStat.ammoCount;
                 }
-                
+
             }
-        } 
+        }
 
         if (gunStatList.Count == 0)
         {
@@ -548,14 +568,14 @@ public class playerController : MonoBehaviour
             gunStat.currentAmmo = gunStat.ammoCount;
 
             gunStatList.Add(gunStat);
-            
+
             if (gunStatList.Count == 2)
             {
                 selectedGun++;
                 selectWeapon();
             }
 
-            
+
         }
     }
 
@@ -655,14 +675,13 @@ public class playerController : MonoBehaviour
 
     void Interact()
     {
-        
         if (Input.GetButton("Interact"))
         {
-            gameManager.instance.interactBarFill.fillAmount += Time.deltaTime/2;
+            gameManager.instance.interactBarFill.fillAmount += Time.deltaTime / 2;
         }
         else
         {
-            gameManager.instance.interactBarFill.fillAmount -= Time.deltaTime/2;
+            gameManager.instance.interactBarFill.fillAmount -= Time.deltaTime / 2;
         }
 
         if (gameManager.instance.interactBarFill.fillAmount == 1)
@@ -671,6 +690,31 @@ public class playerController : MonoBehaviour
             Debug.Log("complete");
             gameManager.instance.InteractBar.SetActive(false);
             gameManager.instance.interactBarFill.fillAmount = 0;
+
+            if (inDrone == true)
+            {
+                StartCoroutine(interactOn());
+
+                RaycastHit hit;
+                if (Physics.Raycast(droneCamera.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, 100000))
+                {
+
+                    if (hit.collider.tag == "Hostage" || hit.collider.tag == "Bomb")
+                    {
+                        Debug.Log("Hit Objective");
+
+                        hit.collider.GetComponent<Renderer>().material.shader = seeThroughWalls;
+                    }
+                }
+            }
+
+            IEnumerator interactOn()
+            {
+                yield return new WaitForSeconds(1.0f);
+                gameManager.instance.InteractBar.SetActive(true);
+                gameManager.instance.interactBarFill.fillAmount = 0;
+            }
+
         }
     }
 }

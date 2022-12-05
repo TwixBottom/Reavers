@@ -63,13 +63,18 @@ public class gameManager : MonoBehaviour
     public List<GameObject> enemy;
     public List<GameObject> spawnLocations;
 
+    [Header("----- Enemy Stuff -----")]
+    public List<GameObject> objective;
+
     float targetTime = 5.0f;
     float orgTime;
 
     public bool defuse;
     public int points;
 
-    Scene m_scene;
+    public Scene m_scene;
+
+
 
     public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>(); // Vision
    
@@ -93,22 +98,34 @@ public class gameManager : MonoBehaviour
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)
         {
             spawnLocations.Add(GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms")[i]);
-        } 
-        
-        if ( m_scene.name == "MainScene")
-        { 
-           enemiesLabel.SetActive(true);
-           waveLabel.SetActive(true);
+        }
+
+        if (m_scene.name == "MainScene")
+        {
+            enemiesLabel.SetActive(true);
+            waveLabel.SetActive(true);
         }
         else if (m_scene.name == "HostageMap")
         {
             HostageLabel.SetActive(true);
+            for (int i = 0; i < GameObject.FindGameObjectsWithTag("Hostage").Length; i++)
+            {
+                objective.Add(GameObject.FindGameObjectsWithTag("Hostage")[i]);
+            }
         }
-        else 
+        else
         {
             BombLabel.SetActive(true);
             DefuseLabel.SetActive(true);
         }
+
+       
+
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Bomb").Length; i++)
+        {
+            objective.Add(GameObject.FindGameObjectsWithTag("Bomb")[i]);
+        }
+
 
         if (spawnPosition == null)
         {

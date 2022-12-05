@@ -816,7 +816,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1678839220
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5938,8 +5938,11 @@ MonoBehaviour:
   - {fileID: 3079129168932552870, guid: 0315bf2fbc123ca43ae8d0f64f7f53fe, type: 3}
   - {fileID: 3079129168932552870, guid: 26442dd0f1da59c43bd0666f64c168e8, type: 3}
   spawnLocations: []
+  objective: []
   defuse: 0
   points: 0
+  m_scene:
+    m_Handle: 0
 --- !u!1 &6901484748071306847
 GameObject:
   m_ObjectHideFlags: 0
