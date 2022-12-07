@@ -334,6 +334,7 @@ public class playerController : MonoBehaviour
 
         if (HP <= 0)
         {
+
             gameManager.instance.playerDeadMenu.SetActive(true);
             gameManager.instance.pointsLabel.SetActive(true);
             gameManager.instance.Pause();
