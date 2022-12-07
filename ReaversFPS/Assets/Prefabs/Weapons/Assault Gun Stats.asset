@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoCount: 30
   magazineCount: 2
-  damage: 2
+  damage: 4
   fireRate: 0.4
   shootDistance: 1000
   audioClip: {fileID: 0}
