@@ -590,8 +590,7 @@ MonoBehaviour:
   throwForce: 15
   throwUpwardForce: 5
   grenadeAud: {fileID: 1633889530579743903}
-  grenadeExplosionAud:
-  - {fileID: 8300000, guid: 4b074e1d6c39ef64fa68df2ba6512bba, type: 3}
+  grenadeExplosionAud: {fileID: 8300000, guid: 61b1036b923ddde4ea0adfc8f9ba6be1, type: 3}
   HitVol: 1
 --- !u!96 &8935668688798758046
 TrailRenderer:
@@ -757,7 +756,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

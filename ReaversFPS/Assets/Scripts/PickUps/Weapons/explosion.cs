@@ -8,11 +8,16 @@ public class explosion : MonoBehaviour
     [SerializeField] SphereCollider coll;
     [SerializeField] int damage;
 
+    [SerializeField] AudioSource grenadeAud;
+    [SerializeField] AudioClip[] grenadeExplosionAud;
+    [Range(0, 1)][SerializeField] float HitVol;
+
     bool damaged;
     // Start is called before the first frame update
     void Start()
     {
         ExplosionDMG();
+        grenadeAud.PlayOneShot(grenadeExplosionAud[Random.Range(0, grenadeExplosionAud.Length)], HitVol);
         Destroy(gameObject, 0.1f);
     }
 
