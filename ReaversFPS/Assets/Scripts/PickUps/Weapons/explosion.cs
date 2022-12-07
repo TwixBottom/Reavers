@@ -18,7 +18,7 @@ public class explosion : MonoBehaviour
     {
         ExplosionDMG();
         grenadeAud.PlayOneShot(grenadeExplosionAud[Random.Range(0, grenadeExplosionAud.Length)], HitVol);
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject, 5.0f);
     }
 
     void ExplosionDMG()
