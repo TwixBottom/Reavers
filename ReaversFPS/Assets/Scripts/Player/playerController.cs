@@ -619,6 +619,15 @@ public class playerController : MonoBehaviour
         reseveGunAmmo = gunStatList[selectedGun].ammoReserves;
     }
 
+    void quickSwap()
+    {
+        // Check nnumber
+        // Check if its valid
+
+        // selectedWeapon = number
+
+        selectWeapon();
+    }
 
     void gunSelect()
     {

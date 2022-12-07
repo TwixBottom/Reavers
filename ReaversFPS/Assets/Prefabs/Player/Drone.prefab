@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4275610414609537018}
   - component: {fileID: 4275610414609536999}
   - component: {fileID: 4275610414609536997}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DroneCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1975
+    m_Bits: 8119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4275610414930469468}
   - component: {fileID: 4275610414930469456}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Drone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,9 +224,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 8184781522784786304, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184781522784786306, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184781522784786312, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184781522784786314, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8184781522784786316, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
       propertyPath: m_Name
       value: dron_2_body_root
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184781522784786316, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184781522784786318, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e259d62dd6bb41ca8ca13e7f71b502d, type: 3}
