@@ -35,7 +35,11 @@ public class RoamAction : BaseAction
 
     public override void OnDeactivated()
     {
-        agent.CancelCurrentCommand();
+        if (LinkedAI.isDead != true)
+        {
+            agent.CancelCurrentCommand();
+        }
+        
     }
 
     public override void OnTick()
@@ -50,7 +54,7 @@ public class RoamAction : BaseAction
     IEnumerator waitForNextMove()
     {
         wait = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(4.0f);
         wait = false;
     }
 }

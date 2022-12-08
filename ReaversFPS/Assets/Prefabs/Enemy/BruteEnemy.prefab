@@ -65,13 +65,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FeedbackDisplay: {fileID: 0}
   _VisionConeAngle: 70
-  _VisionConeRange: 15
+  _VisionConeRange: 25
   _VisionConeColour: {r: 1, g: 0, b: 0, a: 0.25}
-  _HearingRange: 15
+  _HearingRange: 30
   _HearingRangeColour: {r: 1, g: 1, b: 0, a: 0.25}
-  _ProximityDetectionRange: 0
+  _ProximityDetectionRange: 5
   _ProximityRangeColor: {r: 1, g: 1, b: 1, a: 0.25}
-  _OnOff: 0
+  _OnOff: 1
   model: {fileID: 1588714844580485863}
   agent: {fileID: 3079129168932552873}
   anim: {fileID: 1808165353811216732}

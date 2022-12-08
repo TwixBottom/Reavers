@@ -34,7 +34,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3079129168932552880
 Transform:
   m_ObjectHideFlags: 0
@@ -65,13 +65,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FeedbackDisplay: {fileID: 0}
   _VisionConeAngle: 80
-  _VisionConeRange: 20
+  _VisionConeRange: 30
   _VisionConeColour: {r: 1, g: 0, b: 0, a: 0.25}
-  _HearingRange: 20
+  _HearingRange: 35
   _HearingRangeColour: {r: 1, g: 1, b: 0, a: 0.25}
-  _ProximityDetectionRange: 3
+  _ProximityDetectionRange: 5
   _ProximityRangeColor: {r: 1, g: 1, b: 1, a: 0.25}
-  _OnOff: 0
+  _OnOff: 1
   model: {fileID: 5188275924746033245}
   agent: {fileID: 3079129168932552873}
   anim: {fileID: 5123880333044403174}
