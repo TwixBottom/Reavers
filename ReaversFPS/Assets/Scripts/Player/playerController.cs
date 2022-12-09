@@ -394,7 +394,7 @@ public class playerController : MonoBehaviour
             {
                 isShooting = true;
                 FindRecoil();
-                //StartCoroutine(MuzzleFlash());
+                StartCoroutine(MuzzleFlash());
 
                 aud.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
 
@@ -440,11 +440,11 @@ public class playerController : MonoBehaviour
     void FindRecoil()
     {
         if (gunStatList[selectedGun].name == "Sniper Gun Stat")
-            gunModel.transform.localPosition -= Vector3.forward * 0.5f;
+            gunModel.transform.localPosition -= Vector3.forward * 0.8f;
         else if (gunStatList[selectedGun].name == "Assault Gun Stats")
-            gunModel.transform.localPosition -= Vector3.forward * 0.3f;
+            gunModel.transform.localPosition -= Vector3.forward * 0.5f;
         else if (gunStatList[selectedGun].name == "SMG Gun Stats")
-            gunModel.transform.localPosition -= Vector3.forward * 0.1f;
+            gunModel.transform.localPosition -= Vector3.forward * 0.3f;
     }
 
     void FindAim()
@@ -456,14 +456,27 @@ public class playerController : MonoBehaviour
         gunModel.transform.localPosition = desiredPos;
     }
 
-    //IEnumerator MuzzleFlash()
-    //{
-    //    flashImage.sprite = numFlashes[Random.Range(0, numFlashes.Length)];
-    //    flashImage.color = Color.white;
-    //    yield return new WaitForSeconds(shootRate);
-    //    flashImage.sprite = null;
-    //    flashImage.color = new Color(0, 0, 0, 0);
-    //}
+    IEnumerator MuzzleFlash()
+    {
+        if (gunStatList[selectedGun].name == "Sniper Gun Stat")
+        {
+            Instantiate(flashImage, sniperShootPos.transform.position, flashImage.transform.rotation);
+            yield return new WaitForSeconds(0.3f);
+            //flashImage.SetActive(false);
+        }
+        else if (gunStatList[selectedGun].name == "Assault Gun Stats")
+        {
+            Instantiate(flashImage, rifleShootPos.transform.position, flashImage.transform.rotation);
+            yield return new WaitForSeconds(0.3f);
+            //flashImage.SetActive(false);
+        }
+        else if (gunStatList[selectedGun].name == "SMG Gun Stats")
+        {
+            Instantiate(flashImage, smgShootPos.transform.position, flashImage.transform.rotation);
+            yield return new WaitForSeconds(0.3f);
+            //flashImage.SetActive(false);
+        }
+    }
 
 
     IEnumerator RelodeWeapon()
@@ -599,8 +612,6 @@ public class playerController : MonoBehaviour
                 selectedGun++;
                 selectWeapon();
             }
-
-
         }
     }
 
@@ -647,7 +658,6 @@ public class playerController : MonoBehaviour
                     selectedGun--;
                     selectWeapon();
                 }
-
             }
         }
     }
