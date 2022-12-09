@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     {
         Debug.Log(other.name);
 
-        if (other.name != "Player" && !other.CompareTag("Hostage"))
+        if (other.name != "Player")
         {
             Destroy(gameObject);
         }
