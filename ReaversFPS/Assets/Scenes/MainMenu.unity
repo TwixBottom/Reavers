@@ -1380,7 +1380,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 324945768}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadDefuseMap
+        m_MethodName: LoadDefuseEasy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3314,7 +3314,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 324945768}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadDefuseMap
+        m_MethodName: LoadDefuseHard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11964,7 +11964,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 324945768}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadDefuseMap
+        m_MethodName: LoadDefuseMedium
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
