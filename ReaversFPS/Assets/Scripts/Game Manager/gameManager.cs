@@ -108,7 +108,7 @@ public class gameManager : MonoBehaviour
             enemiesLabel.SetActive(true);
             waveLabel.SetActive(true);
         }
-        else if (m_scene.name == "HostageMap")
+        else if (m_scene.name == "HostageEasy" || m_scene.name == "HostageMedium" || m_scene.name == "HostageHard")
         {
             HostageLabel.SetActive(true);
             for (int i = 0; i < GameObject.FindGameObjectsWithTag("Hostage").Length; i++)

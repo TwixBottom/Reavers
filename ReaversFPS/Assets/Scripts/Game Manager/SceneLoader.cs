@@ -10,42 +10,43 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
-    public void LoadHostageMap()
+    public void LoadHostageMapEasy()
     {
-        //SceneManager.LoadScene("HostageMap");
-
-        // Loads depending on difficulty selected
-        if (gameObject.name == "Recruit")
-        {
-            SceneManager.LoadScene("HostageMap");
-        }
-        else if (gameObject.name == "Agent")
-        {
-            SceneManager.LoadScene("HostageMap");
-        }
-        else
-        {
-            SceneManager.LoadScene("HostageMap");
-        }
+        SceneManager.LoadScene("HostageEasy");
     }
 
-    public void LoadDefuseMap()
+    public void LoadHostageMapMedium()
     {
-        //SceneManager.LoadScene("DefuseMap");
+        SceneManager.LoadScene("HostageMedium");
 
-        // Loads depending on difficulty selected
-        if (gameObject.name == "Recruit")
-        {
-            SceneManager.LoadScene("DefuseMap");
-        }
-        else if (gameObject.name == "Agent")
-        {
-            SceneManager.LoadScene("DefuseMap");
-        }
-        else
-        {
-            SceneManager.LoadScene("DefuseMap");
-        }
+    }
+
+    public void LoadHostageMapHard()
+    {
+
+        SceneManager.LoadScene("HostageHard");
+
+    }
+
+    public void LoadDefuseEasy()
+    {
+
+        SceneManager.LoadScene("DefuseEasy");
+
+    }
+
+    public void LoadDefuseMedium()
+    {
+
+        SceneManager.LoadScene("DefuseMedium");
+
+    }
+
+    public void LoadDefuseHard()
+    {
+
+        SceneManager.LoadScene("DefuseHard");
+
     }
 
     public void QuitGame()

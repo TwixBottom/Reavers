@@ -733,7 +733,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 324945768}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadHostageMap
+        m_MethodName: LoadHostageMapEasy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1640,7 +1640,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 324945768}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadHostageMap
+        m_MethodName: LoadHostageMapMedium
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4519,7 +4519,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 324945768}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadHostageMap
+        m_MethodName: LoadHostageMapHard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

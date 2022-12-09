@@ -9,12 +9,24 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 452925d2e6b949442bfa7bdc687b253a
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
+    path: Assets/Scenes/Survival/MainScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/HostageMap.unity
+    path: Assets/Scenes/Hostage/HostageMedium.unity
     guid: 4c2363ac9d2123c43abc5978c55861e8
   - enabled: 1
-    path: Assets/Scenes/DefuseMap.unity
+    path: Assets/Scenes/Defuse/DefuseEasy.unity
     guid: d64d93a427403ab47b749c95d4099993
+  - enabled: 1
+    path: Assets/Scenes/Defuse/DefuseHard.unity
+    guid: 65287c1d205f50f46a6ce031cbbe20b9
+  - enabled: 1
+    path: Assets/Scenes/Defuse/DefuseMedium.unity
+    guid: 15157a4eb58e9b54e9af30dff91e45ed
+  - enabled: 1
+    path: Assets/Scenes/Hostage/HostageHard.unity
+    guid: f42216bbc76c38a48be88c66ec17f454
+  - enabled: 1
+    path: Assets/Scenes/Hostage/HostageEasy.unity
+    guid: a63d74a78011766479ef3f7c18741c49
   m_configObjects: {}

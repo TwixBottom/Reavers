@@ -1563,7 +1563,7 @@ MonoBehaviour:
   magazineCount: 0
   gunModel: {fileID: 8296172669399745340}
   hitEffect: {fileID: 7226583673155636401, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
-  flashImage: {fileID: 7226583673155636401, guid: 4900bb140edeeef47a63f8ab6d5c3498, type: 3}
+  flashImage: {fileID: 2955623459812423943, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
   gunStatList: []
   granade: {fileID: 7130934858220220358, guid: 8c659c79636c68542a06b1b3ed62bc5d, type: 3}
   totalThrows: 2
@@ -1604,6 +1604,7 @@ MonoBehaviour:
   NoAmmoVol: 0.15
   inDrone: 0
   pushBack: {x: 0, y: 0, z: 0}
+  isAiming: 0
   startHP: 0
   reseveGunAmmo: 0
   normalPosition: {x: 0, y: 0, z: 0}
