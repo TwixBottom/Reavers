@@ -31,7 +31,8 @@ public class gameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject playerDamageScreen;
     public GameObject playerDeadMenu;
-    public GameObject winMenu; 
+    public GameObject winMenu;
+    public GameObject outOfTimeMenu;
     public GameObject newWave;
     public GameObject hostagePrompt;
     public GameObject waveLabel;
@@ -60,7 +61,10 @@ public class gameManager : MonoBehaviour
     public int currentWaveNumber = 1;
     public int hostageToRescue;
     public int bombsToDefuse;
+    public float timeRemaining;
+    public bool timerIsRunning = false;
     public bool isPaused;
+   
    
     [Header("----- Enemy Stuff -----")]
     public List<GameObject> enemy;
@@ -96,6 +100,7 @@ public class gameManager : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         orgTime = targetTime;
         pointsLabel.SetActive(false);
+        timerIsRunning = true;
         
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)
@@ -119,9 +124,21 @@ public class gameManager : MonoBehaviour
         else
         {
             BombLabel.SetActive(true);
-           // DefuseLabel.SetActive(true);
+            DefuseLabel.SetActive(true);
         }
 
+        if (m_scene.name == "DefuseEasy")
+        {
+            timeRemaining = 300;
+        }
+        else if (m_scene.name == "DefuseMedium")
+        {
+            timeRemaining = 240;
+        }
+        else
+        {
+            timeRemaining = 180;
+        }
        
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Bomb").Length; i++)
@@ -150,6 +167,7 @@ public class gameManager : MonoBehaviour
             else
                 unPause();
         }
+        updateTime();
     }
     public void Pause()
     {
@@ -222,6 +240,31 @@ public class gameManager : MonoBehaviour
         {
             youWin();
         }
+    }
+    public void updateTime()
+    {
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                displayTime(timeRemaining);
+            }
+            else
+            {
+                Pause();
+                outOfTimeMenu.SetActive(true);
+                timeRemaining = 0;
+                timerIsRunning = false;
+            }
+        }
+    }
+    void displayTime(float displayTime)
+    {
+        displayTime += 1;
+        float minutes = Mathf.FloorToInt(displayTime / 60);
+        float seconds = Mathf.FloorToInt(displayTime % 60);
+        defuseTimer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void updateWaveNumber()
