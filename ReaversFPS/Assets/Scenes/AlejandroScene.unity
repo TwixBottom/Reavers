@@ -1722,6 +1722,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 838520644}
     - target: {fileID: 6358832128208527875, guid: fde0c4249f3547644b8c69e0ca39623b, type: 3}
+      propertyPath: flashImage
+      value: 
+      objectReference: {fileID: 2955623459812423943, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
+    - target: {fileID: 6358832128208527875, guid: fde0c4249f3547644b8c69e0ca39623b, type: 3}
       propertyPath: droneCamera
       value: 
       objectReference: {fileID: 48102130}

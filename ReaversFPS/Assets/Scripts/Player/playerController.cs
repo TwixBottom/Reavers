@@ -88,6 +88,7 @@ public class playerController : MonoBehaviour
     bool isJumping;
     bool sprintSoundEffects = false;
     bool readyToThrow = true;
+    public bool isAiming;
 
     public float startHP;
     public int reseveGunAmmo;
@@ -177,6 +178,8 @@ public class playerController : MonoBehaviour
 
         move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
         controller.Move((move + pushBack) * Time.deltaTime * playerSpeed);
+
+        gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EFootstep, 1.0f);
 
         // changes the height position of the player
         if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
@@ -394,7 +397,10 @@ public class playerController : MonoBehaviour
             {
                 isShooting = true;
                 FindRecoil();
-                StartCoroutine(MuzzleFlash());
+                if (!isAiming)
+                {
+                    StartCoroutine(MuzzleFlash());
+                }              
 
                 aud.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
 
@@ -406,8 +412,9 @@ public class playerController : MonoBehaviour
                         hit.collider.GetComponent<IDamage>().TakeDamage(shootDamage);
                     }
 
-                    Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
-
+                       Instantiate(hitEffect, hit.point, hitEffect.transform.rotation);
+                    
+               
                     gameManager.instance.OnSoundEmitted(gameObject, transform.position, EHeardSoundCategory.EShoot, 2.0f);
 
                 }
@@ -460,19 +467,19 @@ public class playerController : MonoBehaviour
     {
         if (gunStatList[selectedGun].name == "Sniper Gun Stat")
         {
-            Instantiate(flashImage, sniperShootPos.transform.position, flashImage.transform.rotation);
+            Instantiate(flashImage, sniperShootPos.transform.position, flashImage.transform.rotation, sniperShootPos.transform);
             yield return new WaitForSeconds(0.3f);
             //flashImage.SetActive(false);
         }
         else if (gunStatList[selectedGun].name == "Assault Gun Stats")
         {
-            Instantiate(flashImage, rifleShootPos.transform.position, flashImage.transform.rotation);
+            Instantiate(flashImage, rifleShootPos.transform.position, flashImage.transform.rotation, rifleShootPos.transform);
             yield return new WaitForSeconds(0.3f);
             //flashImage.SetActive(false);
         }
         else if (gunStatList[selectedGun].name == "SMG Gun Stats")
         {
-            Instantiate(flashImage, smgShootPos.transform.position, flashImage.transform.rotation);
+            Instantiate(flashImage, smgShootPos.transform.position, flashImage.transform.rotation, smgShootPos.transform);
             yield return new WaitForSeconds(0.3f);
             //flashImage.SetActive(false);
         }
@@ -676,13 +683,16 @@ public class playerController : MonoBehaviour
         //gunStatList.Count > 0 && 
         if (Input.GetButtonDown("Fire2")) //bool needed to not allow fov change when menu is open
         {
+
             if (playerCamera.fieldOfView != fovOriginal)
             {
-                StartCoroutine(LerpFOV(false));
+                isAiming = false;
+                StartCoroutine(LerpFOV(isAiming));
             }
             else
             {
-                StartCoroutine(LerpFOV(true));
+                isAiming = true;
+                StartCoroutine(LerpFOV(isAiming));
             }
             yield return new WaitForSeconds(1);
         }
