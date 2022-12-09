@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 9557a2c26677a0a4d811d27f3230cc46, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: d861361121cbe8a4ab4931c404e6c664, type: 2}
 --- !u!4 &42673004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6904059608167247113, guid: da45db148fe96ed46ab1db66cd2fe222, type: 3}
@@ -1829,10 +1829,6 @@ PrefabInstance:
     - target: {fileID: 3079129168932552870, guid: 0315bf2fbc123ca43ae8d0f64f7f53fe, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3079129168932552870, guid: 0315bf2fbc123ca43ae8d0f64f7f53fe, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3079129168932552880, guid: 0315bf2fbc123ca43ae8d0f64f7f53fe, type: 3}
       propertyPath: m_RootOrder
