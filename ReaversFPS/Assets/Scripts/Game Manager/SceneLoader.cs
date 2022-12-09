@@ -12,12 +12,40 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadHostageMap()
     {
-        SceneManager.LoadScene("HostageMap");
+        //SceneManager.LoadScene("HostageMap");
+
+        // Loads depending on difficulty selected
+        if (gameObject.name == "Recruit")
+        {
+            SceneManager.LoadScene("HostageMap");
+        }
+        else if (gameObject.name == "Agent")
+        {
+            SceneManager.LoadScene("HostageMap");
+        }
+        else
+        {
+            SceneManager.LoadScene("HostageMap");
+        }
     }
 
     public void LoadDefuseMap()
     {
-        SceneManager.LoadScene("DefuseMap");
+        //SceneManager.LoadScene("DefuseMap");
+
+        // Loads depending on difficulty selected
+        if (gameObject.name == "Recruit")
+        {
+            SceneManager.LoadScene("DefuseMap");
+        }
+        else if (gameObject.name == "Agent")
+        {
+            SceneManager.LoadScene("DefuseMap");
+        }
+        else
+        {
+            SceneManager.LoadScene("DefuseMap");
+        }
     }
 
     public void QuitGame()
