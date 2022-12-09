@@ -19,7 +19,14 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log(other.name);
+
+        if (other.name != "Player" && !other.CompareTag("Hostage"))
+        {
+            Destroy(gameObject);
+        }
+
+        else if (other.CompareTag("Player"))
         {
             gameManager.instance.playerScript.TakeDamage(damage);
             Destroy(gameObject);

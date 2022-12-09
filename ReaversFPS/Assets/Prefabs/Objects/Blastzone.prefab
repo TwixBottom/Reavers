@@ -45,7 +45,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5469334588377769628
 MonoBehaviour:
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceAmount: 10
   coll: {fileID: 8243455746221499178}
-  damage: 5
+  damage: 10
   grenadeAud: {fileID: -1094054683756496882}
   grenadeExplosionAud:
   - {fileID: 8300000, guid: 61b1036b923ddde4ea0adfc8f9ba6be1, type: 3}
