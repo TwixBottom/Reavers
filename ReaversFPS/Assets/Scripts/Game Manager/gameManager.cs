@@ -44,7 +44,7 @@ public class gameManager : MonoBehaviour
     public GameObject pointsLabel;
     public TextMeshProUGUI pointsEarned;
     public TextMeshProUGUI enemiesLeft;
-    public TextMeshProUGUI grenadesLeft;
+    //public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
     public TextMeshProUGUI BombLeft;
     public TextMeshProUGUI waveNumber; 
@@ -53,6 +53,8 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI defuseTimer;
     public Image HPBar;
     public Image interactBarFill;
+    public Image Grenade;
+    public Sprite[] grenadesLeft;
 
    
 
@@ -275,7 +277,8 @@ public class gameManager : MonoBehaviour
     }
     public void updateUI()
     {
-        grenadesLeft.text = playerScript.totalThrows.ToString("F0");
+        //grenadesLeft.text = playerScript.totalThrows.ToString("F0");
+        updateGrenades(playerScript.totalThrows);
         enemiesLeft.text = enemiesToKill.ToString("F0");
         pointsEarned.text = points.ToString("F0");
         hostageLeft.text = hostageToRescue.ToString("F0");
@@ -288,6 +291,10 @@ public class gameManager : MonoBehaviour
     {
         ammoCount--;
         updateUI();
+    }
+    public void updateGrenades(int currentGrenades)
+    {
+        Grenade.sprite = grenadesLeft[currentGrenades];
     }
     IEnumerator spawnEnemies()
     {

@@ -1608,6 +1608,7 @@ MonoBehaviour:
   startHP: 0
   reseveGunAmmo: 0
   normalPosition: {x: 0, y: 0, z: 0}
+  cameraNormalPosition: {x: 0, y: 0, z: 0}
   aimingPosition: {x: 0, y: 0, z: 0}
   aimSmooth: 10
   interactable: 0
