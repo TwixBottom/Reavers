@@ -69,10 +69,13 @@ public class gameManager : MonoBehaviour
     public bool beingTimerIsRunning = false;
 
     [Header("----- Enemy Stuff -----")]
-    public List<GameObject> enemy;
+    public List<GameObject> easyEnemies;
+    public List<GameObject> mediumEnemies;
+    public List<GameObject> hardEnemies;
+    public GameObject followPlayerEnemy;
     public List<GameObject> spawnLocations;
 
-    [Header("----- Enemy Stuff -----")]
+    [Header("----- Objective -----")]
     public List<GameObject> objective;
 
     float targetTime = 5.0f;
@@ -210,17 +213,10 @@ public class gameManager : MonoBehaviour
         if (enemiesToKill <= 0 && m_scene.name == "MainScene")
         {
             updateWaveNumber();
-            if (currentWaveNumber <= 5)
-            {
-                StartCoroutine(spawnEnemies());
-            }
-           
-        }
 
-        //if (currentWaveNumber > 5)
-        //{
-        //    youWin();
-        //} 
+
+            StartCoroutine(spawnEnemies());
+        }
     }
 
     public void updateHostageNumbers()
@@ -327,8 +323,26 @@ public class gameManager : MonoBehaviour
 
         for (int i = 0; i < spawnLocations.Count; i++)
         {
-            int randomInt = Random.Range(0, 3); 
-            Instantiate(enemy[randomInt], spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
+            int randomInt = Random.Range(0, 2);
+            if (currentWaveNumber <= 5)
+            {
+                Debug.Log("Easy");
+
+                Instantiate(followPlayerEnemy, spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
+            }
+            else if (currentWaveNumber > 5 && currentWaveNumber <= 15 )
+            {
+                Debug.Log("Medium");
+
+                Instantiate(followPlayerEnemy, spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
+            }
+            else if (currentWaveNumber > 15)
+            {
+                Debug.Log("Hard");
+
+                Instantiate(followPlayerEnemywd , spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
+            }
+            
         }
        
     }

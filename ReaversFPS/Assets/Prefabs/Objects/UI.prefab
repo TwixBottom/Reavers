@@ -6602,11 +6602,19 @@ MonoBehaviour:
   isPaused: 0
   timerIsRunning: 0
   beingTimerIsRunning: 0
-  enemy:
-  - {fileID: 3079129168932552870, guid: ce0ad92760742bc4996360d59857d328, type: 3}
+  easyEnemies:
   - {fileID: 3079129168932552870, guid: 0315bf2fbc123ca43ae8d0f64f7f53fe, type: 3}
   - {fileID: 3079129168932552870, guid: 26442dd0f1da59c43bd0666f64c168e8, type: 3}
-  - {fileID: 8796795586804003206, guid: 293c6e8ded0003248859009f58844dc1, type: 3}
+  - {fileID: 3079129168932552870, guid: ce0ad92760742bc4996360d59857d328, type: 3}
+  mediumEnemies:
+  - {fileID: 3079129168932552870, guid: 41310c0a8efe5e74c8e989884b77d073, type: 3}
+  - {fileID: 3079129168932552870, guid: 870762f0ec2a1dd48a05fabb385f787d, type: 3}
+  - {fileID: 3079129168932552870, guid: b51d3e8806c2edc4495e89c49ab05713, type: 3}
+  hardEnemies:
+  - {fileID: 3079129168932552870, guid: ea91cd986cc86fb4abb93393a3302c08, type: 3}
+  - {fileID: 3079129168932552870, guid: d9461c4acaf42b344a10bfc8a6cefc33, type: 3}
+  - {fileID: 3079129168932552870, guid: c92e3ef628916ed408647832a20401a0, type: 3}
+  followPlayerEnemy: {fileID: 8796795586804003206, guid: 293c6e8ded0003248859009f58844dc1, type: 3}
   spawnLocations: []
   objective: []
   defuse: 0

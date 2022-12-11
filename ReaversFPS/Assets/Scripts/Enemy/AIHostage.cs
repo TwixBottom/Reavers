@@ -120,7 +120,7 @@ public class AIHostage : MonoBehaviour, IDamage
 
         for (int i = 0; i < gameManager.instance.spawnLocations.Count; i++)
         {
-            Instantiate(gameManager.instance.enemy[3], gameManager.instance.spawnLocations[i].transform.position, gameManager.instance.spawnLocations[i].transform.rotation);
+            Instantiate(gameManager.instance.followPlayerEnemy, gameManager.instance.spawnLocations[i].transform.position, gameManager.instance.spawnLocations[i].transform.rotation);
         }
      
         yield return new WaitForSeconds(10);

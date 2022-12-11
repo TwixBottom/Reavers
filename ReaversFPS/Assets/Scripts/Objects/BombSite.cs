@@ -36,7 +36,7 @@ public class BombSite : MonoBehaviour
         {
             for (int i = 0; i < spawnPositions.Count; i++)
             {
-                Instantiate(gameManager.instance.enemy[3], spawnPositions[i].transform.position, spawnPositions[i].transform.rotation);
+                Instantiate(gameManager.instance.followPlayerEnemy, spawnPositions[i].transform.position, spawnPositions[i].transform.rotation);
             }
 
 

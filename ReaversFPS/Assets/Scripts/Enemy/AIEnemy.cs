@@ -87,6 +87,7 @@ public class AIEnemy : MonoBehaviour, IDamage
     
     public bool tookDamage = false;
     bool chase;
+    bool shoot;
 
     void Awake()
     {
@@ -112,7 +113,7 @@ public class AIEnemy : MonoBehaviour, IDamage
             {
                 playerDirection = (gameManager.instance.player.transform.position - transform.position).normalized;
 
-                if (playerInRange == true)
+                if (playerInRange == true && shoot == true)
                 {
                     facePlayer();
 
@@ -269,6 +270,8 @@ public class AIEnemy : MonoBehaviour, IDamage
         canThrowGrenade = false;
 
         chase = true;
+
+        shoot = false;
     }
 
     public void OnDetected(GameObject target)
@@ -278,6 +281,8 @@ public class AIEnemy : MonoBehaviour, IDamage
         canThrowGrenade = false;
 
         chase = true;
+
+        shoot = false;
     }
 
     public void OnFullyDetected(GameObject target)
@@ -287,6 +292,10 @@ public class AIEnemy : MonoBehaviour, IDamage
         canThrowGrenade = true;
 
         chase = true;
+
+        shoot = true;
+
+
     }
 
     public void OnLostDetection(GameObject target)
@@ -296,6 +305,8 @@ public class AIEnemy : MonoBehaviour, IDamage
         canThrowGrenade = true;
 
         chase = false;
+
+        shoot = false;
     }
 
     public void OnLostSuspicion()
@@ -305,6 +316,8 @@ public class AIEnemy : MonoBehaviour, IDamage
         canThrowGrenade = false;
 
         chase = false;
+
+        shoot = false;
     }
 
     public void OnFullyLost()
@@ -314,6 +327,8 @@ public class AIEnemy : MonoBehaviour, IDamage
         canThrowGrenade = false;
 
         chase = false;
+
+        shoot = false;
     }
 }
 
