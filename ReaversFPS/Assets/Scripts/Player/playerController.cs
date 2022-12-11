@@ -64,6 +64,7 @@ public class playerController : MonoBehaviour
     [Range(0, 1)][SerializeField] float ReloadVol;
     [SerializeField] AudioClip[] NoAmmoAudio;
     [Range(0, 1)][SerializeField] float NoAmmoVol;
+    [SerializeField] AudioClip LowHealthAudio;
 
     public bool inDrone = false;
     Vector3 droneVelocity;
@@ -326,6 +327,10 @@ public class playerController : MonoBehaviour
     public void updatePlayerHBar()
     {
         gameManager.instance.HPBar.fillAmount = HP / startHP;
+        if(HP <= 10)
+        {
+            aud.PlayOneShot(LowHealthAudio);
+        }
     }
 
     public void TakeDamage(float dmg)
