@@ -39,8 +39,6 @@ public class BombSite : MonoBehaviour
                 Instantiate(gameManager.instance.followPlayerEnemy, spawnPositions[i].transform.position, spawnPositions[i].transform.rotation);
             }
 
-
-
             once = true;
         }
         

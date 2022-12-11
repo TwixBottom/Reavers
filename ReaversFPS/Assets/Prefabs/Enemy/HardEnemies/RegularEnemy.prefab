@@ -71,7 +71,7 @@ MonoBehaviour:
   _HearingRangeColour: {r: 1, g: 1, b: 0, a: 0.25}
   _ProximityDetectionRange: 5
   _ProximityRangeColor: {r: 1, g: 1, b: 1, a: 0.25}
-  _OnOff: 1
+  _OnOff: 0
   model: {fileID: 5188275924746033245}
   agent: {fileID: 3079129168932552873}
   anim: {fileID: 5123880333044403174}
