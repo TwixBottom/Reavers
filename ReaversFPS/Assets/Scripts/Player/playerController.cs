@@ -222,7 +222,7 @@ public class playerController : MonoBehaviour
         }
 
         move = drone.transform.right * Input.GetAxis("Horizontal") + drone.transform.forward * Input.GetAxis("Vertical");
-        droneController.Move((move + pushBack) * Time.deltaTime * (playerSpeed * 2));
+        droneController.Move((move) * Time.deltaTime * (playerSpeed * 2));
 
         // changes the height position of the player
         if (Input.GetButtonDown("Jump") && jumpTimes < jumpMax)
