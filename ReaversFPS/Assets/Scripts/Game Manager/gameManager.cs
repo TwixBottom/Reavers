@@ -32,6 +32,7 @@ public class gameManager : MonoBehaviour
     public GameObject playerDamageScreen;
     public GameObject playerDeadMenu;
     public GameObject winMenu;
+    public GameObject optionsMenu;
     public GameObject outOfTimeMenu;
     public GameObject newWave;
     public GameObject hostagePrompt;
@@ -162,7 +163,8 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") && !playerDeadMenu.activeSelf && !winMenu.activeSelf)
+        if (Input.GetButtonDown("Cancel") && !playerDeadMenu.activeSelf && !winMenu.activeSelf && 
+            !optionsMenu.activeSelf && !outOfTimeMenu.activeSelf)
         {
             isPaused = !isPaused;
             pauseMenu.SetActive(isPaused);
@@ -172,8 +174,11 @@ public class gameManager : MonoBehaviour
             else
                 unPause();
         }
-        updateBeginTime();
-        updateTime();
+        if (m_scene.name == "DefuseEasy" || m_scene.name == "DefuseMedium" || m_scene.name == "DefuseHard")
+        {
+            updateBeginTime();
+            updateTime();
+        }
     }
     public void Pause()
     {
