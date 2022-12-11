@@ -40,23 +40,22 @@ public class gameManager : MonoBehaviour
     public GameObject HostageLabel;
     public GameObject DefuseLabel;
     public GameObject BombLabel;
+    public GameObject BeginLabel;
     public GameObject InteractBar;
     public GameObject pointsLabel;
     public TextMeshProUGUI pointsEarned;
     public TextMeshProUGUI enemiesLeft;
-    //public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
     public TextMeshProUGUI BombLeft;
     public TextMeshProUGUI waveNumber; 
     public TextMeshProUGUI currentAmmo;
     public TextMeshProUGUI ammoRemaining;
     public TextMeshProUGUI defuseTimer;
+    public TextMeshProUGUI beginTimer;
     public Image HPBar;
     public Image interactBarFill;
     public Image Grenade;
     public Sprite[] grenadesLeft;
-
-   
 
     public int ammoCount;
     public int enemiesToKill;
@@ -64,10 +63,11 @@ public class gameManager : MonoBehaviour
     public int hostageToRescue;
     public int bombsToDefuse;
     public float timeRemaining;
-    public bool timerIsRunning = false;
+    public float beginTimeRemaining;
     public bool isPaused;
-   
-   
+    public bool timerIsRunning = false;
+    public bool beingTimerIsRunning = false;
+
     [Header("----- Enemy Stuff -----")]
     public List<GameObject> enemy;
     public List<GameObject> spawnLocations;
@@ -82,8 +82,6 @@ public class gameManager : MonoBehaviour
     public int points;
 
     public Scene m_scene;
-
-
 
     public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>(); // Vision
    
@@ -102,8 +100,9 @@ public class gameManager : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         orgTime = targetTime;
         pointsLabel.SetActive(false);
-        timerIsRunning = true;
-        
+        beingTimerIsRunning = true;
+        beginTimeRemaining = 5;
+
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)
         {
@@ -127,6 +126,7 @@ public class gameManager : MonoBehaviour
         {
             BombLabel.SetActive(true);
             DefuseLabel.SetActive(true);
+            BeginLabel.SetActive(true);
         }
 
         if (m_scene.name == "DefuseEasy")
@@ -169,6 +169,7 @@ public class gameManager : MonoBehaviour
             else
                 unPause();
         }
+        updateBeginTime();
         updateTime();
     }
     public void Pause()
@@ -260,6 +261,23 @@ public class gameManager : MonoBehaviour
                 timerIsRunning = false;
             }
         }
+       
+    }
+    public void updateBeginTime()
+    {
+        if (beingTimerIsRunning)
+        {
+            if (beginTimeRemaining > 0)
+            {
+                beginTimeRemaining -= Time.deltaTime;
+                displayBeginTime(beginTimeRemaining);
+                if (beginTimeRemaining < 0)
+                {
+                    BeginLabel.SetActive(false);
+                    timerIsRunning = true;
+                }
+            }
+        }
     }
     void displayTime(float displayTime)
     {
@@ -268,7 +286,12 @@ public class gameManager : MonoBehaviour
         float seconds = Mathf.FloorToInt(displayTime % 60);
         defuseTimer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
+    void displayBeginTime(float displayTime)
+    {
+        displayTime += 1;
+        float seconds = Mathf.FloorToInt(displayTime % 60);
+        beginTimer.text = string.Format("{000}", seconds);
+    }
     public void updateWaveNumber()
     {
         points += 1000;
