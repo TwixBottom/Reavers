@@ -89,6 +89,7 @@ public class playerController : MonoBehaviour
     bool sprintSoundEffects = false;
     bool readyToThrow = true;
     public bool isAiming;
+    bool knockback = false;
 
     public float startHP;
     public int reseveGunAmmo;
@@ -97,6 +98,7 @@ public class playerController : MonoBehaviour
     float fovOriginal;
 
     public Vector3 normalPosition;
+    public Vector3 cameraNormalPosition;
     public Vector3 aimingPosition;
 
     public float aimSmooth = 10;
@@ -111,6 +113,7 @@ public class playerController : MonoBehaviour
     void Start()
     {
         normalPosition = gunModel.transform.localPosition;
+        cameraNormalPosition = playerCamera.transform.localPosition;
         fovOriginal = playerCamera.fieldOfView;
         isSprinting = false;
         startHP = HP;
@@ -137,9 +140,7 @@ public class playerController : MonoBehaviour
             {
                 StartCoroutine(ToggleDrone());
             }
-                
         }
-
 
 
         if (interactable == true || inDrone == true)
@@ -154,6 +155,7 @@ public class playerController : MonoBehaviour
         else
         {
             FindAim();
+            cameraShake();
             pushBack = Vector3.Lerp(pushBack, Vector3.zero, Time.deltaTime * pushBackTime);
             PlayerMovement();
             PlayerSprint();
@@ -329,7 +331,7 @@ public class playerController : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         HP -= dmg;
-
+        //StartCoroutine(CameraShake(5f, 5f));
         StartCoroutine(gameManager.instance.playerDamageFlash());
         updatePlayerHBar();
 
@@ -400,7 +402,8 @@ public class playerController : MonoBehaviour
                 if (!isAiming)
                 {
                     StartCoroutine(MuzzleFlash());
-                }              
+                    //StartCoroutine(CameraShake(5f, 5f));
+                }
 
                 aud.PlayOneShot(ShootAudio[Random.Range(0, ShootAudio.Length)], ShootVol);
 
@@ -447,11 +450,20 @@ public class playerController : MonoBehaviour
     void FindRecoil()
     {
         if (gunStatList[selectedGun].name == "Sniper Gun Stat")
+        {
             gunModel.transform.localPosition -= Vector3.forward * 0.8f;
+            playerCamera.transform.localPosition -= Vector3.forward * 0.8f;
+        }
         else if (gunStatList[selectedGun].name == "Assault Gun Stats")
+        {
             gunModel.transform.localPosition -= Vector3.forward * 0.5f;
+            playerCamera.transform.localPosition -= Vector3.forward * 0.5f;
+        }
         else if (gunStatList[selectedGun].name == "SMG Gun Stats")
+        {
             gunModel.transform.localPosition -= Vector3.forward * 0.3f;
+            playerCamera.transform.localPosition -= Vector3.forward * 0.3f;
+        }
     }
 
     void FindAim()
@@ -461,6 +473,15 @@ public class playerController : MonoBehaviour
         Vector3 desiredPos = Vector3.Lerp(gunModel.transform.localPosition, targetPos, Time.deltaTime * aimSmooth);
 
         gunModel.transform.localPosition = desiredPos;
+    }
+
+    void cameraShake()
+    {
+        Vector3 targetPos = cameraNormalPosition;
+
+        Vector3 desiredPos = Vector3.Lerp(playerCamera.transform.localPosition, targetPos, Time.deltaTime * aimSmooth);
+
+        playerCamera.transform.localPosition = desiredPos;
     }
 
     IEnumerator MuzzleFlash()
@@ -485,6 +506,21 @@ public class playerController : MonoBehaviour
         }
     }
 
+    //IEnumerator CameraShake(float duration, float magnitude)
+    //{
+    //    if (knockback == false)
+    //    {
+    //        knockback = true;
+    //        Vector3 originalPos = playerCamera.transform.localPosition;
+    //    Vector3 goToPos = new Vector3(playerCamera.transform.localPosition.x, playerCamera.transform.localPosition.y, playerCamera.transform.localPosition.z - 0.6f);
+    //    playerCamera.transform.localPosition = goToPos;
+    //    yield return new WaitForSeconds(0.3f);
+    //    playerCamera.transform.localPosition = originalPos;
+    //        knockback = false;
+    //    }
+
+
+    
 
     IEnumerator RelodeWeapon()
     {

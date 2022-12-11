@@ -31,7 +31,8 @@ public class gameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject playerDamageScreen;
     public GameObject playerDeadMenu;
-    public GameObject winMenu; 
+    public GameObject winMenu;
+    public GameObject outOfTimeMenu;
     public GameObject newWave;
     public GameObject hostagePrompt;
     public GameObject waveLabel;
@@ -39,29 +40,34 @@ public class gameManager : MonoBehaviour
     public GameObject HostageLabel;
     public GameObject DefuseLabel;
     public GameObject BombLabel;
+    public GameObject BeginLabel;
     public GameObject InteractBar;
     public GameObject pointsLabel;
     public TextMeshProUGUI pointsEarned;
     public TextMeshProUGUI enemiesLeft;
-    public TextMeshProUGUI grenadesLeft;
     public TextMeshProUGUI hostageLeft;
     public TextMeshProUGUI BombLeft;
     public TextMeshProUGUI waveNumber; 
     public TextMeshProUGUI currentAmmo;
     public TextMeshProUGUI ammoRemaining;
     public TextMeshProUGUI defuseTimer;
+    public TextMeshProUGUI beginTimer;
     public Image HPBar;
     public Image interactBarFill;
-
-   
+    public Image Grenade;
+    public Sprite[] grenadesLeft;
 
     public int ammoCount;
     public int enemiesToKill;
     public int currentWaveNumber = 1;
     public int hostageToRescue;
     public int bombsToDefuse;
+    public float timeRemaining;
+    public float beginTimeRemaining;
     public bool isPaused;
-   
+    public bool timerIsRunning = false;
+    public bool beingTimerIsRunning = false;
+
     [Header("----- Enemy Stuff -----")]
     public List<GameObject> enemy;
     public List<GameObject> spawnLocations;
@@ -76,8 +82,6 @@ public class gameManager : MonoBehaviour
     public int points;
 
     public Scene m_scene;
-
-
 
     public List<DetectableTarget> allTargets { get; private set; } = new List<DetectableTarget>(); // Vision
    
@@ -96,7 +100,9 @@ public class gameManager : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         orgTime = targetTime;
         pointsLabel.SetActive(false);
-        
+        beingTimerIsRunning = true;
+        beginTimeRemaining = 5;
+
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Enemy Spawn Rooms").Length; i++)
         {
@@ -119,9 +125,22 @@ public class gameManager : MonoBehaviour
         else
         {
             BombLabel.SetActive(true);
-           // DefuseLabel.SetActive(true);
+            DefuseLabel.SetActive(true);
+            BeginLabel.SetActive(true);
         }
 
+        if (m_scene.name == "DefuseEasy")
+        {
+            timeRemaining = 300;
+        }
+        else if (m_scene.name == "DefuseMedium")
+        {
+            timeRemaining = 240;
+        }
+        else
+        {
+            timeRemaining = 180;
+        }
        
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Bomb").Length; i++)
@@ -150,6 +169,8 @@ public class gameManager : MonoBehaviour
             else
                 unPause();
         }
+        updateBeginTime();
+        updateTime();
     }
     public void Pause()
     {
@@ -223,7 +244,54 @@ public class gameManager : MonoBehaviour
             youWin();
         }
     }
-
+    public void updateTime()
+    {
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                displayTime(timeRemaining);
+            }
+            else
+            {
+                Pause();
+                outOfTimeMenu.SetActive(true);
+                timeRemaining = 0;
+                timerIsRunning = false;
+            }
+        }
+       
+    }
+    public void updateBeginTime()
+    {
+        if (beingTimerIsRunning)
+        {
+            if (beginTimeRemaining > 0)
+            {
+                beginTimeRemaining -= Time.deltaTime;
+                displayBeginTime(beginTimeRemaining);
+                if (beginTimeRemaining < 0)
+                {
+                    BeginLabel.SetActive(false);
+                    timerIsRunning = true;
+                }
+            }
+        }
+    }
+    void displayTime(float displayTime)
+    {
+        displayTime += 1;
+        float minutes = Mathf.FloorToInt(displayTime / 60);
+        float seconds = Mathf.FloorToInt(displayTime % 60);
+        defuseTimer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+    void displayBeginTime(float displayTime)
+    {
+        displayTime += 1;
+        float seconds = Mathf.FloorToInt(displayTime % 60);
+        beginTimer.text = string.Format("{000}", seconds);
+    }
     public void updateWaveNumber()
     {
         points += 1000;
@@ -232,7 +300,8 @@ public class gameManager : MonoBehaviour
     }
     public void updateUI()
     {
-        grenadesLeft.text = playerScript.totalThrows.ToString("F0");
+        //grenadesLeft.text = playerScript.totalThrows.ToString("F0");
+        updateGrenades(playerScript.totalThrows);
         enemiesLeft.text = enemiesToKill.ToString("F0");
         pointsEarned.text = points.ToString("F0");
         hostageLeft.text = hostageToRescue.ToString("F0");
@@ -245,6 +314,10 @@ public class gameManager : MonoBehaviour
     {
         ammoCount--;
         updateUI();
+    }
+    public void updateGrenades(int currentGrenades)
+    {
+        Grenade.sprite = grenadesLeft[currentGrenades];
     }
     IEnumerator spawnEnemies()
     {
