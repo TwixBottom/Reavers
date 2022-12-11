@@ -340,7 +340,7 @@ public class gameManager : MonoBehaviour
             {
                 Debug.Log("Hard");
 
-                Instantiate(followPlayerEnemywd , spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
+                Instantiate(followPlayerEnemy , spawnLocations[i].transform.position, spawnLocations[i].transform.rotation);
             }
             
         }
